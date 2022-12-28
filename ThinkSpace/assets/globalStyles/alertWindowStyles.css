@@ -1,0 +1,38 @@
+@keyframes alertAnimation {
+  from {transform: translate(calc(100% + 10px), 0)}
+  to {transform: translate(0, 0)}
+}
+
+
+
+.alertWindow {
+  width: 20vw;
+  padding: 10px;
+  background: var(--themeMainContentBackground);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  animation: alertAnimation 150ms 1 ease-in-out;
+  cursor: pointer;
+  transform: translate(0, 0);
+  transition-duration: 120ms;
+}
+.alertWindow.removed {
+  animation: none;
+  transform: translate(calc(100% + 10px), 0)
+}
+
+
+
+
+.alertWindow > .alertIcon {
+  width: 30px;
+  color: #47852c;
+}
+.alertWindow > .alertText {
+  color: var(--textColor);
+}

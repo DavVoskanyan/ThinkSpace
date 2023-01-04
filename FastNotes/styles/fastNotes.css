@@ -148,6 +148,7 @@
 .notesGrid > .note > .noteTitle {
   color: var(--textColor);
   margin-bottom: 20px;
+  padding: 5px 0 0 5px;
 }
 
 

@@ -1,0 +1,24 @@
+:root {
+  /*light theme */
+  /*--themeBackground: #ffffff;*/
+  /*--themeMainContentBackground: #f3f3f3;*/
+  /*--textColor: #2e2e2e;*/
+  /*--elementsDividerColor: #f3f3f3;*/
+  /*--nonStandardTextColor: #e3e3e3;*/
+  /*--menuIconColor: #7a7a7a;*/
+  /*--menuIconColorHover: #2e2e2e;*/
+  /*--noteBackground: #ffffff;*/
+  /*--inputBackground: #f3f3f3;*/
+
+
+  /* dark theme */
+  --themeBackground: #2e2e2e;
+  --themeMainContentBackground: #3e3e3e;
+  --textColor: #ffffff;
+  --elementsDividerColor: #3e3e3e;
+  --nonStandardTextColor: #454545;
+  --menuIconColor: #c0c0c0;
+  --menuIconColorHover: #f3f3f3;
+  --noteBackground: #2e2e2e;
+  --inputBackground: #1e1e1e;
+}

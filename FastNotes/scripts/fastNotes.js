@@ -3,6 +3,7 @@ import NoteConverter from "/assets/globalScripts/NoteConverter.js";
 import ModalController from "/assets/globalScripts/ModalController.js";
 import IndexedDataBaseWorker from "/assets/globalScripts/IndexedDataBaseWorker.js";
 import WindowAlerter from "/assets/globalScripts/WindowAlerter.js";
+import DatePicker from "/assets/globalScripts/DatePicker.js";
 
 //////////////////////////   A D D   N O T E S   F R O M   S T O R A G E   /////////////////////////////
 const notesContainer = document.querySelector('.notesContainer');
@@ -55,10 +56,3 @@ submitButtonInModal.addEventListener('click', (e) => {
 
 
 
-let idb = new IndexedDataBaseWorker('ThinkSpace', 1);
-console.log(idb.getAllObjects('notesStore'));
-
-
-const alerter = new WindowAlerter(document.querySelector('#rightSideBar'));
-alerter.alertDivConstructor("error", "This is a successful alert :)");
-setTimeout(() => alerter.alertDivConstructor("success", "Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry."), 2500)

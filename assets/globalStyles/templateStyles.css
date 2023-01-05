@@ -247,6 +247,7 @@ hr {
 }
 .modalContent {
     background: var(--themeBackground);
+    display: flex;
 }
 
 

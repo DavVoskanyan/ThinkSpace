@@ -16,7 +16,12 @@
     <script type="module" defer src="/assets/globalScripts/NoteConverter.js"></script>
     <script type="module" defer src="/assets/globalScripts/NotesWorker.js"></script>
     <script type="module" defer src="/assets/globalScripts/WindowAlerter.js"></script>
+    <script type="module" defer src="/assets/globalScripts/DatePicker.js"></script>
     <script type="module" defer src="/FastNotes/scripts/fastNotes.js"></script>
+
+
+    <!-- script for development -->
+  <script type="module" defer src="/assets/globalScripts/TestModules.js"></script>
 </head>
 <body>
   <div id="header">
@@ -177,6 +182,9 @@
       </div>
   </div>
 
+
+
+
   <div id="addNoteModal" class="modal">
     <div class="modalWindow">
       <div class="modalHeader">Add New Note</div>
@@ -190,9 +198,15 @@
           </label>
           <button class="addNewNote"> Add </button>
         </form>
+        <div class="datePickerContainer">
+        </div>
       </div>
       <div class="modalFooter"></div>
     </div>
   </div>
+
+
+
+
 </body>
 </html>

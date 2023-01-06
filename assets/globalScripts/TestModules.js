@@ -1,7 +1,6 @@
 import IndexedDataBaseWorker from "./IndexedDataBaseWorker.js";
 import WindowAlerter from "./WindowAlerter.js";
 import DatePicker from "./DatePicker.js";
-import datePicker from "./DatePicker.js";
 
 
 let idb = new IndexedDataBaseWorker('ThinkSpace', 1);

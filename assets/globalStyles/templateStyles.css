@@ -249,9 +249,37 @@ hr {
     background: var(--themeBackground);
     display: flex;
 }
+.datePickerPreviousButton,
+.datePickerNextButton {
+  width: 15px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--menuIconColor);
+  cursor: pointer;
+  transition: color 120ms;
+}
+.datePickerPreviousButton:hover,
+ .datePickerNextButton:hover { color: var(--textColor); }
+.currentMonthDay.today {
+  border-radius: 5px;
+  border: 2px solid var(--textColor);
+}
+.currentMonthDay {
+  color: var(--textColor);
+  transition: background-color 120ms, border-radius 300ms;
+}
+.currentMonthDay:hover,
+.currentMonthDay.selected {
+  border-radius: 8px;
+  background: var(--datePickerHoverBackground);
+  color: var(--datePickerHoverTextColor);
+}
+.datePicker .weekDayName {
+  color: var(--nonStandardTextColor);
+  text-transform: capitalize;
+}
 
-
-
-
+.datePicker .datePickerHead > div { color: var(--textColor) }
 
 

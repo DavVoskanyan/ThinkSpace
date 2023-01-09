@@ -1,8 +1,15 @@
 class DatePicker {
-  #DATEPICKER_CONTAINER;
-  #CURRENT_DATE;
 
+  static #MONTH_NAMES = ["January","February","March","April","May","June","July",
+    "August","September","October","November","December"]
+
+  #CURRENT_DATE;
   #DAYS_TABLE;
+  #IN_TITLE_MONTH;
+  #IN_TITLE_YEAR;
+  selectedDate;
+
+
 
   constructor(container) {
     this.#CURRENT_DATE = new Date();
@@ -43,9 +50,7 @@ class DatePicker {
                                             12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 278.6 86.6c12.5-12.5 12.5-32.8
                                             0-45.3s-32.8-12.5-45.3 0l-192 192z" fill="currentColor"/>
                                 </svg>`
-    previousButton.addEventListener('click', () => {
-      this.changeMonthByCount(-1);
-    });
+    previousButton.addEventListener('click', () => this.#changeMonthByCount(-1) );
 
 
 
@@ -57,11 +62,12 @@ class DatePicker {
     const month = document.createElement('span');
     month.classList.add('onTitleMonth');
     month.innerText = this.#CURRENT_DATE.toLocaleDateString('default', {month: 'long'});
+    this.#IN_TITLE_MONTH = month;
 
     const year = document.createElement('span');
     year.classList.add('onTitleYear');
     year.innerText = this.#CURRENT_DATE.getFullYear();
-
+    this.#IN_TITLE_YEAR = year;
     dateInfoTitle.appendChild(month);
     dateInfoTitle.appendChild(year);
 
@@ -77,9 +83,7 @@ class DatePicker {
                                         12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256 105.4 86.6c-12.5-12.5-12.5-32.8
                                         0-45.3s32.8-12.5 45.3 0l192 192z" fill="currentColor"/>
                             </svg>`
-    nextButton.addEventListener('click', () => {
-      this.changeMonthByCount(1);
-    });
+    nextButton.addEventListener('click', () => this.#changeMonthByCount(1) );
 
 
 
@@ -89,28 +93,42 @@ class DatePicker {
     return datePickerHeader;
   }
 
-  changeMonthByCount(number) {
-
+  #changeMonthByCount(number) {
+    this.#CURRENT_DATE = new Date(this.#CURRENT_DATE.getFullYear(), this.#CURRENT_DATE.getMonth() + number, 1);
+    this.#drawMonthTable(this.#CURRENT_DATE);
   }
 
   #drawMonthTable(dateObject) {
     const firstDayOfMonth = new Date(dateObject.getFullYear(), dateObject.getMonth(), 1 );
     const lastDayOfMonth = new Date(dateObject.getFullYear(), dateObject.getMonth(), 0 );
-    console.log(lastDayOfMonth.getDay());
-    debugger
+    this.#DAYS_TABLE.innerHTML = `<div class="weekDayName">s</div>
+                                  <div class="weekDayName">m</div>
+                                  <div class="weekDayName">t</div>
+                                  <div class="weekDayName">w</div>
+                                  <div class="weekDayName">t</div>
+                                  <div class="weekDayName">f</div>
+                                  <div class="weekDayName">s</div>`
     for(let i = 0; i < firstDayOfMonth.getDay(); i++) {
       this.#DAYS_TABLE.appendChild( document.createElement('div') );
     }
-    debugger
 
     for(let i = 0; i < lastDayOfMonth.getDate(); i++) {
       const day = document.createElement('div');
+      day.innerText = (i + 1).toString();
       day.classList.add('currentMonthDay');
       if(i + 1 === this.#CURRENT_DATE.getDate()) { day.classList.add('today'); }
 
+      day.addEventListener('click', () => {
+        this.#DAYS_TABLE.querySelectorAll(':scope .currentMonthDay.selected').forEach(selected => selected.classList.remove('selected'));
+
+        this.selectedDate = new Date(this.#CURRENT_DATE.getFullYear(), this.#CURRENT_DATE.getMonth(), parseInt(day.innerText));
+        day.classList.add('selected');
+        console.log(this.selectedDate);
+      })
       this.#DAYS_TABLE.appendChild(day);
     }
-
+  }
+  #changeMonthAndYearTitle(dateObject) {
 
   }
 }

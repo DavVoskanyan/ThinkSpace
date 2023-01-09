@@ -91,7 +91,7 @@
   width: 50%;
   min-height: 30vh;
 }
-#addNoteModal .modalContent form {
+#addNoteModal .q form {
   width: 50%;
   padding: 20px;
   display: flex;
@@ -163,4 +163,25 @@
   font-size: 18px;
   font-style: italic;
   color: var(--textColor);
+}
+#addNoteModal form {
+  width: 50%;
+  margin-inline: 10px;
+}
+#addNoteModal .datePickerContainer {
+  margin-inline: 10px;
+  border-radius: 8px;
+  background: var(--inputBackground);
+}
+.datePickerContainer {
+  width: 50%;
+  height: calc(50px + 30vh);
+  padding-inline: 10px;
+}
+.daysTable {
+  height: 30vh;
+}
+.datePickerHead {
+  height: 35px;
+  margin-bottom: 15px;
 }

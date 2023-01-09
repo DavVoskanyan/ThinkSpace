@@ -15,4 +15,4 @@ const alerter = new WindowAlerter(document.querySelector('#rightSideBar'));
 alerter.alertDivConstructor("error", "This is a successful alert :)");
 setTimeout(() => alerter.alertDivConstructor("success", "Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry."), 2500)
 
-new DatePicker(document.querySelector('.datePickerContainer'));
+let dp = new DatePicker(document.querySelector('.datePickerContainer'));

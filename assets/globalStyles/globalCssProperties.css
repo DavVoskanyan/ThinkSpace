@@ -14,11 +14,19 @@
   /* dark theme */
   --themeBackground: #2e2e2e;
   --themeMainContentBackground: #3e3e3e;
+
   --textColor: #ffffff;
-  --elementsDividerColor: #3e3e3e;
   --nonStandardTextColor: #454545;
+
+  --elementsDividerColor: #3e3e3e;
+
   --menuIconColor: #c0c0c0;
   --menuIconColorHover: #f3f3f3;
+
   --noteBackground: #2e2e2e;
+
   --inputBackground: #1e1e1e;
+
+  --datePickerHoverBackground: #f3f3f3;
+  --datePickerHoverTextColor: #2e2e2e;
 }

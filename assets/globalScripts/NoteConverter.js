@@ -14,6 +14,9 @@ class NoteConverter {
     const newNote = document.createElement('div');
     newNote.classList.add('note');
     newNote.dataset.id = noteObject.id;
+    newNote.addEventListener('click', () => {
+      newNote.classList.add('fullScreened')
+    })
 
     const title = document.createElement('h2');
     title.innerText = noteObject.name;

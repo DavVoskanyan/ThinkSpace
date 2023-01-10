@@ -1,8 +1,8 @@
 class DatePicker {
 
   static #MONTH_NAMES = ["January","February","March","April","May","June","July",
-    "August","September","October","November","December"]
-
+    "August","September","October","November","December"];
+  #NOW;
   #CURRENT_DATE;
   #DAYS_TABLE;
   #IN_TITLE_MONTH;
@@ -13,7 +13,7 @@ class DatePicker {
 
   constructor(container) {
     this.#CURRENT_DATE = new Date();
-
+    this.#NOW = new Date();
 
     if(container) {
       container.appendChild(this.createDatePicker());
@@ -61,13 +61,14 @@ class DatePicker {
 
     const month = document.createElement('span');
     month.classList.add('onTitleMonth');
-    month.innerText = this.#CURRENT_DATE.toLocaleDateString('default', {month: 'long'});
     this.#IN_TITLE_MONTH = month;
 
     const year = document.createElement('span');
     year.classList.add('onTitleYear');
-    year.innerText = this.#CURRENT_DATE.getFullYear();
     this.#IN_TITLE_YEAR = year;
+
+    this.#changeMonthAndYearTitle(this.#CURRENT_DATE);
+
     dateInfoTitle.appendChild(month);
     dateInfoTitle.appendChild(year);
 
@@ -94,8 +95,9 @@ class DatePicker {
   }
 
   #changeMonthByCount(number) {
-    this.#CURRENT_DATE = new Date(this.#CURRENT_DATE.getFullYear(), this.#CURRENT_DATE.getMonth() + number, 1);
+    this.#CURRENT_DATE = new Date(this.#CURRENT_DATE.getFullYear(), this.#CURRENT_DATE.getMonth() + number, this.#CURRENT_DATE.getDate());
     this.#drawMonthTable(this.#CURRENT_DATE);
+    this.#changeMonthAndYearTitle(this.#CURRENT_DATE);
   }
 
   #drawMonthTable(dateObject) {
@@ -116,7 +118,15 @@ class DatePicker {
       const day = document.createElement('div');
       day.innerText = (i + 1).toString();
       day.classList.add('currentMonthDay');
-      if(i + 1 === this.#CURRENT_DATE.getDate()) { day.classList.add('today'); }
+
+      if(i + 1 === this.#CURRENT_DATE.getDate()
+        && this.#CURRENT_DATE.getMonth() === this.#NOW.getMonth()
+        && this.#CURRENT_DATE.getFullYear() === this.#NOW.getFullYear()) { day.classList.add('today'); }
+
+      if( this.selectedDate
+        && i + 1 === this.selectedDate.getDate()
+        && this.#CURRENT_DATE.getMonth() === this.selectedDate.getMonth()
+        && this.#CURRENT_DATE.getFullYear() === this.selectedDate.getFullYear()) {day.classList.add('selected');}
 
       day.addEventListener('click', () => {
         this.#DAYS_TABLE.querySelectorAll(':scope .currentMonthDay.selected').forEach(selected => selected.classList.remove('selected'));
@@ -129,7 +139,8 @@ class DatePicker {
     }
   }
   #changeMonthAndYearTitle(dateObject) {
-
+    this.#IN_TITLE_MONTH.innerText = `${DatePicker.#MONTH_NAMES[dateObject.getMonth()]}, `;
+    this.#IN_TITLE_YEAR.innerText = dateObject.getFullYear();
   }
 }
 

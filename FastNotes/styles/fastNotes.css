@@ -50,6 +50,7 @@
   grid-template-rows: repeat(3, 1fr);
   grid-gap: 20px;
   overflow-y: auto;
+  position: relative;
 }
 .notesContainer.notesList {
   width: 100%;
@@ -78,7 +79,7 @@
   transition: transform 200ms;
   overflow: hidden;
 }
-.notesGrid > .note:hover {
+.notesGrid > .note:not(.fullScreened):hover {
   transform: scale(1.05, 1.05);
 }
 .notesContainer::-webkit-scrollbar { width: 6px; }
@@ -91,13 +92,7 @@
   width: 50%;
   min-height: 30vh;
 }
-#addNoteModal .q form {
-  width: 50%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
+
 #addNoteModal .modalContent form label {
   width: 100%;
 }
@@ -184,4 +179,14 @@
 .datePickerHead {
   height: 35px;
   margin-bottom: 15px;
+}
+
+.notesGrid > .note.fullScreened {
+  width: 100%;
+  height: calc(100% - 15px);
+  position: absolute;
+
+}
+.notesGrid > .note.fullScreened > .noteText {
+  overflow: visible;
 }

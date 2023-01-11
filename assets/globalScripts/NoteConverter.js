@@ -1,8 +1,10 @@
-
-
-
-
 class NoteConverter {
+  #CLASSES_OF_NOTE_COMPONENT
+  #clickOutOfNoteHandler(openedNote, eventObject) {
+    if(!openedNote.contains(eventObject.target)) {
+      openedNote.classList.remove('fullScreened');
+    }
+  }
   objectFromInputs(form) {
     const noteObject = {};
     noteObject.name = form.querySelector(':scope > input.title').value;
@@ -15,7 +17,8 @@ class NoteConverter {
     newNote.classList.add('note');
     newNote.dataset.id = noteObject.id;
     newNote.addEventListener('click', () => {
-      newNote.classList.add('fullScreened')
+      newNote.classList.add('fullScreened');
+      document.body.addEventListener('click', (e) => this.#clickOutOfNoteHandler(newNote, e) );
     })
 
     const title = document.createElement('h2');

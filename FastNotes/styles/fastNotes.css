@@ -49,15 +49,18 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(3, 1fr);
   grid-gap: 20px;
+  overflow-x: hidden;
   overflow-y: auto;
   position: relative;
 }
 .notesContainer.notesList {
   width: 100%;
-  height: 100%;
+  height: calc(100% - 15px);
   margin-bottom: 15px;
-  padding: 15px 10px 15px 0;
+  padding: 15px 10px 15px 10px;
+  overflow-x: hidden;
   overflow-y: auto;
+  position: relative;
 }
 .notesGrid > .note {
   width: 100%;
@@ -148,7 +151,10 @@
   margin-bottom: 20px;
   padding: 5px 0 0 5px;
 }
-
+.notesList > .note > .noteTitle {
+  color: var(--textColor);
+  padding: 10px 0 5px 10px;
+}
 
 .notesGrid > .note > .noteText {
   display: -webkit-box;
@@ -156,6 +162,15 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-size: 18px;
+  font-style: italic;
+  color: var(--textColor);
+}
+.notesList > .note > .noteText {
+  padding-inline: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   font-style: italic;
   color: var(--textColor);
 }
@@ -181,12 +196,14 @@
   margin-bottom: 15px;
 }
 
-.notesGrid > .note.fullScreened {
+.notesContainer > .note.fullScreened {
   width: 100%;
   height: calc(100% - 15px);
   position: absolute;
-
+  overflow-y: auto;
+  cursor: default;
 }
-.notesGrid > .note.fullScreened > .noteText {
+.notesContainer > .note.fullScreened > .noteText {
+  display: block;
   overflow: visible;
 }

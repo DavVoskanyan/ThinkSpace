@@ -279,7 +279,18 @@ hr {
   color: var(--nonStandardTextColor);
   text-transform: capitalize;
 }
-
 .datePicker .datePickerHead > div { color: var(--textColor) }
 
 
+.openWindow {
+  width: 100%;
+  height: 0;
+  background: #ffffff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: height 300ms;
+}
+.note.fullScreened > .openWindow {
+  height: 100%;
+}

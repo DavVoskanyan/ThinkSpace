@@ -1,39 +1,13 @@
-import NotesWorker from "/assets/globalScripts/NotesWorker.js";
-import NoteConverter from "/assets/globalScripts/NoteConverter.js";
 import ModalController from "/assets/globalScripts/ModalController.js";
 import IndexedDataBaseWorker from "/assets/globalScripts/IndexedDataBaseWorker.js";
 import WindowAlerter from "/assets/globalScripts/WindowAlerter.js";
 import DatePicker from "/assets/globalScripts/DatePicker.js";
+import NotesContainer from "/assets/globalScripts/NotesContainer.js";
 
-//////////////////////////   A D D   N O T E S   F R O M   S T O R A G E   /////////////////////////////
-const notesContainer = document.querySelector('.notesContainer');
-const notesFromStorage = new NotesWorker();
-const noteConverter = new NoteConverter();
-
-notesFromStorage.getAllNotes().forEach(noteObject => {
-  notesContainer.appendChild(noteConverter.objectToElement(noteObject));
-})
-
-
-//////////////////////////   N O T E - L I S T   V I E W   C H A N G E   B U T T O N S   ///////////////////////////////
-const gridButton = document.querySelector('.gridView');
-const barView = document.querySelector('.barView');
-const notesList = document.querySelector('.notesContainer');
-
-gridButton.addEventListener("click", () => {
-    gridButton.classList.add('selected');
-    barView.classList.remove('selected');
-
-    notesList.classList.remove('notesList');
-    notesList.classList.add('notesGrid');
-});
-barView.addEventListener("click", () => {
-    barView.classList.add('selected');
-    gridButton.classList.remove('selected');
-
-    notesList.classList.remove('notesGrid');
-    notesList.classList.add('notesList');
-});
+//////////////////////////   A D D   N O T E S   F R O M   I N D E X E D - D B   /////////////////////////////
+const notesContainer = new NotesContainer(document.querySelector("#mainContent"), true);
+notesContainer.addNewNote('Hello World', "Lorem Ipsum dolor sit amet", new Date());
+notesContainer.addNewNote('Hello World', "Lorem Ipsum dolor sit amet", new Date());
 
 
 
@@ -48,9 +22,7 @@ addNewNoteButton.addEventListener('click', () => newNoteModalController.openModa
 const submitButtonInModal = document.querySelector('.addNewNote');
 
 submitButtonInModal.addEventListener('click', (e) => {
-    e.preventDefault();
-    notesFromStorage.addSingleNote(noteConverter.objectFromInputs(document.querySelector('#addNoteModal form')))
-    newNoteModalController.closeModal();
+
 })
 
 

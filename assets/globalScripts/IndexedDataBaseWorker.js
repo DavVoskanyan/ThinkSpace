@@ -3,11 +3,14 @@
 
 
 class IndexedDataBaseWorker {
-  idbName;
-  idbVersion;
+  #idbName;
+  #idbVersion;
+
+
   constructor(idbName, idbVersion) {
     this.idbName = idbName;
     this.idbVersion = idbVersion;
+
   }
 
   setNewObject(storeName, needToSetObject) {

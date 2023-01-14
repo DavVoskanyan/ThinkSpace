@@ -35,6 +35,7 @@ class Note {
 
   addToOpenElement(title, description, date) {
     this.openModalElement.innerHTML = '';
+    this.openModalElement.classList.remove('open');
 
     const titleElement = document.createElement('h2');
     titleElement.classList.add('openElementTitle');
@@ -46,6 +47,7 @@ class Note {
 
     this.openModalElement.appendChild(titleElement);
     this.openModalElement.appendChild(descriptionElement);
+    this.openModalElement.classList.add('open');
   }
 
 }

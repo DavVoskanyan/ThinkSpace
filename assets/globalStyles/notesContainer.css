@@ -8,13 +8,42 @@
   
 }
 .openNoteContainer {
-  width: 100%;
+  width: 0;
   height: 0;
   background: var(--noteBackground);
   border-radius: 10px;
-  transition: height 350ms;
+  transition: width 250ms, height 250ms;
   z-index: 2;
+  position: fixed;
+  left: calc(37.5vw + 60px);
+  top: calc(50vh + 33px);
+  translate: -50% -50%;
+  overflow: hidden;
 }
 .openNoteContainer.open {
-  height: 50%;
+  width: calc(75vw - 140px);
+  height: calc(100vh - 85px);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.openNoteContainer > * {
+  color: var(--textColor);
+}
+
+
+.closeButton {
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: var(--menuIconColor);
+  cursor: pointer;
+  transition: color 120ms;
+}
+.closeButton:hover {
+  color: var(--menuIconColorHover);
 }

@@ -12,7 +12,7 @@ class Note {
     this.description = description;
     this.creationDate = new Date();
     this.selectedDate = selectedDate;
-    this.openModalElement = openModalElement;
+    this.openModalElement = openModalElement.querySelector(':scope .noteInfoContainer');
 
 
     this.domElement = document.createElement('div');
@@ -47,7 +47,7 @@ class Note {
 
     this.openModalElement.appendChild(titleElement);
     this.openModalElement.appendChild(descriptionElement);
-    this.openModalElement.classList.add('open');
+    this.openModalElement.parentElement.classList.add('open');
   }
 
 }

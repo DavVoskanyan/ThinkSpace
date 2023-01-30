@@ -4,6 +4,7 @@ class NotesView {
   #isGrid;
   #openNoteContainer;
   #notesContainer;
+  #editAndSubmitButton;
 
   constructor(parentElement, isGrid) {
 
@@ -65,11 +66,35 @@ class NotesView {
                                          0-45.3L205.3 256 310.6 150.6z" 
                                       fill="currentColor"/>
                              </svg>`;
+
+    const editAndSubmitButton = document.createElement('button');
+    this.#editAndSubmitButton = editAndSubmitButton;
+    editAndSubmitButton.classList.add("editAndSubmitButton", 'editState');
+    editAndSubmitButton.addEventListener('click', () => this.#inNoteContainerEditOnClick());
+    editAndSubmitButton.innerText = 'Edit';
+
     openNoteContainer.appendChild(closeButton);
     openNoteContainer.appendChild(containerForNoteInfo);
+    openNoteContainer.appendChild(editAndSubmitButton);
 
     this.#openNoteContainer = openNoteContainer;
     return openNoteContainer;
+  }
+
+
+  #inNoteContainerEditOnClick() {
+    this.#editAndSubmitButton.classList.remove('editState');
+    this.#editAndSubmitButton.classList.add('submitState');
+    this.#editAndSubmitButton.removeEventListener('click', () => this.#inNoteContainerEditOnClick());
+    this.#editAndSubmitButton.addEventListener('click', () => this.#inNoteContainerSubmitOnClick());
+    this.#editAndSubmitButton.innerText = 'Submit';
+  }
+  #inNoteContainerSubmitOnClick() {
+    this.#editAndSubmitButton.classList.remove('submitState');
+    this.#editAndSubmitButton.classList.add('editState');
+    this.#editAndSubmitButton.removeEventListener('click', () => this.#inNoteContainerSubmitOnClick());
+    this.#editAndSubmitButton.addEventListener('click', () => this.#inNoteContainerEditOnClick());
+    this.#editAndSubmitButton.innerText = 'Edit';
   }
 
   #createNotesContainer() {

@@ -3,12 +3,16 @@ import Note from "/assets/globalScripts/Note.js";
 class NotesView {
   #isGrid;
   #openNoteContainer;
+  #noteInfoContainer;
+  #noteEditingContainer;
   #notesContainer;
   #editAndSubmitButton;
+  #buttonStatus;
 
   constructor(parentElement, isGrid) {
 
     this.#isGrid = isGrid ?? true;
+    this.#buttonStatus = 'edit';
 
     const elementContainer = document.createElement("div");
     elementContainer.classList.add('notesView');
@@ -54,18 +58,16 @@ class NotesView {
 
     const containerForNoteInfo = document.createElement('div');
     containerForNoteInfo.classList.add('noteInfoContainer');
+    this.#noteInfoContainer = containerForNoteInfo;
+
+    const containerForNoteEdition = document.createElement('div');
+    containerForNoteEdition.classList.add('noteEditionContainer');
+    this.#noteEditingContainer = containerForNoteEdition;
 
     const closeButton = document.createElement('button');
     closeButton.classList.add('closeButton');
-    closeButton.addEventListener('click', () => openNoteContainer.classList.remove('open'));
-    closeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                                <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3
-                                         0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0
-                                         45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5
-                                         45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8
-                                         0-45.3L205.3 256 310.6 150.6z" 
-                                      fill="currentColor"/>
-                             </svg>`;
+    closeButton.addEventListener('click', () => this.#closeNoteModalContainer());
+    closeButton.innerText = 'Close';
 
     const editAndSubmitButton = document.createElement('button');
     this.#editAndSubmitButton = editAndSubmitButton;
@@ -75,26 +77,58 @@ class NotesView {
 
     openNoteContainer.appendChild(closeButton);
     openNoteContainer.appendChild(containerForNoteInfo);
+    openNoteContainer.appendChild(containerForNoteEdition);
     openNoteContainer.appendChild(editAndSubmitButton);
 
     this.#openNoteContainer = openNoteContainer;
     return openNoteContainer;
   }
+  #openNoteModalContainer() {
+    this.#openNoteContainer.classList.add('open');
+  }
+  #closeNoteModalContainer() {
+    this.#openNoteContainer.classList.remove('open');
+    this.#changeButtonState('edit');
+  }
 
 
   #inNoteContainerEditOnClick() {
-    this.#editAndSubmitButton.classList.remove('editState');
-    this.#editAndSubmitButton.classList.add('submitState');
-    this.#editAndSubmitButton.removeEventListener('click', () => this.#inNoteContainerEditOnClick());
-    this.#editAndSubmitButton.addEventListener('click', () => this.#inNoteContainerSubmitOnClick());
-    this.#editAndSubmitButton.innerText = 'Submit';
+    if(this.#buttonStatus === 'submit') {
+      this.#changeButtonState('edit');
+
+      this.#changeContainerState('submit');
+    }
+    else {
+      this.#changeButtonState('submit');
+
+      this.#changeContainerState('edit');
+    }
   }
-  #inNoteContainerSubmitOnClick() {
-    this.#editAndSubmitButton.classList.remove('submitState');
-    this.#editAndSubmitButton.classList.add('editState');
-    this.#editAndSubmitButton.removeEventListener('click', () => this.#inNoteContainerSubmitOnClick());
-    this.#editAndSubmitButton.addEventListener('click', () => this.#inNoteContainerEditOnClick());
-    this.#editAndSubmitButton.innerText = 'Edit';
+
+  #changeButtonState(status) {
+    if(status.trim().toLowerCase() === 'edit') {
+      this.#editAndSubmitButton.classList.remove('submitState');
+      this.#editAndSubmitButton.classList.add('editState');
+      this.#editAndSubmitButton.innerText = 'Edit';
+      this.#buttonStatus = 'edit';
+    }
+    else {
+      this.#editAndSubmitButton.classList.remove('editState');
+      this.#editAndSubmitButton.classList.add('submitState');
+      this.#editAndSubmitButton.innerText = 'Submit';
+      this.#buttonStatus = 'submit';
+    }
+  }
+
+  #changeContainerState(status) {
+    if(status.trim().toLowerCase() === 'edit') {
+      this.#noteInfoContainer.classList.add('hidden');
+      this.#noteEditingContainer.classList.remove('hidden');
+    }
+    else {
+      this.#noteEditingContainer.classList.add('hidden');
+      this.#noteInfoContainer.classList.remove('hidden');
+    }
   }
 
   #createNotesContainer() {

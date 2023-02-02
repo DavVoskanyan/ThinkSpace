@@ -30,6 +30,7 @@
   --datePickerHoverBackground: #f3f3f3;
   --datePickerHoverTextColor: #2e2e2e;
 
+  --cancelButtonBackgroundColor: #f12929;
   --editButtonBackgroundColor: #ffb100;
   --submitButtonBackgroundColor: #40b040;
 }

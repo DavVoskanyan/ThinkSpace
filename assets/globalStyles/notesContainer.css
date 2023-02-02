@@ -35,23 +35,50 @@
 
 
 .closeButton {
-  width: 20px;
-  height: 20px;
-  background: transparent;
-  border: none;
+  min-width: 100px;
+  padding: 5px 10px;
+  background: var(--noteBackground);
+  border: 2px solid var(--cancelButtonBackgroundColor);
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
   position: absolute;
-  right: 15px;
-  top: 10px;
-  color: var(--menuIconColor);
+  left: 15px;
+  bottom: 15px;
   cursor: pointer;
-  transition: color 120ms;
+  transition: border-color 120ms, background 120ms, font-style 120ms;
 }
 .closeButton:hover {
-  color: var(--menuIconColorHover);
+  font-style: italic;
+  background: var(--cancelButtonBackgroundColor);
 }
 .openElementTitle {
   font-size: 35px;
   margin-bottom: 20px
+}
+.editNoteTitleInput {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  outline: none;
+  background: var(--inputBackground);
+  border: none;
+  font-size: 35px;
+  color: var(--textColor);
+}
+.editNoteTextInput {
+  width: 100%;
+  height: calc(100vh - 240px);
+  padding: 5px 10px;
+  border-radius: 8px;
+  outline: none;
+  background: var(--inputBackground);
+  border: none;
+  color: var(--textColor);
+  font-size: 16px;
+  resize: none;
 }
 .editAndSubmitButton {
   min-width: 100px;
@@ -72,3 +99,10 @@
 .editAndSubmitButton.submitState { border-color: var(--submitButtonBackgroundColor); }
 .editAndSubmitButton.editState:hover { background: var(--editButtonBackgroundColor); font-style: italic;}
 .editAndSubmitButton.submitState:hover { background: var(--submitButtonBackgroundColor); font-style: italic; }
+
+.noteInfoContainer.hidden,
+.noteEditionContainer.hidden {
+  height: 0;
+  overflow-y: hidden;
+}
+

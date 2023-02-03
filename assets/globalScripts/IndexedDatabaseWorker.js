@@ -1,16 +1,27 @@
+// noteObjectModel = {
+//   id: 12,
+//   title: "title",
+//   text: 'text',
+//   date: new Date()
+// }
 
-// const openRequest = indexedDB.open('ThinkSpace', 2);
 
 
-class IndexedDataBaseWorker {
+class IndexedDatabaseWorker {
   #idbName;
   #idbVersion;
+  #ALL_STORE_NAMES;
+  #dbStoresAsMap;
 
 
   constructor(idbName, idbVersion) {
     this.idbName = idbName;
     this.idbVersion = idbVersion;
 
+    this.#ALL_STORE_NAMES = ['notesStore'];
+
+    this.#dbStoresAsMap = new Map();
+    this.#updateStoreInfoInMap('notesStore');
   }
 
   setNewObject(storeName, needToSetObject) {
@@ -32,12 +43,13 @@ class IndexedDataBaseWorker {
 
       const currentObjectStore = writeTransaction.objectStore(storeName);
       const writeRequest = currentObjectStore.add(needToSetObject);
+      this.#updateStoreInfoInMap(storeName);
     }
   }
 
-  getAllObjects(storeName) {
+  #updateStoreInfoInMap(storeName) {
     const openIdbRequest = indexedDB.open(this.idbName, this.idbVersion);
-    let objectsArray = [];
+    const objectsArray = [];
 
     openIdbRequest.onerror = () => {
       console.error('Can not connect to IndexedDB.');
@@ -46,7 +58,7 @@ class IndexedDataBaseWorker {
       console.log('Updating IndexedDB');
       openIdbRequest.result.createObjectStore(storeName, { keyPath: 'id', autoIncrement: true });
     }
-    openIdbRequest.onsuccess = () => {
+    openIdbRequest.onsuccess = async () => {
       console.log('Successfully connected to IndexedDB');
 
       const writeTransaction = openIdbRequest.result.transaction(storeName, 'readonly');
@@ -60,13 +72,17 @@ class IndexedDataBaseWorker {
         readRequest.result.forEach(object => {
           objectsArray.push(object);
         })
+        this.#dbStoresAsMap[storeName] = objectsArray;
       }
     }
-
-    return objectsArray;
   }
+  async getAllObjectsFromStore(storeName) {
+    return await this.#dbStoresAsMap[storeName];
+  }
+
+
 
 
 }
 
-export default IndexedDataBaseWorker;
+export default (new IndexedDatabaseWorker('ThinkSpace', 1));

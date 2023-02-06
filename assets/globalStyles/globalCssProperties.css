@@ -34,3 +34,83 @@
   --editButtonBackgroundColor: #ffb100;
   --submitButtonBackgroundColor: #40b040;
 }
+
+
+
+
+#addNoteModal > .modalWindow {
+  width: 50%;
+  min-height: 30vh;
+}
+
+#addNoteModal .modalContent form label {
+  width: 100%;
+}
+#addNoteModal .modalContent form input {
+  width: 100%;
+  height: 35px;
+  margin-bottom: 15px;
+  padding-inline: 15px;
+  border: none;
+  border-radius: 8px;
+  background: var(--inputBackground);
+  outline: none;
+  color: var(--textColor);
+}
+#addNoteModal .modalContent form textarea {
+  width: 100%;
+  height: 30vh;
+  padding: 15px;
+  background: var(--inputBackground);
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  resize: none;
+  color: var(--textColor);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+#addNoteModal .modalContent form textarea::-webkit-scrollbar { width: 6px; }
+#addNoteModal .modalContent form textarea::-webkit-scrollbar-thumb {
+  background: var(--menuIconColor);
+  border-radius: 3px;
+}
+#addNoteModal .modalContent form button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--inputBackground);
+  color: var(--textColor);
+  font-size: 15px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+  transition: background 120ms, color 120ms;
+}
+#addNoteModal .modalContent form button:hover {
+  background: var(--textColor);
+  color: var(--inputBackground);
+}
+
+#addNoteModal form {
+  width: 50%;
+  margin-inline: 10px;
+}
+#addNoteModal .datePickerContainer {
+  margin-inline: 10px;
+  border-radius: 8px;
+  background: var(--inputBackground);
+}
+.datePickerContainer {
+  width: 50%;
+  height: calc(50px + 30vh);
+  padding-inline: 10px;
+}
+.daysTable {
+  height: 30vh;
+}
+.datePickerHead {
+  height: 35px;
+  margin-bottom: 15px;
+}

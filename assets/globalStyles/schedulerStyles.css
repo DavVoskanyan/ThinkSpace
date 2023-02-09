@@ -1,0 +1,72 @@
+.scheduler {
+    width: 100%;
+    height: 100%;
+}
+.controlLine {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+.dateLine {
+    width: 155px;
+    margin-right: 20px;
+    font-size: 20px;
+    color: var(--textColor);
+}
+.previousMonthButton,
+.nextMonthButton {
+    width: 25px;
+    height: 25px;
+    margin-inline: 3px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    border: none;
+}
+.daysLine {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.dayCell {
+    width: 100%;
+    color: var(--textColor);
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+}
+.calendar {
+    height: 100%;
+}
+.calendarsContainer {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+.calendarList {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    place-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: left 500ms;
+}
+.calendarList.previousShownMonth { left: -100%; }
+.calendarList.currentShowingMonth { left: 0; }
+.calendarList.nextBeShownMonth { left: 100%; }
+
+.currentShownMonthDay,
+.notThisMonthDay {
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    border: 1px solid #f3f3f366;
+    color: var(--textColor);
+}

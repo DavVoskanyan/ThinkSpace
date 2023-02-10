@@ -1,4 +1,9 @@
 class Scheduler {
+    #ALL_NOTES_ARRAY = [ {date: new Date(2023, 2, 10)},
+                         {date: new Date(2023, 1, 10)},
+                         {date: new Date(2023, 2, 12)},
+                         {date: new Date(2023, 2, 10)} ];
+
     #PARENT_NODE;
     #CURRENT_DATE_CONTAINER;
     #DAYS_ARRAY = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
@@ -21,8 +26,8 @@ class Scheduler {
         const scheduler = document.createElement('div');
         scheduler.classList.add('scheduler');
 
-        scheduler.appendChild( this.#createControlLine() );
         scheduler.appendChild( this.#createCalendars() );
+        scheduler.appendChild( this.#createControlLine() );
 
         this.#PARENT_NODE.appendChild(scheduler);
     }
@@ -33,11 +38,12 @@ class Scheduler {
 
         const dateLine = document.createElement('span');
         dateLine.classList.add('dateLine');
-        dateLine.innerText = `${this.#MONTHS_ARRAY[this.#currentShowingDate.getMonth()]}, ${this.#currentShowingDate.getFullYear()}`;
         this.#CURRENT_DATE_CONTAINER = dateLine;
+        this.#setValueOfDateLine();
 
         const previousMonthButton = document.createElement('button');
         previousMonthButton.classList.add('previousMonthButton');
+        previousMonthButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256 105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" fill="currentColor"/></svg>`;
         previousMonthButton.addEventListener('click', () => {
             this.#currentShowingDate = new Date(
                 this.#currentShowingDate.getFullYear(),
@@ -58,12 +64,13 @@ class Scheduler {
                 'previousShownMonth'
             );
             this.#CALENDARS_CONTAINER.insertBefore(this.#previousMonth, this.#currentMonth);
-            this.#CURRENT_DATE_CONTAINER.innerText = `${this.#MONTHS_ARRAY[this.#currentShowingDate.getMonth()]}, ${this.#currentShowingDate.getFullYear()}`;
+            this.#setValueOfDateLine();
         })
 
 
         const nextMonthButton = document.createElement('button');
         nextMonthButton.classList.add('nextMonthButton');
+        nextMonthButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256 105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" fill="currentColor"/></svg>`;
         nextMonthButton.addEventListener('click', () => {
             this.#currentShowingDate = new Date(
                 this.#currentShowingDate.getFullYear(),
@@ -85,7 +92,7 @@ class Scheduler {
                 'nextBeShownMonth'
             );
             this.#CALENDARS_CONTAINER.appendChild(this.#nextMonth);
-            this.#CURRENT_DATE_CONTAINER.innerText = `${this.#MONTHS_ARRAY[this.#currentShowingDate.getMonth()]}, ${this.#currentShowingDate.getFullYear()}`;
+            this.#setValueOfDateLine();
         })
 
         controlLine.appendChild(dateLine);
@@ -144,6 +151,7 @@ class Scheduler {
         for(let i = 0; i < new Date(dateObject.getFullYear(), dateObject.getMonth(), 0).getDay(); i++) {
             const notThisMonthDay = document.createElement('div');
             notThisMonthDay.classList.add('notThisMonthDay');
+            notThisMonthDay.innerText = '✕';
 
             calendarPage.appendChild(notThisMonthDay);
         }
@@ -152,16 +160,41 @@ class Scheduler {
             day.classList.add('currentShownMonthDay');
             day.innerText = (i + 1).toString();
 
+            const inDayNotesButton = this.#createDayButton( new Date( dateObject.getFullYear(), dateObject.getMonth(), i + 1 ) );
+            if(inDayNotesButton) { day.append(inDayNotesButton); }
+
             calendarPage.appendChild(day);
         }
         for(let i = 0; i < calendarPage.children.length % 7; i++) {
             const notThisMonthDay = document.createElement('div');
             notThisMonthDay.classList.add('notThisMonthDay');
+            notThisMonthDay.innerText = '✕';
 
             calendarPage.appendChild(notThisMonthDay);
         }
 
         return calendarPage;
+    }
+    #setValueOfDateLine() {
+        this.#CURRENT_DATE_CONTAINER.innerHTML = `  <span>${this.#MONTHS_ARRAY[this.#currentShowingDate.getMonth()]}</span>
+                                                    <span>${this.#currentShowingDate.getFullYear()}</span>`;
+    }
+
+    #createDayButton(dateObject) {
+        const inDayButton = document.createElement('button');
+        inDayButton.classList.add('inDayButton');
+
+        const notesForDay = this.#ALL_NOTES_ARRAY.filter(note => {
+            return note['date'].getFullYear() === dateObject.getFullYear()
+                && note['date'].getMonth() === dateObject.getMonth()
+                && note['date'].getDate() === dateObject.getDate();
+        }).length;
+
+        inDayButton.innerText = notesForDay <= 5 ? notesForDay : '5+';
+
+        inDayButton.addEventListener('click', () => {})
+
+        return notesForDay ? inDayButton : null;
     }
 }
 

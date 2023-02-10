@@ -4,28 +4,58 @@
 }
 .controlLine {
     width: 100%;
-    margin-bottom: 20px;
+    margin-top: 20px;
     display: flex;
     align-items: center;
 }
 .dateLine {
     width: 155px;
-    margin-right: 20px;
+    margin-right: auto;
+    padding: 5px;
+    background: var(--noteBackground);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
     font-size: 20px;
+    font-weight: 700;
     color: var(--textColor);
+    text-align: center;
+    text-transform: uppercase;
 }
 .previousMonthButton,
 .nextMonthButton {
-    width: 25px;
-    height: 25px;
+    width: 70px;
+    height: 56px;
     margin-inline: 3px;
-    border-radius: 50%;
-    background: #ffffff;
+    border-radius: 5px;
+    background: var(--noteBackground);
+    display: grid;
+    place-items: center;
     cursor: pointer;
     border: none;
+    opacity: 0.8;
+    transition: scale 120ms, opacity 120ms;
+}
+.previousMonthButton:hover,
+.nextMonthButton:hover {
+    scale: 0.9 0.9;
+    opacity: 1;
+}
+.previousMonthButton { rotate: 180deg; }
+.previousMonthButton > svg,
+.nextMonthButton > svg {
+    height: 25px;
+    color: var(--menuIconColor);
+}
+.previousMonthButton:hover > svg,
+.nextMonthButton:hover > svg {
+    color: var(--menuIconColorHover);
 }
 .daysLine {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    padding: 10px 0;
+    border-radius: 5px;
+    background: var(--noteBackground);
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -38,11 +68,11 @@
     text-align: center;
 }
 .calendar {
-    height: 100%;
+    height: calc(100% - 66px);
 }
 .calendarsContainer {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 38px);
     overflow: hidden;
     position: relative;
 }
@@ -67,6 +97,36 @@
     width: 100%;
     height: 100%;
     padding: 5px;
-    border: 1px solid #f3f3f366;
+    background: var(--noteBackground);
+    border: 1px solid var(--themeMainContentBackground);
     color: var(--textColor);
+    font-weight: 700;
+    font-style: italic;
+    border-radius: 7px;
+    position: relative;
+}
+.notThisMonthDay {
+    opacity: 0.7;
+    color: var(--menuIconColor);
+}
+.inDayButton {
+    width: 40%;
+    aspect-ratio: 3 / 2;
+    border: 2px solid var(--menuIconColor);
+    border-radius: 5px;
+    background: var(--noteBackground);
+    color: var(--textColor);
+    font-size: 20px;
+    font-weight: 400;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    cursor: pointer;
+    transition: backgound 300ms, border 300ms, color 300ms;
+}
+.inDayButton:hover {
+    background: var(--menuIconColorHover);
+    color: var(--noteBackground);
+    border: 2px solid var(--menuIconColorHover);
 }

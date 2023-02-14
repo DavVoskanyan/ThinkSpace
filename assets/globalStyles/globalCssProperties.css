@@ -83,8 +83,8 @@
   color: var(--textColor);
   font-size: 15px;
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  bottom: 10px;
+  right: 10px;
   cursor: pointer;
   transition: background 120ms, color 120ms;
 }

@@ -91,6 +91,7 @@
 #addNoteModal .modalContent form button:hover {
   background: var(--textColor);
   color: var(--inputBackground);
+  font-style: italic;
 }
 
 #addNoteModal form {

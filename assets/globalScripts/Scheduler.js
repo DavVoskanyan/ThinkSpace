@@ -1,3 +1,5 @@
+import ModalController from "/assets/globalScripts/ModalController.js";
+
 class Scheduler {
     #ALL_NOTES_ARRAY = [ {date: new Date(2023, 2, 10)},
                          {date: new Date(2023, 1, 10)},
@@ -19,9 +21,13 @@ class Scheduler {
     #notesListElementInContainer;
     #singleNoteContainer;
 
+    #addNoteModalContainer;
+
     constructor(parentNode) {
         this.#PARENT_NODE = parentNode;
         this.#currentShowingDate = new Date();
+
+        this.#addNoteModalContainer = new ModalController('addNoteModal')
 
         this.#createSchedulerContainer();
         this.#createInDayNotes();
@@ -201,7 +207,15 @@ class Scheduler {
             this.#openInDayNotes(dateObject);
         })
 
-        return notesForDay ? inDayButton : null;
+        const inDayAddNoteButton = document.createElement('button');
+        inDayAddNoteButton.classList.add('inDayAddNoteButton');
+
+        inDayAddNoteButton.innerText = '+';
+        inDayAddNoteButton.addEventListener('click', () => {
+            this.#addNoteModalContainer.openModal();
+        })
+
+        return notesForDay ? inDayButton : inDayAddNoteButton;
     }
 
     #createInDayNotes() {
@@ -210,6 +224,7 @@ class Scheduler {
 
         const closeButton = document.createElement('button');
         closeButton.classList.add('closeButton');
+        closeButton.innerText = 'Cancel';
         closeButton.addEventListener('click',
             () => this.#onDayNotesContainer.classList.remove('isOpen'));
 
@@ -218,7 +233,7 @@ class Scheduler {
         this.#notesListElementInContainer = notesList;
 
         const singleNoteContainer = document.createElement('div');
-        singleNoteContainer.classList.add('singleNOteContainer');
+        singleNoteContainer.classList.add('singleNoteContainer');
         this.#singleNoteContainer = singleNoteContainer;
 
         onDayNotesContainer.append(singleNoteContainer, notesList, closeButton);
@@ -232,22 +247,20 @@ class Scheduler {
                 && note.date.getMonth() === dateObject.getMonth()
                 && note.date.getDate() === dateObject.getDate()
         })
-
         selectedDateNotes.forEach(note => {
             const noteDomObject = document.createElement('div');
             noteDomObject.classList.add('noteObjectInList');
             noteDomObject.addEventListener('click', () => {
                 this.#singleNoteContainer.innerHTML = ` <h2 class="noteTitle">${note.title}</h2>
-                                                        <p class="noteText">${note.text}</p>`;
+                                                    <p class="noteText">${note.text}</p>`;
                 this.#singleNoteContainer.classList.add('noteIsSelected');
             })
             noteDomObject.innerHTML = ` <h2 class="noteTitle">${note.title}</h2>
-                                        <p class="noteText">${note.text}</p>`;
+                                    <p class="noteText">${note.text}</p>`;
             this.#notesListElementInContainer.appendChild(noteDomObject);
         })
         this.#onDayNotesContainer.classList.add('isOpen');
     }
-
 }
 
 export default Scheduler;

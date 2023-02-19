@@ -166,7 +166,11 @@
     font-size: 20px;
     left: 0;
     top: 0;
+    opacity: 0;
     cursor: pointer;
-    transition: color 120ms;
+    transition: color 120ms, opacity 120ms;
 }
-.inDayAddNoteButton:hover { color: var(--menuIconColorHover); }
+.inDayAddNoteButton:hover {
+    color: var(--menuIconColorHover);
+    opacity: 1;
+}

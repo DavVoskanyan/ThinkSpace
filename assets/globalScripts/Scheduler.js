@@ -1,4 +1,5 @@
 import ModalController from "/assets/globalScripts/ModalController.js";
+import DatePicker from "/assets/globalScripts/DatePicker.js";
 
 class Scheduler {
     #ALL_NOTES_ARRAY = [ {date: new Date(2023, 2, 10)},
@@ -22,12 +23,14 @@ class Scheduler {
     #singleNoteContainer;
 
     #addNoteModalContainer;
+    #datePickerController;
 
     constructor(parentNode) {
         this.#PARENT_NODE = parentNode;
         this.#currentShowingDate = new Date();
 
-        this.#addNoteModalContainer = new ModalController('addNoteModal')
+        this.#datePickerController = new DatePicker(document.querySelector('.datePickerContainer'));
+        this.#addNoteModalContainer = new ModalController('addNoteModal');
 
         this.#createSchedulerContainer();
         this.#createInDayNotes();
@@ -211,7 +214,14 @@ class Scheduler {
         inDayAddNoteButton.classList.add('inDayAddNoteButton');
 
         inDayAddNoteButton.innerText = '+';
-        inDayAddNoteButton.addEventListener('click', () => {
+        inDayAddNoteButton.addEventListener('click', (e) => {
+            this.#datePickerController.selectDate(
+                new Date(
+                    this.#currentShowingDate.getFullYear(),
+                    this.#currentShowingDate.getMonth(),
+                    parseInt(e.currentTarget.parentNode.childNodes[0].nodeValue)
+                )
+            );
             this.#addNoteModalContainer.openModal();
         })
 

@@ -101,8 +101,9 @@ class DatePicker {
   }
 
   #drawMonthTable(dateObject) {
-    const firstDayOfMonth = new Date(dateObject.getFullYear(), dateObject.getMonth(), 1 );
-    const lastDayOfMonth = new Date(dateObject.getFullYear(), dateObject.getMonth(), 0 );
+    this.#DAYS_TABLE.innerHTML = '';
+    const firstDayOfMonth = new Date(dateObject.getFullYear(), dateObject.getMonth() + 1, 1 );
+    const lastDayOfMonth = new Date(dateObject.getFullYear(), dateObject.getMonth() + 1, 0 );
     this.#DAYS_TABLE.innerHTML = `<div class="weekDayName">s</div>
                                   <div class="weekDayName">m</div>
                                   <div class="weekDayName">t</div>
@@ -141,6 +142,18 @@ class DatePicker {
   #changeMonthAndYearTitle(dateObject) {
     this.#IN_TITLE_MONTH.innerText = `${DatePicker.#MONTH_NAMES[dateObject.getMonth()]}, `;
     this.#IN_TITLE_YEAR.innerText = dateObject.getFullYear();
+  }
+
+  selectDate(dateObject) {
+    this.#changeMonthAndYearTitle(dateObject);
+    this.selectedDate = dateObject;
+    this.#CURRENT_DATE = dateObject;
+    this.#drawMonthTable(dateObject);
+    this.#DAYS_TABLE.querySelectorAll(':scope .currentMonthDay.selected').forEach(selected => selected.classList.remove('selected'));
+
+    this.#DAYS_TABLE.querySelectorAll(':scope .currentMonthDay').forEach(day => {
+      if(parseInt(day.innerText) === dateObject.getDate()) { day.classList.add('selected') }
+    })
   }
 }
 

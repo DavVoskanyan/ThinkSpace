@@ -49,6 +49,7 @@ body {
     position: relative;
     color: var(--menuIconColor);
     transition: color 200ms, margin-left 200ms;
+    cursor: pointer;
 }
 .menuIcon > svg {
     width: 25px;
@@ -106,7 +107,7 @@ body {
     height: 35px;
 }
 .addNewThought {
-    margin: 0 20px 0 auto;
+    margin: 0 0 0 auto;
     padding: 10px;
     border: none;
     border-radius: 20px;

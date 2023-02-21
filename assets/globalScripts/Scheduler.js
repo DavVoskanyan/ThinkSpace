@@ -252,6 +252,7 @@ class Scheduler {
         this.#PARENT_NODE.appendChild(onDayNotesContainer);
     }
     #openInDayNotes(dateObject) {
+        this.#singleNoteContainer.innerHTML = '';
         const selectedDateNotes = this.#ALL_NOTES_ARRAY.filter(note => {
             return note.date.getFullYear() === dateObject.getFullYear()
                 && note.date.getMonth() === dateObject.getMonth()

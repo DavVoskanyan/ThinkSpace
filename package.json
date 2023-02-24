@@ -1,0 +1,19 @@
+{
+  "name": "think_space",
+  "version": "1.0.0",
+  "description": " ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/DavVoskanyan/ThinkSpace.git"
+  },
+  "author": "David Voskanyan <voskanyandavid001001@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DavVoskanyan/ThinkSpace/issues"
+  },
+  "homepage": "https://github.com/DavVoskanyan/ThinkSpace#readme"
+}

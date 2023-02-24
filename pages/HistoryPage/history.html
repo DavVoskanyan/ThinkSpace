@@ -2,17 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Schedule</title>
+    <title>History</title>
 
     <!--  styles  -->
     <link rel="stylesheet" href="/assets/globalStyles/datePickerStyles.css">
     <link rel="stylesheet" href="/assets/globalStyles/globalCssProperties.css">
     <link rel="stylesheet" href="/assets/globalStyles/alertWindowStyles.css">
     <link rel="stylesheet" href="/assets/globalStyles/templateStyles.css">
-    <link rel="stylesheet" href="/assets/globalStyles/notesContainer.css">
-    <link rel="stylesheet" href="/assets/globalStyles/schedulerStyles.css">
 
-    <link rel="stylesheet" href="styles/schedule.css">
+    <link rel="stylesheet" href="styles/history.css">
 
 
     <!--  scripts  -->
@@ -20,11 +18,8 @@
     <script type="module" async src="/assets/globalScripts/ModalController.js"></script>
     <script type="module" async src="/assets/globalScripts/WindowAlerter.js"></script>
     <script type="module" async src="/assets/globalScripts/DatePicker.js"></script>
-    <script type="module" async src="/assets/globalScripts/NotesView.js"></script>
-    <script type="module" async src="/assets/globalScripts/Note.js"></script>
-    <script type="module" async src="/assets/globalScripts/Scheduler.js"></script>
 
-    <script type="module" defer src="scripts/schedule.js"></script>
+    <script type="module" defer src="scripts/history.js"></script>
 
 
     <!-- script for development -->
@@ -113,7 +108,7 @@
     </a>
 </div>
 <div id="mainContent">
-    <div id="schedulerMainContainer"></div>
+
 </div>
 <div id="rightSideBar">
     <div class="nameAndAvatar">
@@ -155,30 +150,5 @@
         </div>
     </div>
 </div>
-
-
-
-
-<div id="addNoteModal" class="modal">
-    <div class="modalWindow">
-        <div class="modalHeader">Add New Note</div>
-        <div class="modalContent">
-            <form>
-                <label>
-                    <input type="text" class="title" placeholder="Title...">
-                </label>
-                <label>
-                    <textarea class='description' cols="30" rows="10" placeholder="Text..."></textarea>
-                </label>
-                <button class="addNewNote"> Add </button>
-            </form>
-            <div class="datePickerContainer">
-            </div>
-        </div>
-        <div class="modalFooter"></div>
-    </div>
-</div>
-
-
 </body>
 </html>

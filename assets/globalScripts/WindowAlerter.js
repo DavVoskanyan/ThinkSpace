@@ -1,3 +1,5 @@
+import '/assets/globalStyles/alertWindowStyles.css';
+
 class WindowAlerter {
   static NOTIFICATIONS_CONTAINER;
   #ERROR_SVG_FILE_NAME = 'xMark';

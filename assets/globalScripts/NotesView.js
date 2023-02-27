@@ -1,3 +1,5 @@
+import '/assets/globalStyles/notesContainer.css';
+
 import Note from "/assets/globalScripts/Note.js";
 
 class NotesView {

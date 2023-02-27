@@ -1,3 +1,5 @@
+import '/assets/globalStyles/datePickerStyles.css';
+
 class DatePicker {
 
   static #MONTH_NAMES = ["January","February","March","April","May","June","July",

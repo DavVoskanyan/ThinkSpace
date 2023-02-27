@@ -1,3 +1,5 @@
+import '/assets/globalStyles/schedulerStyles.css';
+
 import ModalController from "/assets/globalScripts/ModalController.js";
 import DatePicker from "/assets/globalScripts/DatePicker.js";
 

@@ -1,3 +1,5 @@
+import '../styles/schedule.css';
+
 import ModalController from "/assets/globalScripts/ModalController.js";
 import Scheduler from "/assets/globalScripts/Scheduler.js";
 

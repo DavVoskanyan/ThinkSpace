@@ -11,6 +11,9 @@ import NotesView from "/assets/globalScripts/NotesView.js";
 const notesContainer = new NotesView(document.querySelector("#mainContent"), true);
 
 
+/////////////////////////   I N I T I A L I Z I N G   W I N D O W   A L E R T E R   ////////////////////////
+const windowAlerter = new WindowAlerter(document.querySelector('#rightSideBar'));
+windowAlerter.alertDivConstructor('success', "It finally works!")
 
 
 /////////////////////////   A D D   N E W   N O T E   M O D A L   //////////////////////////

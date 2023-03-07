@@ -1,7 +1,8 @@
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
+    mode: 'development',
     entry: {
         schedulePage: '/pages/SchedulePage/scripts/schedule.js',
         allNotesPage: '/pages/AllNotes/scripts/allNotes.js',
@@ -14,17 +15,18 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/i,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                ],
+                test: /\.css$/,
+                use: [ 'style-loader', 'css-loader' ],
+                exclude: /node_modules/,
             }
         ]
     },
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: 'bundle.css',
-        }),
-    ],
+    devServer: {
+        static: {
+            directory: path.resolve(__dirname, '')
+        },
+        hot: true,
+        port: 8080,
+    },
+    watch: true
 };

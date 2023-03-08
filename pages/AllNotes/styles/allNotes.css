@@ -82,9 +82,17 @@
   padding: 10px;
   border-radius: 10px;
   background: var(--noteBackground);
+  position: relative;
+  color: #ffffff;
   cursor: pointer;
   transition: transform 200ms;
   overflow: hidden;
+}
+.notesGrid .noteDate {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 12px;
 }
 .notesList > .note {
   width: 100%;

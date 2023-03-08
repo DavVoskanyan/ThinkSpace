@@ -1,0 +1,30 @@
+.notesGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+}
+.notesGrid > .note {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    background: var(--noteBackground);
+    cursor: pointer;
+    transition: scale 200ms;
+    overflow: hidden;
+}
+.notesGrid > .note:hover { scale: 1.05 1.05; }
+
+.note {
+    padding: 10px;
+    color: #ffffff;
+    position: relative;
+}
+.note > .noteText {
+    margin-top: 10px;
+}
+.note > .noteDate {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    font-size: 12px;
+}

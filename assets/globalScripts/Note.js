@@ -11,8 +11,7 @@ class Note {
   constructor(title, description, selectedDate, openModalElement) {
     this.title = title;
     this.description = description;
-    this.creationDate = new Date();
-    this.selectedDate = selectedDate;
+    this.selectedDate = selectedDate ?? new Date();
     this.openModalElement = openModalElement.querySelector(':scope .noteInfoContainer');
     this.openEditModalElement = openModalElement.querySelector(':scope .noteEditionContainer');
 
@@ -28,9 +27,20 @@ class Note {
     domText.classList.add('noteText');
     domText.innerText = description;
 
-    this.domElement.appendChild(domTitle);
-    this.domElement.appendChild(domText);
+    const domDate = document.createElement('span');
+    domDate.classList.add('noteDate');
 
+    let month, date;
+    month = selectedDate.getMonth() + 1 > 9
+        ? selectedDate.getMonth() + 1
+        : `0${selectedDate.getMonth() + 1}`;
+    date = selectedDate.getDate() > 9
+        ? selectedDate.getDate()
+        : `0${selectedDate.getDate()}`;
+
+    domDate.innerText = `${selectedDate.getFullYear()}.${month}.${date}`;
+
+    this.domElement.append(domTitle, domText, domDate);
     this.domElement.addEventListener('click', () => this.addToOpenElement(title, description, selectedDate));
   }
 

@@ -10,16 +10,21 @@ class NotesView {
   #notesContainer;
   #editAndSubmitButton;
   #buttonStatus;
+  #isEditable;
+  #isFilterable;
 
-  constructor(parentElement, isGrid) {
+  constructor(parentElement, isGrid, isEditable, isFilterable) {
 
     this.#isGrid = isGrid ?? true;
+    this.#isEditable = isEditable ?? true;
+    this.#isFilterable = isFilterable ?? true;
     this.#buttonStatus = 'edit';
 
     const elementContainer = document.createElement("div");
     elementContainer.classList.add('notesView');
-
-    elementContainer.appendChild(this.#createFilteringField());
+    if(this.#isFilterable) {
+      elementContainer.appendChild(this.#createFilteringField());
+    }
     elementContainer.appendChild(this.#createOpenNoteContainer());
     elementContainer.appendChild(this.#createNotesContainer());
 
@@ -100,7 +105,9 @@ class NotesView {
     openNoteContainer.appendChild(closeButton);
     openNoteContainer.appendChild(containerForNoteInfo);
     openNoteContainer.appendChild(containerForNoteEdition);
-    openNoteContainer.appendChild(editAndSubmitButton);
+    if(this.#isEditable) {
+      openNoteContainer.appendChild(editAndSubmitButton);
+    }
 
     this.#openNoteContainer = openNoteContainer;
     return openNoteContainer;
@@ -162,7 +169,7 @@ class NotesView {
     return notesContainer;
   }
 
-  addNewNote(title, description, selectedDate) {
+  addNewNote(title, description, selectedDate, isEditable) {
     const newNote = new Note(title, description, selectedDate, this.#openNoteContainer);
 
     this.#notesContainer.insertBefore(newNote.domElement, this.#notesContainer.firstChild);

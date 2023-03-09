@@ -1,9 +1,7 @@
 import '../styles/allNotes.css';
 
 import ModalController from "/assets/globalScripts/ModalController.js";
-import IndexedDatabaseWorker from "/assets/globalScripts/IndexedDatabaseWorker.js";
 import WindowAlerter from "/assets/globalScripts/WindowAlerter.js";
-import DatePicker from "/assets/globalScripts/DatePicker.js";
 import NotesView from "/assets/globalScripts/NotesView.js";
 
 

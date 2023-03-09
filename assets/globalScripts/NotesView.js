@@ -2,22 +2,67 @@ import '/assets/globalStyles/notesContainer.css';
 
 import Note from "/assets/globalScripts/Note.js";
 
+/**
+ * @class "NotesView" creates list of notes and all functionality for them.
+ */
 class NotesView {
+  /**
+   *          configuration properties of class
+   *
+   * @private #isGrid {boolean} -> default type of list ("grid" or "list").
+   * @private #isFilterable {boolean} -> if "filter line" should be.
+   * @private #isEditable {boolean} -> default are notes editable or not.
+   * @private #isDeletable {boolean} -> if user will have opportunity to delete not.
+   *
+   *
+   *          properties that are connected with opened note
+   *
+   * @private #openNoteContainer {HTMLDivElement} -> DOM-element which you see after clicking on note.
+   * @private #noteInfoContainer {HTMLDivElement} -> DOM-element (child of #openNoteContainer) in which you see note
+   *                                                 info.
+   * @private #noteEditingContainer {HTMLDivElement} -> DOM-element (child of #openNoteContainer) in which you can
+   *                                                    change information about note (title, text).
+   * @private #editAndSubmitButton {HTMLButtonElement} -> DOM-element which has 2 states: "edit" and "submit".
+   *                                                      "edit" -> if you click on it, it will open #noteEditingContainer,
+   *                                                                close #noteInfoContiner and changes status,
+   *                                                      "submit" -> if you click on it, it will open #noteInfoContiner,
+   *                                                                close #noteEditingContainer and change status.
+   * @private #buttonStatus {String} -> it holds status of button as string ("edit"/"submit").
+   *
+   *
+   *          properties that are connected with notes list
+   *
+   * @private #notesContainer {HTMLDivElement} -> DOM-element which is parent element of notes. Can have 2 states:
+   *                                              grid (with "notesGrid" class) and list (with "notesList" class).
+   */
   #isGrid;
+  #isFilterable;
+  #isEditable;
+  #isDeletable;
+
   #openNoteContainer;
   #noteInfoContainer;
   #noteEditingContainer;
-  #notesContainer;
   #editAndSubmitButton;
   #buttonStatus;
-  #isEditable;
-  #isFilterable;
 
-  constructor(parentElement, isGrid, isEditable, isFilterable) {
+  #notesContainer;
+
+  /**
+   * @param parentElement -> {HTMLDivElement} in which notes list will be.
+   * @param isGrid -> {boolean} if default notesContainer should be as grid.
+   * @param isEditable -> {boolean} if notes in list should be editable.
+   * @param isFilterable -> {boolean} if there should be filter line.
+   * @param isDeletable -> {boolean} if notes from list can be deleted.
+   *
+   * @constructor -> sets all "config-values", creates dom-elements with their hierarchy and adds to DOM.
+   */
+  constructor(parentElement, isGrid, isEditable, isFilterable, isDeletable) {
 
     this.#isGrid = isGrid ?? true;
     this.#isEditable = isEditable ?? true;
     this.#isFilterable = isFilterable ?? true;
+    this.#isDeletable = isDeletable ?? true;
     this.#buttonStatus = 'edit';
 
     const elementContainer = document.createElement("div");
@@ -31,6 +76,11 @@ class NotesView {
     parentElement.appendChild(elementContainer);
   }
 
+  /**
+   * @private #createFilteringField -> creates "grid" and "list" buttons and filter inputs.
+   *
+   * @returns {HTMLDivElement} -> "filter-line" as DOM-element.
+   */
   #createFilteringField() {
     const filterLine = document.createElement("div");
     filterLine.classList.add('filterLine');
@@ -99,7 +149,7 @@ class NotesView {
     const editAndSubmitButton = document.createElement('button');
     this.#editAndSubmitButton = editAndSubmitButton;
     editAndSubmitButton.classList.add("editAndSubmitButton", 'editState');
-    editAndSubmitButton.addEventListener('click', () => this.#inNoteContainerEditOnClick());
+    editAndSubmitButton.addEventListener('click', () => {this.#inNoteContainerEditOnClick(); console.log(this.#buttonStatus)});
     editAndSubmitButton.innerText = 'Edit';
 
     openNoteContainer.appendChild(closeButton);
@@ -169,7 +219,7 @@ class NotesView {
     return notesContainer;
   }
 
-  addNewNote(title, description, selectedDate, isEditable) {
+  addNewNote(title, description, selectedDate) {
     const newNote = new Note(title, description, selectedDate, this.#openNoteContainer);
 
     this.#notesContainer.insertBefore(newNote.domElement, this.#notesContainer.firstChild);

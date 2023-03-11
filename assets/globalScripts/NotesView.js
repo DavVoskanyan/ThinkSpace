@@ -129,6 +129,11 @@ class NotesView {
     return filterLine;
   }
 
+  /**
+   * @private #createOpenNoteContainer -> creates #openNoteContainer and returns dom-element
+   *
+   * @returns {HTMLDivElement}
+   */
   #createOpenNoteContainer() {
     const openNoteContainer = document.createElement('div');
     openNoteContainer.classList.add('openNoteContainer');
@@ -162,15 +167,25 @@ class NotesView {
     this.#openNoteContainer = openNoteContainer;
     return openNoteContainer;
   }
+
+  /**
+   * @private #openNoteModalContainer -> opens #openNoteContainer
+   */
   #openNoteModalContainer() {
     this.#openNoteContainer.classList.add('open');
   }
+
+  /**
+   * @private #closeNoteModalContainer -> closes #openNoteContainer
+   */
   #closeNoteModalContainer() {
     this.#openNoteContainer.classList.remove('open');
     this.#changeButtonState('edit');
   }
 
-
+  /**
+   * @private #inNoteContainerEditOnClick -> changes button and #noteInfoContainer container's status to opposite one ("edit" <--> "submit")
+   */
   #inNoteContainerEditOnClick() {
     if(this.#buttonStatus === 'submit') {
       this.#changeButtonState('edit');
@@ -184,6 +199,11 @@ class NotesView {
     }
   }
 
+  /**
+   * @private #changeButtonState -> changes button status to opposite one.
+   *
+   * @param status
+   */
   #changeButtonState(status) {
     if(status.trim().toLowerCase() === 'edit') {
       this.#editAndSubmitButton.classList.remove('submitState');
@@ -199,6 +219,11 @@ class NotesView {
     }
   }
 
+  /**
+   * @private #changeContainerState -> changes #noteInfoContainer's and #noteEditingContainer's statuses
+   *
+   * @param status
+   */
   #changeContainerState(status) {
     if(status.trim().toLowerCase() === 'edit') {
       this.#noteInfoContainer.classList.add('hidden');
@@ -210,6 +235,11 @@ class NotesView {
     }
   }
 
+  /**
+   * @private #createNotesContainer -> creates #notesContainer and returns it as dom-element.
+   *
+   * @returns {HTMLDivElement}
+   */
   #createNotesContainer() {
     const notesContainer = document.createElement('div');
     notesContainer.classList.add('notesContainer');
@@ -219,6 +249,13 @@ class NotesView {
     return notesContainer;
   }
 
+  /**
+   * @param title
+   * @param description
+   * @param selectedDate
+   *
+   * @public addNewNote -> calls "Note" class, passes all parameters and adds to dom hierarchy.
+   */
   addNewNote(title, description, selectedDate) {
     const newNote = new Note(title, description, selectedDate, this.#openNoteContainer);
 
@@ -226,4 +263,7 @@ class NotesView {
   }
 }
 
+/**
+ * @export -> class is exported for further usage.
+ */
 export default NotesView;

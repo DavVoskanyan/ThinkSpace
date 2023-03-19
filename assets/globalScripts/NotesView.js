@@ -34,6 +34,7 @@ class NotesView {
    *
    * @private #notesContainer {HTMLDivElement} -> DOM-element which is parent element of notes. Can have 2 states:
    *                                              grid (with "notesGrid" class) and list (with "notesList" class).
+   * @private #allNotesObjects [{Note},...] -> Array which saves all created objects of notes.
    */
   #isGrid;
   #isFilterable;
@@ -47,6 +48,8 @@ class NotesView {
   #buttonStatus;
 
   #notesContainer;
+
+  #allNotesObjects;
 
   /**
    * @param parentElement -> {HTMLDivElement} in which notes list will be.
@@ -64,6 +67,7 @@ class NotesView {
     this.#isFilterable = isFilterable ?? true;
     this.#isDeletable = isDeletable ?? true;
     this.#buttonStatus = 'edit';
+    this.#allNotesObjects = [];
 
     const elementContainer = document.createElement("div");
     elementContainer.classList.add('notesView');
@@ -127,11 +131,36 @@ class NotesView {
       this.#isGrid = false;
     })
 
+    const searchInput = document.createElement('input');
+    searchInput.classList.add('notesSearchInput');
+    searchInput.placeholder = 'Search';
+    searchInput.addEventListener('input', () => {
+      this.searchAndShow(searchInput.value);
+    })
 
-    filterLine.appendChild(gridButton);
-    filterLine.appendChild(listButton);
+    filterLine.append(gridButton, listButton, searchInput);
 
     return filterLine;
+  }
+
+  /**
+   * @param searchText -> String, which will be the search text.
+   *
+   * @public searchAndShow -> takes string, searches notes hides all other notes.
+   */
+  searchAndShow(searchText) {
+    searchText = searchText.toLowerCase().trim();
+    const domObjectsOfNotes = this.#allNotesObjects.map(noteObject => noteObject.domElement);
+    const valuesOfTitles = domObjectsOfNotes.map(domObject => domObject.querySelector(':scope .noteTitle').innerText.toLowerCase().trim());
+    const valuesOfTexts = domObjectsOfNotes.map(domObject => domObject.querySelector(':scope .noteText').innerText.toLowerCase().trim());
+
+    domObjectsOfNotes.forEach((domObject, index) => {
+      const check = valuesOfTitles[index].includes(searchText) || valuesOfTexts[index].includes(searchText);
+
+      if(!searchText || check) { domObject.classList.remove('hiddenNote'); }
+      else { domObject.classList.add('hiddenNote'); }
+    })
+
   }
 
   /**
@@ -265,6 +294,7 @@ class NotesView {
     const newNote = new Note(title, description, selectedDate, this.#openNoteContainer);
 
     this.#notesContainer.insertBefore(newNote.domElement, this.#notesContainer.firstChild);
+    this.#allNotesObjects.push(newNote);
   }
 }
 

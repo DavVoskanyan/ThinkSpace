@@ -3,7 +3,11 @@ import '../styles/allNotes.css';
 import ModalController from "/assets/globalScripts/ModalController.js";
 import WindowAlerter from "/assets/globalScripts/WindowAlerter.js";
 import NotesView from "/assets/globalScripts/NotesView.js";
+import DatePicker from "../../../assets/globalScripts/DatePicker";
 
+
+//////////////////////////   A D D   D A T E - P I C K E R   T O   M O D A L   ///////////////////////////
+const inModalDatePicker = new DatePicker(document.querySelector('.datePickerContainer'));
 
 //////////////////////////   A D D   N O T E S   F R O M   I N D E X E D - D B   /////////////////////////////
 const notesContainer = new NotesView(document.querySelector("#mainContent"), true, true, true);

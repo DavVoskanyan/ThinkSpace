@@ -116,18 +116,16 @@
 .notesGrid > .note > .noteTitle {
   color: var(--textColor);
   margin-bottom: 20px;
-  padding: 5px 0 0 5px;
   font-style: italic;
 }
 .notesList > .note > .noteTitle {
   color: var(--textColor);
-  padding: 10px 0 5px 10px;
   font-style: italic;
 }
 
 .notesGrid > .note > .noteText {
   display: -webkit-box;
-  -webkit-line-clamp: 7;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-size: 18px;

@@ -14,7 +14,8 @@ const notesContainer = new NotesView(document.querySelector("#mainContent"), tru
 notesContainer.addNewNote('Hello', 'Hell no', new Date());
 notesContainer.addNewNote('Hello', 'Hell no', new Date());
 notesContainer.addNewNote('Hello', 'Hell no', new Date());
-notesContainer.addNewNote('Hello', 'Hell no', new Date());
+notesContainer.addNewNote('Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello', 'Hell noHell noHell noHell noHell noHell noHell noHell noHell noHell noHell noHell noHell noHell noHell noHell noHell noHell noHell noHell noHell no', new Date());
+
 
 
 /////////////////////////   I N I T I A L I Z I N G   W I N D O W   A L E R T E R   ////////////////////////

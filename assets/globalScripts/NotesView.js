@@ -109,16 +109,21 @@ class NotesView {
                                          5.85H51.14c-3.22,0-5.85-2.63-5.85-5.85V5.85C45.28,2.63,47.92,0,51.14,0L51.14,0z"/>
                             </svg>`
     gridButton.addEventListener('click', () => {
-      this.#notesContainer.classList.remove('noteList');
-      this.#notesContainer.classList.add('noteGrid');
+      this.#notesContainer.classList.remove('notesList');
+      this.#notesContainer.classList.add('notesGrid');
       this.#isGrid = true;
     })
 
     const listButton = document.createElement('button');
     listButton.classList.add('listButton');
+    listButton.innerHTML = `<svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150">
+                                <path d="M15,30h120c8.284,0,15-6.716,15-15s-6.716-15-15-15H15C6.716,0,0,6.716,0,15S6.716,30,15,30z"/>
+                                <path d="M135,60H15C6.716,60,0,66.716,0,75s6.716,15,15,15h120c8.284,0,15-6.716,15-15S143.284,60,135,60z"/>
+                                <path d="M135,120H15c-8.284,0-15,6.716-15,15s6.716,15,15,15h120c8.284,0,15-6.716,15-15S143.284,120,135,120z"/>
+                            </svg>`;
     listButton.addEventListener('click', () => {
-      this.#notesContainer.classList.remove('noteGrid');
-      this.#notesContainer.classList.add('noteList');
+      this.#notesContainer.classList.remove('notesGrid');
+      this.#notesContainer.classList.add('notesList');
       this.#isGrid = false;
     })
 

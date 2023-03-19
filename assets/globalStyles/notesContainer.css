@@ -5,7 +5,8 @@
 }
 .filterLine {
   width: 100%;
-  
+  display: flex;
+  align-items: center;
 }
 .note .noteTitle {
   max-height: 65px;
@@ -139,4 +140,17 @@
 }
 .noteDate {
   color: var(--textColor);
+}
+.note.hiddenNote { display: none; }
+
+.notesSearchInput {
+  width: 30%;
+  height: 30px;
+  margin-inline: 10px;
+  padding: 5px 10px;
+  background: var(--noteBackground);
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  color: var(--menuIconColor);
 }

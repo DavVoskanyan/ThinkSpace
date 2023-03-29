@@ -1,6 +1,8 @@
 import '/assets/globalStyles/notesContainer.css';
 
 import Note from "/assets/globalScripts/Note.js";
+import DatePicker from "/assets/globalScripts/DatePicker.js";
+import datePicker from "/assets/globalScripts/DatePicker.js";
 
 /**
  * @class "NotesView" creates list of notes and all functionality for them.
@@ -51,6 +53,10 @@ class NotesView {
 
   #allNotesObjects;
 
+  #filterLine;
+  filterStartDate;
+  filterEndDate;
+
   /**
    * @param parentElement -> {HTMLDivElement} in which notes list will be.
    * @param isGrid -> {boolean} if default notesContainer should be as grid.
@@ -72,7 +78,8 @@ class NotesView {
     const elementContainer = document.createElement("div");
     elementContainer.classList.add('notesView');
     if(this.#isFilterable) {
-      elementContainer.appendChild(this.#createFilteringField());
+      this.#filterLine = this.#createFilteringField();
+      elementContainer.appendChild(this.#filterLine);
     }
     elementContainer.appendChild(this.#createOpenNoteContainer());
     elementContainer.appendChild(this.#createNotesContainer());
@@ -135,38 +142,91 @@ class NotesView {
     searchInput.classList.add('notesSearchInput');
     searchInput.placeholder = 'Search';
     searchInput.addEventListener('input', () => {
-      this.searchAndShow(searchInput.value);
+      this.filterAndHide(searchInput.value, this.filterStartDate.selectedDate, this.filterEndDate.selectedDate);
     })
 
-    filterLine.append(gridButton, listButton, searchInput);
+    const startDateContainer = this.#createDatePickerForFiltering('startDatePicker', 'filterStartDate', searchInput);
+    const endDateContainer = this.#createDatePickerForFiltering('endDatePicker', 'filterEndDate', searchInput);
+
+
+
+    filterLine.append(gridButton, listButton, startDateContainer, endDateContainer, searchInput);
 
     return filterLine;
   }
 
   /**
    * @param searchText -> String, which will be the search text.
+   * @param startDate -> start date {Date} for filtering.
+   * @param endDate -> finish date {Date} for filtering.
    *
-   * @public searchAndShow -> takes string, searches notes hides all other notes.
+   * @public filterAndHide -> takes string, searches notes hides all other notes.
    */
-  searchAndShow(searchText) {
+  filterAndHide(searchText, startDate, endDate) {
     searchText = searchText.toLowerCase().trim();
     const domObjectsOfNotes = this.#allNotesObjects.map(noteObject => noteObject.domElement);
     const valuesOfTitles = domObjectsOfNotes.map(domObject => domObject.querySelector(':scope .noteTitle').innerText.toLowerCase().trim());
     const valuesOfTexts = domObjectsOfNotes.map(domObject => domObject.querySelector(':scope .noteText').innerText.toLowerCase().trim());
 
     domObjectsOfNotes.forEach((domObject, index) => {
-      const check = valuesOfTitles[index].includes(searchText) || valuesOfTexts[index].includes(searchText);
+      const dateInObject = domObject.querySelector(':scope .noteDate').innerText.trim();
+      const searchCheck = searchText
+          ? valuesOfTitles[index].includes(searchText) || valuesOfTexts[index].includes(searchText)
+          : true;
+      const startDateCheck = startDate
+          ? startDate.getTime() <= new Date(dateInObject).getTime()
+          : true;
+      const endDateCheck = endDate
+          ? endDate.getTime() >= new Date(dateInObject).getTime()
+          : true;
 
-      if(!searchText || check) { domObject.classList.remove('hiddenNote'); }
+      if(searchCheck && startDateCheck && endDateCheck) { domObject.classList.remove('hiddenNote'); }
       else { domObject.classList.add('hiddenNote'); }
     })
-
   }
 
   /**
-   * @private #createOpenNoteContainer -> creates #openNoteContainer and returns dom-element
+   * @param id -> String, which will be given to element's "id" attribute as value.
+   * @param propertyName -> {String} to which parameter the DatePicker object will be given.
    *
-   * @returns {HTMLDivElement}
+   * @private createDatePickerForFiltering -> creates datepicker for filter-line and returns it.
+   *
+   * @returns {HTMLDivElement} -> "DatePicker"-s object.
+   */
+  #createDatePickerForFiltering(id, propertyName, searchInput) {
+    const datePickerContainer = document.createElement('div');
+    datePickerContainer.id = id;
+    datePickerContainer.classList.add('datePickerContainer');
+
+    datePickerContainer.addEventListener('click', () => {
+      this.filterAndHide(
+          searchInput.value.trim(),
+          this.filterStartDate ? this.filterStartDate.selectedDate : null,
+          this.filterEndDate ? this.filterEndDate.selectedDate : null
+          );
+    })
+
+    const containerTitle = document.createElement('span');
+    containerTitle.classList.add('containerTitle');
+
+    const dropValueButton = document.createElement('button');
+    dropValueButton.classList.add('dropValueButton');
+    dropValueButton.innerText = '✕';
+    dropValueButton.addEventListener('click', () => this[propertyName].dropSelectedDate() );
+
+    const forModuleContainer = document.createElement('div');
+    forModuleContainer.classList.add('forModuleContainer');
+
+    datePickerContainer.append(containerTitle, dropValueButton, forModuleContainer);
+    this[propertyName] = new DatePicker(forModuleContainer, containerTitle);
+
+    return datePickerContainer;
+  }
+
+  /**
+   * @private #createOpenNoteContainer -> creates #openNoteContainer and returns dom-element.
+   *
+   * @returns {HTMLDivElement} -> Element, in which you see your clicked note, as DOM-element.
    */
   #createOpenNoteContainer() {
     const openNoteContainer = document.createElement('div');
@@ -200,13 +260,6 @@ class NotesView {
 
     this.#openNoteContainer = openNoteContainer;
     return openNoteContainer;
-  }
-
-  /**
-   * @private #openNoteModalContainer -> opens #openNoteContainer
-   */
-  #openNoteModalContainer() {
-    this.#openNoteContainer.classList.add('open');
   }
 
   /**

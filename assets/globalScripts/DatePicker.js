@@ -4,21 +4,31 @@ class DatePicker {
 
   static #MONTH_NAMES = ["January","February","March","April","May","June","July",
     "August","September","October","November","December"];
+  #ObjectModal;
   #NOW;
   #CURRENT_DATE;
   #DAYS_TABLE;
   #IN_TITLE_MONTH;
   #IN_TITLE_YEAR;
+  #DATE_ELEMENT;
+  #DEFAULT_TEXT_FOR_ELEMENT;
   selectedDate;
+  datePickerObjectModel;
+
+  forSelectEvent;
 
 
 
-  constructor(container) {
+  constructor(container, elementForDate, defaultTextForElement) {
+    this.#DATE_ELEMENT = elementForDate;
+    this.#DEFAULT_TEXT_FOR_ELEMENT = defaultTextForElement ?? '';
+
     this.#CURRENT_DATE = new Date();
     this.#NOW = new Date();
 
     if(container) {
-      container.appendChild(this.createDatePicker());
+      this.datePickerObjectModel = this.createDatePicker();
+      container.appendChild(this.datePickerObjectModel);
     }
     else { console.error(`DatePickerError: Parent element is ${container}`); }
   }
@@ -104,7 +114,7 @@ class DatePicker {
 
   #drawMonthTable(dateObject) {
     this.#DAYS_TABLE.innerHTML = '';
-    const firstDayOfMonth = new Date(dateObject.getFullYear(), dateObject.getMonth() + 1, 1 );
+    const firstDayOfMonth = new Date(dateObject.getFullYear(), dateObject.getMonth(), 1 );
     const lastDayOfMonth = new Date(dateObject.getFullYear(), dateObject.getMonth() + 1, 0 );
     this.#DAYS_TABLE.innerHTML = `<div class="weekDayName">s</div>
                                   <div class="weekDayName">m</div>
@@ -122,7 +132,7 @@ class DatePicker {
       day.innerText = (i + 1).toString();
       day.classList.add('currentMonthDay');
 
-      if(i + 1 === this.#CURRENT_DATE.getDate()
+      if(i + 1 === this.#NOW.getDate()
         && this.#CURRENT_DATE.getMonth() === this.#NOW.getMonth()
         && this.#CURRENT_DATE.getFullYear() === this.#NOW.getFullYear()) { day.classList.add('today'); }
 
@@ -132,11 +142,7 @@ class DatePicker {
         && this.#CURRENT_DATE.getFullYear() === this.selectedDate.getFullYear()) {day.classList.add('selected');}
 
       day.addEventListener('click', () => {
-        this.#DAYS_TABLE.querySelectorAll(':scope .currentMonthDay.selected').forEach(selected => selected.classList.remove('selected'));
-
-        this.selectedDate = new Date(this.#CURRENT_DATE.getFullYear(), this.#CURRENT_DATE.getMonth(), parseInt(day.innerText));
-        day.classList.add('selected');
-        console.log(this.selectedDate);
+        this.selectDate(new Date(this.#CURRENT_DATE.getFullYear(), this.#CURRENT_DATE.getMonth(), parseInt(day.innerText)));
       })
       this.#DAYS_TABLE.appendChild(day);
     }
@@ -156,6 +162,22 @@ class DatePicker {
     this.#DAYS_TABLE.querySelectorAll(':scope .currentMonthDay').forEach(day => {
       if(parseInt(day.innerText) === dateObject.getDate()) { day.classList.add('selected') }
     })
+    if(this.#DATE_ELEMENT) {
+      let day = this.selectedDate.getDate() < 10 ? `0${this.selectedDate.getDate()}` : this.selectedDate.getDate();
+      let month = this.selectedDate.getMonth() < 9 ? `0${this.selectedDate.getMonth() + 1}` : this.selectedDate.getMonth() + 1
+      let translatedDate = `${day}/${month}/${this.selectedDate.getFullYear()}`;
+
+      if(this.#DATE_ELEMENT.tagName.toLowerCase() === 'input') { this.#DATE_ELEMENT.value = translatedDate; }
+      else { this.#DATE_ELEMENT.innerText = translatedDate; }
+      this.#DATE_ELEMENT.dataset['date'] = translatedDate;
+    }
+  }
+
+  dropSelectedDate() {
+    this.#CURRENT_DATE = new Date();
+    this.selectedDate = null;
+    this.#DAYS_TABLE.querySelectorAll(':scope .currentMonthDay.selected').forEach(selected => selected.classList.remove('selected'));
+    if(this.#DATE_ELEMENT) { this.#DATE_ELEMENT.innerText = this.#DEFAULT_TEXT_FOR_ELEMENT }
   }
 }
 

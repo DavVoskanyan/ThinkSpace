@@ -4,7 +4,6 @@ class DatePicker {
 
   static #MONTH_NAMES = ["January","February","March","April","May","June","July",
     "August","September","October","November","December"];
-  #ObjectModal;
   #NOW;
   #CURRENT_DATE;
   #DAYS_TABLE;
@@ -14,8 +13,6 @@ class DatePicker {
   #DEFAULT_TEXT_FOR_ELEMENT;
   selectedDate;
   datePickerObjectModel;
-
-  forSelectEvent;
 
 
 

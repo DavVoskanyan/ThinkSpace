@@ -2,7 +2,6 @@ import '/assets/globalStyles/notesContainer.css';
 
 import Note from "/assets/globalScripts/Note.js";
 import DatePicker from "/assets/globalScripts/DatePicker.js";
-import datePicker from "/assets/globalScripts/DatePicker.js";
 
 /**
  * @class "NotesView" creates list of notes and all functionality for them.
@@ -188,6 +187,7 @@ class NotesView {
   /**
    * @param id -> String, which will be given to element's "id" attribute as value.
    * @param propertyName -> {String} to which parameter the DatePicker object will be given.
+   * @param searchInput -> {Input} Dom-element of search input.
    *
    * @private createDatePickerForFiltering -> creates datepicker for filter-line and returns it.
    *

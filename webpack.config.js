@@ -6,6 +6,7 @@ module.exports = {
     entry: {
         schedulePage: '/pages/SchedulePage/scripts/schedule.js',
         allNotesPage: '/pages/AllNotes/scripts/allNotes.js',
+        analyticsPage: '/pages/AnalyticsPage/scripts/analytics.js',
         historyPage: '/pages/HistoryPage/scripts/history.js'
     },
     output: {

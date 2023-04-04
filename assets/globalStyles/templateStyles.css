@@ -96,7 +96,7 @@ body {
 #mainContent {
     width: calc(75vw - 120px);
     height: calc(100vh - 65px);
-    padding: 20px 10px 20px 10px;
+    padding: 20px;
     border-radius: 15px 15px 0 0;
     position: fixed;
     bottom: 0;

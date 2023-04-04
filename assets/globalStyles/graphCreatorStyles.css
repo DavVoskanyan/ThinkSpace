@@ -1,0 +1,39 @@
+#canvasContainer {
+    width: 100%;
+    height: 70%;
+    padding: 10px;
+    background: var(--noteBackground);
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+}
+.canvasContainer {
+    display: grid;
+    place-items: center;
+}
+#measurePointsOnY {
+    width: 20px;
+    height: calc(100% - 80px);
+    margin-right: 10px;
+    color: #ffffff;
+    text-align: center;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+}
+#measurePointsOnX {
+    width: calc(100% - 30px);
+    height: 80px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+#measurePointsOnX > span {
+    rotate: 90deg;
+    translate: 0 30px;
+}

@@ -7,12 +7,14 @@
     <!--  icon  -->
     <link rel="icon" href="/assets/forTabIcon.png">
 
+    <!--  fonts  -->
+
     <!--  styles  -->
     <link rel="stylesheet" href="/assets/globalStyles/globalCssProperties.css">
     <link rel="stylesheet" href="/assets/globalStyles/templateStyles.css">
 
     <!--  scripts  -->
-    <script type="module" defer src="/dist/AnalyticsPage.bundle.js"></script>
+    <script type="module" defer src="/dist/analyticsPage.bundle.js"></script>
 </head>
 <body>
 <div id="header">
@@ -95,7 +97,26 @@
     </a>
 </div>
 <div id="mainContent">
-
+    <div id="upperNumbersContainer">
+        <div id="allNotesNumberContainer" class="numberContainer">
+            <span class="forNumberText">All Notes Ever:</span>
+            <span class="number">0</span>
+        </div>
+        <div id="actualNotesNumberContainer" class="numberContainer">
+            <span class="forNumberText">Actual Notes:</span>
+            <span class="number">0</span>
+        </div>
+        <div id="expiredNotesNumberContainer" class="numberContainer">
+            <span class="forNumberText">Expired Notes:</span>
+            <span class="number">0</span>
+        </div>
+        <div id="undatedNotesNumberContainer" class="numberContainer">
+            <span class="forNumberText">Undated Notes:</span>
+            <span class="number">0</span>
+        </div>
+    </div>
+    <div id="canvasContainer">
+    </div>
 </div>
 <div id="rightSideBar">
     <div class="nameAndAvatar">

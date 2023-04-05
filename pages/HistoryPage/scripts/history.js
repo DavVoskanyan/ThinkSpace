@@ -1,8 +1,15 @@
 import '../styles/history.css';
+import SideBarCreator from "/assets/globalScripts/SideBarCreator.js";
 import ModalController from "/assets/globalScripts/ModalController.js";
 import WindowAlerter from "/assets/globalScripts/WindowAlerter.js";
 import NotesView from "/assets/globalScripts/NotesView.js";
 
+
+/////////////////////////   I N I T I A L I Z I N G   S I D E B A R   //////////////////////////////
+const sidebar = new SideBarCreator(
+    document.querySelector('#leftSideBar'),
+    document.querySelector('#mainContent'),
+    'history');
 
 //////////////////////////   A D D   N O T E S   F R O M   I N D E X E D - D B   /////////////////////////////
 const notesContainer = new NotesView(document.querySelector("#mainContent"), true, false, false);

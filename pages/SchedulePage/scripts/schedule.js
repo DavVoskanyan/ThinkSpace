@@ -1,8 +1,16 @@
 import '../styles/schedule.css';
 
+import SideBarCreator from "/assets/globalScripts/SideBarCreator.js";
 import ModalController from "/assets/globalScripts/ModalController.js";
 import Scheduler from "/assets/globalScripts/Scheduler.js";
 import WindowAlerter from "/assets/globalScripts/WindowAlerter.js";
+
+
+/////////////////////////   I N I T I A L I Z I N G   S I D E B A R   //////////////////////////////
+const sidebar = new SideBarCreator(
+    document.querySelector('#leftSideBar'),
+    document.querySelector('#mainContent'),
+    'scheduler');
 
 /////////////////////////   I N I T I A L I Z I N G   W I N D O W   A L E R T E R   ////////////////////////
 

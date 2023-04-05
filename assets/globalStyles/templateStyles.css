@@ -102,7 +102,9 @@ body {
     bottom: 0;
     right: 25vw;
     background: var(--themeMainContentBackground);
+    transition: bottom 350ms;
 }
+#mainContent.hiddenSmoothly { bottom: -100vh; }
 .appLogo {
     height: 35px;
 }

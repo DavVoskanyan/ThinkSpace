@@ -74,8 +74,8 @@ class GraphCreator {
         return pointsContainer;
     }
     #drawGraph() {
-        this.#canvasContext.strokeStyle = '#880000';
-        this.#canvasContext.lineWidth = 3;
+        this.#canvasContext.strokeStyle = '#3aafae';
+        this.#canvasContext.lineWidth = 4;
         this.#canvasContext.beginPath();
 
         this.#canvasContext.moveTo((1) * Math.floor(this.#canvasWidth / 12) - this.#canvasWidth * 4 / 100, this.#canvasHeight - ((this.#canvasHeight / 20) * this.values[0]));

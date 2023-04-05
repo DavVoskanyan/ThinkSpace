@@ -1,10 +1,17 @@
 import '../styles/allNotes.css';
 
+import SideBarCreator from "/assets/globalScripts/SideBarCreator.js";
 import ModalController from "/assets/globalScripts/ModalController.js";
 import WindowAlerter from "/assets/globalScripts/WindowAlerter.js";
 import NotesView from "/assets/globalScripts/NotesView.js";
 import DatePicker from "../../../assets/globalScripts/DatePicker";
 
+
+/////////////////////////   I N I T I A L I Z I N G   S I D E B A R   //////////////////////////////
+const sidebar = new SideBarCreator(
+    document.querySelector('#leftSideBar'),
+    document.querySelector('#mainContent'),
+    'all notes');
 
 //////////////////////////   A D D   D A T E - P I C K E R   T O   M O D A L   ///////////////////////////
 const inModalDatePicker = new DatePicker(document.querySelector('.datePickerContainer'));

@@ -28,6 +28,7 @@ export default class AjaxSender {
             .then(response => response.json())
             .then(response => {
                 if(response && response['status']) {
+                    console.log(response);
                     this.#windowAlerterInstance.alertDivConstructor('success', 'New note is successfully added')
                 }
             });

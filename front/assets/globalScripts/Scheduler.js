@@ -31,7 +31,7 @@ class Scheduler {
         this.#PARENT_NODE = parentNode;
         this.#currentShowingDate = new Date();
 
-        this.#datePickerController = new DatePicker(document.querySelector('.datePickerContainer'));
+        // this.#datePickerController = new DatePicker(document.querySelector('.datePickerContainer'));
         this.#addNoteModalContainer = new ModalController('addNoteModal');
 
         this.#createSchedulerContainer();

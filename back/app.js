@@ -21,13 +21,16 @@ app.get('/getAllNotes/:userId', (req, res) => {
     });
 });
 app.post('/setNewNote', (req, res) => {
+    const currentDate = new Date();
+    const currentDateString = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
     pool.query(`INSERT INTO notesTable (noteTitle, noteText, noteCreationDate, noteForDate, userId) VALUES
-                     (${req.body['noteTitle']},
-                      ${req.body['noteText']},
-                      ${new Date()},
-                      ${req.body['reservedDate']},
+                     ('${req.body['noteTitle']}',
+                      '${req.body['noteText']}',
+                      '${currentDateString}',
+                      ${`'${req.body['reservedDate']}'` ?? 'NULL'},
                       ${req.body['userId']});`,
         (err, rows) => {
+        console.log(err);
             res.json({status: !err});
         }
     );

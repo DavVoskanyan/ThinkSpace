@@ -19,7 +19,7 @@ windowAlerter.alertDivConstructor('success', "It finally works!")
 
 /////////////////////////   A D D   N E W   N O T E   M O D A L   //////////////////////////
 
-const newNoteModalController = new ModalController('addNoteModal');
+const newNoteModalController = new ModalController();
 const addNewNoteButton = document.querySelector('button.addNewThought');
 addNewNoteButton.addEventListener('click', () => newNoteModalController.openModal() );
 

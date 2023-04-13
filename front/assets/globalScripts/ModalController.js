@@ -1,14 +1,24 @@
+import '/front/assets/globalStyles/modalControllerStyles.css';
+
 import AjaxSender from "/front/assets/globalScripts/AjaxSender.js";
+import WindowAlerter from "/front/assets/globalScripts/WindowAlerter.js";
 import DatePicker from "/front/assets/globalScripts/DatePicker.js";
 
 export default class ModalController {
-  MODAL_ELEMENT;
   #ajaxSenderInstance;
+  #windowAlerterInstance;
+  #datePickerInstance;
+
+  #modalContainer;
+  #titleInput;
+  #textarea;
+
   constructor() {
     this.#ajaxSenderInstance = new AjaxSender();
+    this.#windowAlerterInstance = new WindowAlerter(document.querySelector('#rightSideBar'));
     this.#createModal();
 
-    this.MODAL_ELEMENT.addEventListener('click', (e) => {
+    this.#modalContainer.addEventListener('click', (e) => {
       if(e.target.classList.contains('modal')) { this.closeModal(); }
     })
   }
@@ -16,11 +26,13 @@ export default class ModalController {
   #createModal() {
     const newModal = document.createElement('div');
     newModal.classList.add('modal');
+    this.#modalContainer = newModal;
 
     const modalWindow = document.createElement('div');
     modalWindow.classList.add('modalWindow');
 
     const modalHeader = document.createElement('div');
+    modalHeader.classList.add('modalHeader');
     modalHeader.innerText = 'Add new note';
 
     const modalFooter = document.createElement('div');
@@ -30,7 +42,7 @@ export default class ModalController {
 
     newModal.appendChild(modalWindow);
 
-    document.body.appendChild(modalWindow);
+    document.body.appendChild(newModal);
   }
 
   #createModalContent() {
@@ -49,6 +61,7 @@ export default class ModalController {
     noteTitleInput.id = 'titleInput';
     noteTitleInput.classList.add('title');
     noteTitleInput.placeholder = 'Title...';
+    this.#titleInput = noteTitleInput;
     noteTitleLabel.appendChild(noteTitleInput);
 
     const noteTextLabel = document.createElement('label');
@@ -58,11 +71,17 @@ export default class ModalController {
     noteTextArea.placeholder = 'Text...';
     noteTextArea.cols = 30;
     noteTextArea.rows = 10;
+    this.#textarea = noteTextArea;
     noteTextLabel.appendChild(noteTextArea);
 
     const submitButton = document.createElement('button');
     submitButton.id = 'addNewNote';
     submitButton.classList.add('addNewNote');
+    submitButton.innerText = 'Add';
+    submitButton.addEventListener('click', (eventObject) => {
+      eventObject.preventDefault();
+      this.#submitFunction()
+    })
 
     form.append(noteTitleLabel, noteTextLabel, submitButton);
     return form;
@@ -72,22 +91,41 @@ export default class ModalController {
     const datePickerContainer = document.createElement('div');
     datePickerContainer.classList.add('datePickerContainer');
 
-    new DatePicker(datePickerContainer);
+    this.#datePickerInstance = new DatePicker(datePickerContainer);
 
     return datePickerContainer;
   }
 
+  #submitFunction() {
+    const check = (this.#titleInput.value || this.#textarea.value )
+        && window.localStorage.getItem('userId');
+    if(check) {
+      const reservedDate = this.#datePickerInstance.selectedDate;
+      const reservedDateString = reservedDate
+          ? `${reservedDate.getFullYear()}-${reservedDate.getMonth() + 1}-${reservedDate.getDate()}`
+          : null;
+
+      const newNoteObject= {};
+      newNoteObject.noteTitle = this.#titleInput.value;
+      newNoteObject.noteText = this.#textarea.value;
+      newNoteObject.reservedDate = reservedDateString;
+      newNoteObject.userId = window.localStorage.getItem('userId');
+
+      debugger;
+
+      this.#ajaxSenderInstance.addNewNote(newNoteObject);
+    }
+    else if(!window.localStorage.getItem('userId')) { location.href = '/index.html'; }
+    else { this.#windowAlerterInstance.alertDivConstructor('error', 'No text information provided'); }
+  }
+
+
   closeModal() {
-    this.MODAL_ELEMENT.classList.remove('opened');
+    this.#modalContainer.classList.remove('opened');
   }
 
   openModal() {
-    this.MODAL_ELEMENT.classList.add('opened');
+    this.#modalContainer.classList.add('opened');
   }
 
-  #submitFunction() {
-    const newNoteObject= {};
-
-    newNoteObject
-  }
 }

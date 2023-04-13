@@ -1,0 +1,377 @@
+
+@keyframes windowAppear {
+  0% { transform: translate(-50%, -50%) scale(0, 0); }
+  65% { transform: translate(-50%, -50%) scale(1.1, 1.1); }
+  100% { transform: translate(-50%, -50%) scale(1, 1); }
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+body {
+    background: var(--themeBackground);
+}
+
+
+#header {
+    width: 100vw;
+    height: 65px;
+    padding-inline: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: var(--themeBackground);
+}
+#leftSideBar {
+    width: 120px;
+    height: calc(100vh - 65px);
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: var(--themeBackground);
+    z-index: 2;
+}
+.menuIcon {
+    width: 100%;
+    margin: 5px auto;
+    padding: 10px 5px;
+    position: relative;
+    color: var(--menuIconColor);
+    transition: color 200ms, margin-left 200ms;
+    cursor: pointer;
+}
+.menuIcon > svg {
+    width: 25px;
+    margin-left: calc(50% - 13px);
+    transition: margin-left 200ms;
+}
+.menuIcon:hover > svg { margin-left: 0; }
+.menuIcon:hover,
+.menuIcon:focus,
+.menuIcon:active {
+    color: var(--menuIconColorHover);
+}
+
+.menuIcon:after {
+    content: attr(data-icon);
+    width: 0;
+    padding: 5px 0;
+    position: absolute;
+    opacity: 0;
+    transition: width 200ms, opacity 200ms;
+    overflow: hidden;
+    text-align: center;
+    color: var(--textColor);
+    white-space: nowrap;
+    text-transform: capitalize;
+}
+
+.menuIcon:hover:after,
+.menuIcon:focus:after,
+.menuIcon:active:after {
+    width: 85px;
+    opacity: 1;
+}
+.menuIcon.settingsIcon { margin: auto auto 5px auto; }
+#rightSideBar {
+    width: 25vw;
+    height: calc(100vh - 65px);
+    padding: 0 20px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background: var(--themeBackground);
+}
+#mainContent {
+    width: calc(75vw - 120px);
+    height: calc(100vh - 65px);
+    padding: 20px;
+    border-radius: 15px 15px 0 0;
+    position: fixed;
+    bottom: 0;
+    right: 25vw;
+    background: var(--themeMainContentBackground);
+    transition: bottom 350ms;
+}
+#mainContent.hiddenSmoothly { bottom: -100vh; }
+.appLogo {
+    height: 35px;
+}
+.addNewThought {
+    margin: 0 0 0 auto;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    color: var(--themeBackground);
+    background: #3aafae;
+    text-transform: lowercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 120ms, transform 200ms;
+}
+.addNewThought:hover {
+  transform: scale(1.1, 1.1);
+  background: #2b8080;
+}
+.addNewThought > .plusIcon {
+    width: 15px;
+    margin-inline: 5px;
+    transition: transform 300ms;
+}
+.addNewThought:hover > .plusIcon { transform: rotate(180deg); }
+.rightSidebarTop {
+    width: calc(25vw - 20px);
+}
+.nameAndAvatar {
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.welcome {
+    color: var(--textColor);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1.5em;
+}
+.welcome > span:first-child {
+    font-weight: 500;
+}
+.welcome > span:last-child {
+    font-weight: 900;
+}
+
+.userAvatar {
+    width: 100px;
+    border-radius: 50%;
+}
+hr {
+    width: 100%;
+    height: 1px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    border: none;
+    background: var(--elementsDividerColor);
+}
+.infoBlocksContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 50px;
+    place-items: center;
+}
+.blockTitle {
+    margin-bottom: 5px;
+    font-size: 1em;
+    color: var(--nonStandardTextColor);
+}
+.blockInfoContainer {
+    display: flex;
+    align-items: center;
+}
+.coloredBorder {
+    width: 4px;
+    height: 1.8em;
+    margin-right: 5px;
+    border-radius: 2px;
+}
+.infoBlock:nth-child(1) .coloredBorder { background: #679b30; }
+.infoBlock:nth-child(2) .coloredBorder { background: #e7d528; }
+.infoBlock:nth-child(3) .coloredBorder { background: #d34747; }
+.infoBlock:nth-child(4) .coloredBorder { background: #309f9f; }
+.numericInfo {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--textColor);
+}
+
+.modal {
+  width: 100vw;
+  height: 100vh;
+  background: #000000aa;
+  backdrop-filter: blur(4px);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 200ms;
+}
+.modal.opened {
+  z-index: 3;
+  opacity: 1;
+}
+.modalWindow {
+  background: var(--themeBackground);
+  border-radius: 15px;
+  box-shadow: 5px 5px 4px #000000;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0, 0);
+  transition: transform 300ms;
+}
+.modal.opened > .modalWindow {
+  animation: windowAppear 400ms 1;
+  transform: translate(-50%, -50%) scale(1, 1);
+}
+.modalHeader, .modalContent, .modalFooter { width: 100%; background: #ffffff;}
+.modalHeader {
+    padding: 10px 0 10px 25px;
+    background: var(--themeBackground);
+    height: 50px;
+    border-radius: 15px 15px 0 0;
+    font-size: 20px;
+    color: var(--textColor);
+    letter-spacing: 2px;
+}
+.modalFooter {
+    height: 50px;
+    border-radius: 0 0 15px 15px;
+    background: var(--themeBackground);
+}
+.modalContent {
+    background: var(--themeBackground);
+    display: flex;
+}
+.datePickerPreviousButton,
+.datePickerNextButton {
+  width: 15px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--menuIconColor);
+  cursor: pointer;
+  transition: color 120ms;
+}
+.datePickerPreviousButton:hover,
+ .datePickerNextButton:hover { color: var(--textColor); }
+.currentMonthDay.today {
+  border-radius: 5px;
+  border: 2px solid var(--textColor);
+}
+.currentMonthDay {
+  color: var(--textColor);
+  transition: background-color 120ms, border-radius 300ms;
+}
+.currentMonthDay:hover,
+.currentMonthDay.selected {
+  border-radius: 8px;
+  background: var(--datePickerHoverBackground);
+  color: var(--datePickerHoverTextColor);
+}
+.datePicker .weekDayName {
+  color: var(--nonStandardTextColor);
+  text-transform: capitalize;
+}
+.datePicker .datePickerHead > div { color: var(--textColor) }
+
+
+.openWindow {
+  width: 100%;
+  height: 0;
+  background: #ffffff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: height 300ms;
+}
+.note.fullScreened > .openWindow {
+  height: 100%;
+}
+
+#addNoteModal > .modalWindow {
+    width: 50%;
+    min-height: 30vh;
+}
+
+#addNoteModal .modalContent form label {
+    width: 100%;
+}
+#addNoteModal .modalContent form input {
+    width: 100%;
+    height: 35px;
+    margin-bottom: 15px;
+    padding-inline: 15px;
+    border: none;
+    border-radius: 8px;
+    background: var(--inputBackground);
+    outline: none;
+    color: var(--textColor);
+}
+#addNoteModal .modalContent form textarea {
+    width: 100%;
+    height: 30vh;
+    padding: 15px;
+    background: var(--inputBackground);
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    resize: none;
+    color: var(--textColor);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#addNoteModal .modalContent form textarea::-webkit-scrollbar { width: 6px; }
+#addNoteModal .modalContent form textarea::-webkit-scrollbar-thumb {
+    background: var(--menuIconColor);
+    border-radius: 3px;
+}
+#addNoteModal .modalContent form button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    background: var(--inputBackground);
+    color: var(--textColor);
+    font-size: 15px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    transition: background 120ms, color 120ms;
+}
+#addNoteModal .modalContent form button:hover {
+    background: var(--textColor);
+    color: var(--inputBackground);
+    font-style: italic;
+}
+
+#addNoteModal form {
+    width: 50%;
+    margin-inline: 10px;
+}
+#addNoteModal .datePickerContainer {
+    margin-inline: 10px;
+    border-radius: 8px;
+    background: var(--inputBackground);
+}
+.datePickerContainer {
+    width: 50%;
+    height: calc(50px + 30vh);
+    padding-inline: 10px;
+}
+.daysTable {
+    height: 30vh;
+}
+.datePickerHead {
+    height: 35px;
+    margin-bottom: 15px;
+}

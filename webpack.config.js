@@ -4,10 +4,10 @@ const webpack = require('webpack');
 module.exports = {
     mode: 'development',
     entry: {
-        schedulePage: '/pages/SchedulePage/scripts/schedule.js',
-        allNotesPage: '/pages/AllNotes/scripts/allNotes.js',
-        analyticsPage: '/pages/AnalyticsPage/scripts/analytics.js',
-        historyPage: '/pages/HistoryPage/scripts/history.js'
+        schedulePage: '/front/pages/SchedulePage/scripts/schedule.js',
+        allNotesPage: '/front/pages/AllNotes/scripts/allNotes.js',
+        analyticsPage: '/front/pages/AnalyticsPage/scripts/analytics.js',
+        historyPage: '/front/pages/HistoryPage/scripts/history.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

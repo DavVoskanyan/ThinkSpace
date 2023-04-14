@@ -7,23 +7,22 @@ import WindowAlerter from "/front/assets/globalScripts/WindowAlerter.js";
 
 
 /////////////////////////   I N I T I A L I Z I N G   S I D E B A R   //////////////////////////////
-const sidebar = new SideBarCreator(
+new SideBarCreator(
     document.querySelector('#leftSideBar'),
     document.querySelector('#mainContent'),
     'scheduler');
 
 /////////////////////////   I N I T I A L I Z I N G   W I N D O W   A L E R T E R   ////////////////////////
 
-const windowAlerter = new WindowAlerter(document.querySelector('#rightSideBar'));
-windowAlerter.alertDivConstructor('success', "It finally works!")
+new WindowAlerter(document.querySelector('#rightSideBar'));
 
 /////////////////////////   A D D   N E W   N O T E   M O D A L   //////////////////////////
 
 const newNoteModalController = new ModalController();
-const addNewNoteButton = document.querySelector('button.addNewThought');
+const addNewNoteButton = document.querySelector('button.addNewNote');
 addNewNoteButton.addEventListener('click', () => newNoteModalController.openModal() );
 
 
 ////////////////////////   I I T I L I Z I N G   S C H E D U L E R   /////////////////////////
 
-const scheduler = new Scheduler(document.querySelector('#schedulerMainContainer'));
+new Scheduler(document.querySelector('#schedulerMainContainer'), newNoteModalController);

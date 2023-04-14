@@ -1,41 +1,48 @@
 import '/front/assets/globalStyles/schedulerStyles.css';
 
-import ModalController from "/front/assets/globalScripts/ModalController.js";
-import DatePicker from "/front/assets/globalScripts/DatePicker.js";
+import AjaxSender from "/front/assets/globalScripts/AjaxSender.js";
 
 class Scheduler {
-    #ALL_NOTES_ARRAY = [ {date: new Date(2023, 2, 10)},
-                         {date: new Date(2023, 1, 10)},
-                         {date: new Date(2023, 2, 12)},
-                         {date: new Date(2023, 2, 10)} ];
+    static ALL_NOTES_ARRAY = [];
 
     #PARENT_NODE;
     #CURRENT_DATE_CONTAINER;
     #DAYS_ARRAY = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
     #MONTHS_ARRAY = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    #currentShowingDate;
+    static currentShowingDate;
     #CALENDARS_CONTAINER
+
+    #ajaxSenderInstance;
 
     #previousMonth;
     #currentMonth;
     #nextMonth;
 
-    #onDayNotesContainer;
+     static onDayNotesContainer;
     #notesListElementInContainer;
-    #singleNoteContainer;
+     static singleNoteContainer;
 
     #addNoteModalContainer;
     #datePickerController;
 
-    constructor(parentNode) {
-        this.#PARENT_NODE = parentNode;
-        this.#currentShowingDate = new Date();
+    constructor(parentNode, modalController) {
+        this.#ajaxSenderInstance = new AjaxSender();
+        (async () => {
+            Scheduler.ALL_NOTES_ARRAY = await this.#ajaxSenderInstance.getAllNotesById(
+                window.localStorage.getItem('userId')
+            )
+             
 
-        // this.#datePickerController = new DatePicker(document.querySelector('.datePickerContainer'));
-        this.#addNoteModalContainer = new ModalController('addNoteModal');
+            this.#PARENT_NODE = parentNode;
+             Scheduler.currentShowingDate = new Date();
 
-        this.#createSchedulerContainer();
-        this.#createInDayNotes();
+            this.#addNoteModalContainer = modalController;
+            this.#datePickerController = modalController.datePickerInstance;
+            modalController.dynamicAddingMethod = this.addNoteDynamically;
+
+            this.#createSchedulerContainer();
+            this.#createInDayNotes();
+        })();
     }
 
     #createSchedulerContainer() {
@@ -61,9 +68,9 @@ class Scheduler {
         previousMonthButton.classList.add('previousMonthButton');
         previousMonthButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256 105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" fill="currentColor"/></svg>`;
         previousMonthButton.addEventListener('click', () => {
-            this.#currentShowingDate = new Date(
-                this.#currentShowingDate.getFullYear(),
-                this.#currentShowingDate.getMonth() - 1,
+             Scheduler.currentShowingDate = new Date(
+                 Scheduler.currentShowingDate.getFullYear(),
+                 Scheduler.currentShowingDate.getMonth() - 1,
                 1);
             this.#nextMonth.remove();
 
@@ -76,7 +83,7 @@ class Scheduler {
             this.#currentMonth = this.#previousMonth;
 
             this.#previousMonth = this.#createCalendarPage(
-                new Date( this.#currentShowingDate.getFullYear(), this.#currentShowingDate.getMonth() - 1, 1 ),
+                new Date(  Scheduler.currentShowingDate.getFullYear(),  Scheduler.currentShowingDate.getMonth() - 1, 1 ),
                 'previousShownMonth'
             );
             this.#CALENDARS_CONTAINER.insertBefore(this.#previousMonth, this.#currentMonth);
@@ -88,9 +95,9 @@ class Scheduler {
         nextMonthButton.classList.add('nextMonthButton');
         nextMonthButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256 105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" fill="currentColor"/></svg>`;
         nextMonthButton.addEventListener('click', () => {
-            this.#currentShowingDate = new Date(
-                this.#currentShowingDate.getFullYear(),
-                this.#currentShowingDate.getMonth() + 1,
+             Scheduler.currentShowingDate = new Date(
+                 Scheduler.currentShowingDate.getFullYear(),
+                 Scheduler.currentShowingDate.getMonth() + 1,
                 1);
 
             this.#previousMonth.remove();
@@ -104,7 +111,7 @@ class Scheduler {
             this.#currentMonth = this.#nextMonth;
 
             this.#nextMonth = this.#createCalendarPage(
-                new Date( this.#currentShowingDate.getFullYear(), this.#currentShowingDate.getMonth() + 1, 1 ),
+                new Date(  Scheduler.currentShowingDate.getFullYear(),  Scheduler.currentShowingDate.getMonth() + 1, 1 ),
                 'nextBeShownMonth'
             );
             this.#CALENDARS_CONTAINER.appendChild(this.#nextMonth);
@@ -140,15 +147,15 @@ class Scheduler {
         this.#CALENDARS_CONTAINER = calendarsContainer;
 
         this.#previousMonth = this.#createCalendarPage(
-            new Date( this.#currentShowingDate.getFullYear(), this.#currentShowingDate.getMonth() - 1, 1 ),
+            new Date(  Scheduler.currentShowingDate.getFullYear(),  Scheduler.currentShowingDate.getMonth() - 1, 1 ),
             'previousShownMonth'
         );
         this.#currentMonth = this.#createCalendarPage(
-            this.#currentShowingDate,
+             Scheduler.currentShowingDate,
             'currentShowingMonth'
         );
         this.#nextMonth = this.#createCalendarPage(
-            new Date( this.#currentShowingDate.getFullYear(), this.#currentShowingDate.getMonth() + 1, 1 ),
+            new Date(  Scheduler.currentShowingDate.getFullYear(),  Scheduler.currentShowingDate.getMonth() + 1, 1 ),
             'nextBeShownMonth'
         );
 
@@ -192,24 +199,26 @@ class Scheduler {
         return calendarPage;
     }
     #setValueOfDateLine() {
-        this.#CURRENT_DATE_CONTAINER.innerHTML = `  <span>${this.#MONTHS_ARRAY[this.#currentShowingDate.getMonth()]}</span>
-                                                    <span>${this.#currentShowingDate.getFullYear()}</span>`;
+        this.#CURRENT_DATE_CONTAINER.innerHTML = `  <span>${this.#MONTHS_ARRAY[ Scheduler.currentShowingDate.getMonth()]}</span>
+                                                    <span>${ Scheduler.currentShowingDate.getFullYear()}</span>`;
     }
 
     #createDayButton(dateObject) {
         const inDayButton = document.createElement('button');
         inDayButton.classList.add('inDayButton');
+         
 
-        const notesForDay = this.#ALL_NOTES_ARRAY.filter(note => {
-            return note['date'].getFullYear() === dateObject.getFullYear()
-                && note['date'].getMonth() === dateObject.getMonth()
-                && note['date'].getDate() === dateObject.getDate();
+        const notesForDay =  Scheduler.ALL_NOTES_ARRAY.filter(note => {
+            const currentNoteDate = new Date(note['noteForDate']);
+            return currentNoteDate.getFullYear() === dateObject.getFullYear()
+                && currentNoteDate.getMonth() === dateObject.getMonth()
+                && currentNoteDate.getDate() === dateObject.getDate();
         }).length;
 
         inDayButton.innerText = notesForDay <= 5 ? notesForDay : '5+';
 
         inDayButton.addEventListener('click', () => {
-            this.#openInDayNotes(dateObject);
+             Scheduler.openInDayNotes(dateObject);
         })
 
         const inDayAddNoteButton = document.createElement('button');
@@ -219,8 +228,8 @@ class Scheduler {
         inDayAddNoteButton.addEventListener('click', (e) => {
             this.#datePickerController.selectDate(
                 new Date(
-                    this.#currentShowingDate.getFullYear(),
-                    this.#currentShowingDate.getMonth(),
+                     Scheduler.currentShowingDate.getFullYear(),
+                     Scheduler.currentShowingDate.getMonth(),
                     parseInt(e.currentTarget.parentNode.childNodes[0].nodeValue)
                 )
             );
@@ -238,7 +247,11 @@ class Scheduler {
         closeButton.classList.add('closeButton');
         closeButton.innerText = 'Cancel';
         closeButton.addEventListener('click',
-            () => this.#onDayNotesContainer.classList.remove('isOpen'));
+            () => {
+                Scheduler.onDayNotesContainer.classList.remove('isOpen');
+                this.#notesListElementInContainer.innerHTML = '';
+            }
+        );
 
         const notesList = document.createElement('div');
         notesList.classList.add('notesList');
@@ -246,33 +259,61 @@ class Scheduler {
 
         const singleNoteContainer = document.createElement('div');
         singleNoteContainer.classList.add('singleNoteContainer');
-        this.#singleNoteContainer = singleNoteContainer;
+        Scheduler.singleNoteContainer = singleNoteContainer;
 
         onDayNotesContainer.append(singleNoteContainer, notesList, closeButton);
 
-        this.#onDayNotesContainer = onDayNotesContainer;
+        Scheduler.onDayNotesContainer = onDayNotesContainer;
         this.#PARENT_NODE.appendChild(onDayNotesContainer);
     }
-    #openInDayNotes(dateObject) {
-        this.#singleNoteContainer.innerHTML = '';
-        const selectedDateNotes = this.#ALL_NOTES_ARRAY.filter(note => {
-            return note.date.getFullYear() === dateObject.getFullYear()
-                && note.date.getMonth() === dateObject.getMonth()
-                && note.date.getDate() === dateObject.getDate()
+     static openInDayNotes(dateObject) {
+        Scheduler.singleNoteContainer.innerHTML = '';
+
+        const selectedDateNotes =  Scheduler.ALL_NOTES_ARRAY.filter(note => {
+            const currentDate = new Date(note['noteForDate']);
+
+            return currentDate.getFullYear() === dateObject.getFullYear()
+                && currentDate.getMonth() === dateObject.getMonth()
+                && currentDate.getDate() === dateObject.getDate()
         })
         selectedDateNotes.forEach(note => {
             const noteDomObject = document.createElement('div');
             noteDomObject.classList.add('noteObjectInList');
             noteDomObject.addEventListener('click', () => {
-                this.#singleNoteContainer.innerHTML = ` <h2 class="noteTitle">${note.title}</h2>
-                                                    <p class="noteText">${note.text}</p>`;
-                this.#singleNoteContainer.classList.add('noteIsSelected');
+                Scheduler.singleNoteContainer.innerHTML = ` <h2 class="noteTitle">${note['noteTitle']}</h2>
+                                                    <p class="noteText">${note['noteText']}</p>`;
+                Scheduler.singleNoteContainer.classList.add('noteIsSelected');
             })
-            noteDomObject.innerHTML = ` <h2 class="noteTitle">${note.title}</h2>
-                                    <p class="noteText">${note.text}</p>`;
+            noteDomObject.innerHTML = ` <h2 class="noteTitle">${note['noteTitle']}</h2>
+                                    <p class="noteText">${note['noteText']}</p>`;
             this.#notesListElementInContainer.appendChild(noteDomObject);
         })
-        this.#onDayNotesContainer.classList.add('isOpen');
+        Scheduler.onDayNotesContainer.classList.add('isOpen');
+    }
+
+    addNoteDynamically(noteObject) {
+         Scheduler.ALL_NOTES_ARRAY.push(noteObject);
+
+        const inNoteDate = new Date(noteObject['reservedDate']);
+        const check = inNoteDate.getFullYear() === Scheduler.currentShowingDate.getFullYear()
+            && inNoteDate.getMonth() === Scheduler.currentShowingDate.getMonth();
+
+        if(check) {
+            const dayElement = document.querySelectorAll('.currentShowingMonth .currentShownMonthDay')[inNoteDate.getDate() -1]
+            const inDayButton = dayElement.querySelector(':scope .inDayButton');
+
+            if(inDayButton) {inDayButton.innerText = parseInt(inDayButton.innerText + 1)}
+            else {
+                const newInDayButton = document.createElement('button');
+                newInDayButton.classList.add('inDayButton');
+                newInDayButton.innerText = '1';
+                newInDayButton.addEventListener('click', () => {
+                    Scheduler.openInDayNotes(inNoteDate);
+                });
+
+                dayElement.appendChild(newInDayButton);
+            }
+        }
     }
 }
 

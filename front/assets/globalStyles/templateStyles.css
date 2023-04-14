@@ -56,7 +56,9 @@ body {
     margin-left: calc(50% - 13px);
     transition: margin-left 200ms;
 }
+.menuIcon.active > svg,
 .menuIcon:hover > svg { margin-left: 0; }
+.menuIcon.active,
 .menuIcon:hover,
 .menuIcon:focus,
 .menuIcon:active {
@@ -76,7 +78,7 @@ body {
     white-space: nowrap;
     text-transform: capitalize;
 }
-
+.menuIcon.active:after,
 .menuIcon:hover:after,
 .menuIcon:focus:after,
 .menuIcon:active:after {
@@ -108,7 +110,7 @@ body {
 .appLogo {
     height: 35px;
 }
-.addNewThought {
+.addNewNote {
     margin: 0 0 0 auto;
     padding: 10px;
     border: none;
@@ -122,16 +124,16 @@ body {
     cursor: pointer;
     transition: background 120ms, transform 200ms;
 }
-.addNewThought:hover {
+.addNewNote:hover {
   transform: scale(1.1, 1.1);
   background: #2b8080;
 }
-.addNewThought > .plusIcon {
+.addNewNote > .plusIcon {
     width: 15px;
     margin-inline: 5px;
     transition: transform 300ms;
 }
-.addNewThought:hover > .plusIcon { transform: rotate(180deg); }
+.addNewNote:hover > .plusIcon { transform: rotate(180deg); }
 .rightSidebarTop {
     width: calc(25vw - 20px);
 }

@@ -9,16 +9,17 @@ export default class AjaxSender {
     }
 
     async getAllNotesById(userId) {
-        let notes = null;
+        let notes = [];
         await fetch(`${this.#BACK_SERVER_URL}/getAllNotes/${userId}`, {
             method: 'GET',
         })
             .then(response => response.json())
             .then(response => notes = response);
-        console.log(notes);
+        return notes;
     }
-    addNewNote(noteObject) {
-        fetch(`${this.#BACK_SERVER_URL}/setNewNote`, {
+    async addNewNote(noteObject) {
+        let result;
+        await fetch(`${this.#BACK_SERVER_URL}/setNewNote`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -28,9 +29,12 @@ export default class AjaxSender {
             .then(response => response.json())
             .then(response => {
                 if(response && response['status']) {
-                    console.log(response);
                     this.#windowAlerterInstance.alertDivConstructor('success', 'New note is successfully added')
+                } else {
+                    this.#windowAlerterInstance.alertDivConstructor('error', 'Something went wrong...')
                 }
+                result = response;
             });
+        return result;
     }
 }

@@ -337,13 +337,14 @@ class NotesView {
   }
 
   /**
+   * @param id
    * @param title
    * @param description
    * @param selectedDate
    *
    * @public addNewNote -> calls "Note" class, passes all parameters and adds to dom hierarchy.
    */
-  addNewNote(title, description, selectedDate) {
+  addNewNote(id, title, description, selectedDate) {
     const newNote = new Note(title, description, selectedDate, this.#openNoteContainer);
 
     this.#notesContainer.insertBefore(newNote.domElement, this.#notesContainer.firstChild);

@@ -74,6 +74,7 @@ class SideBarCreator {
         this.#SIDEBAR_SECTION_TITLES.forEach(title => {
             const newSection = document.createElement('a');
             newSection.classList.add('menuIcon');
+            if(currentPageTitle === title) { newSection.classList.add('active'); }
             newSection.dataset['icon'] = title;
             newSection.innerHTML = this.#SIDEBAR_SECTION_ICONS[title];
 

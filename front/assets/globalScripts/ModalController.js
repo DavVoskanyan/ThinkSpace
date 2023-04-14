@@ -7,11 +7,13 @@ import DatePicker from "/front/assets/globalScripts/DatePicker.js";
 export default class ModalController {
   #ajaxSenderInstance;
   #windowAlerterInstance;
-  #datePickerInstance;
+  datePickerInstance;
 
   #modalContainer;
   #titleInput;
   #textarea;
+
+  dynamicAddingMethod;
 
   constructor() {
     this.#ajaxSenderInstance = new AjaxSender();
@@ -91,16 +93,16 @@ export default class ModalController {
     const datePickerContainer = document.createElement('div');
     datePickerContainer.classList.add('datePickerContainer');
 
-    this.#datePickerInstance = new DatePicker(datePickerContainer);
+    this.datePickerInstance = new DatePicker(datePickerContainer);
 
     return datePickerContainer;
   }
 
-  #submitFunction() {
+  async #submitFunction() {
     const check = (this.#titleInput.value || this.#textarea.value )
         && window.localStorage.getItem('userId');
     if(check) {
-      const reservedDate = this.#datePickerInstance.selectedDate;
+      const reservedDate = this.datePickerInstance.selectedDate;
       const reservedDateString = reservedDate
           ? `${reservedDate.getFullYear()}-${reservedDate.getMonth() + 1}-${reservedDate.getDate()}`
           : null;
@@ -111,9 +113,8 @@ export default class ModalController {
       newNoteObject.reservedDate = reservedDateString;
       newNoteObject.userId = window.localStorage.getItem('userId');
 
-      debugger;
-
-      this.#ajaxSenderInstance.addNewNote(newNoteObject);
+      newNoteObject.noteId = await this.#ajaxSenderInstance.addNewNote(newNoteObject).newRowId;;
+      this.dynamicAddingMethod(newNoteObject);
     }
     else if(!window.localStorage.getItem('userId')) { location.href = '/index.html'; }
     else { this.#windowAlerterInstance.alertDivConstructor('error', 'No text information provided'); }
@@ -122,6 +123,7 @@ export default class ModalController {
 
   closeModal() {
     this.#modalContainer.classList.remove('opened');
+    this.datePickerInstance.dropSelectedDate();
   }
 
   openModal() {

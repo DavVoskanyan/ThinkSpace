@@ -24,7 +24,7 @@ const windowAlerter = new WindowAlerter(document.querySelector('#rightSideBar'))
 
 /////////////////////////   A D D   N E W   N O T E   M O D A L   //////////////////////////
 const newNoteModalController = new ModalController('addNoteModal');
-const addNewNoteButton = document.querySelector('button.addNewThought');
+const addNewNoteButton = document.querySelector('button.addNewNote');
 addNewNoteButton.addEventListener('click', () => newNoteModalController.openModal() );
 
 

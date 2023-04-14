@@ -58,7 +58,7 @@
 
 .notesContainer.notesGrid {
   width: 100%;
-  max-height: calc(100% - 15px);
+  max-height: calc(100% - 30px);
   padding: 15px 10px 15px 10px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -140,3 +140,6 @@
   color: var(--textColor);
 }
 
+
+#startDatePicker,
+#endDatePicker { padding-inline: 0; }

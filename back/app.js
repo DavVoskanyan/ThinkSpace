@@ -15,8 +15,7 @@ app.use(bodyParser.json());
 app.use(corsParser());
 
 app.get('/getAllNotes/:userId', (req, res) => {
-    pool.query(`SELECT * FROM usersTable WHERE userId=${req.params['userId']}`, (err, rows) => {
-        console.log('rows ->', rows);
+    pool.query(`SELECT * FROM notesTable WHERE userId=${req.params['userId']}`, (err, rows) => {
         res.json(rows);
     });
 });
@@ -30,8 +29,7 @@ app.post('/setNewNote', (req, res) => {
                       ${`'${req.body['reservedDate']}'` ?? 'NULL'},
                       ${req.body['userId']});`,
         (err, rows) => {
-        console.log(err);
-            res.json({status: !err});
+            res.json({status: !err, newRowId: rows.insertId});
         }
     );
 })

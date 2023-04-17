@@ -33,9 +33,9 @@ class NotesView {
    *
    *          properties that are connected with notes list
    *
-   * @private #notesContainer {HTMLDivElement} -> DOM-element which is parent element of notes. Can have 2 states:
+   * @private notesContainer {HTMLDivElement} -> DOM-element which is parent element of notes. Can have 2 states:
    *                                              grid (with "notesGrid" class) and list (with "notesList" class).
-   * @private #allNotesObjects [{Note},...] -> Array which saves all created objects of notes.
+   * @private allNotesObjects [{Note},...] -> Array which saves all created objects of notes.
    */
   #isGrid;
   #isFilterable;
@@ -48,9 +48,9 @@ class NotesView {
   #editAndSubmitButton;
   #buttonStatus;
 
-  #notesContainer;
+  static notesContainer;
 
-  #allNotesObjects;
+  static allNotesObjects;
 
   #filterLine;
   filterStartDate;
@@ -72,7 +72,7 @@ class NotesView {
     this.#isFilterable = isFilterable ?? true;
     this.#isDeletable = isDeletable ?? true;
     this.#buttonStatus = 'edit';
-    this.#allNotesObjects = [];
+    NotesView.allNotesObjects = [];
 
     const elementContainer = document.createElement("div");
     elementContainer.classList.add('notesView');
@@ -119,8 +119,8 @@ class NotesView {
                                          5.85H51.14c-3.22,0-5.85-2.63-5.85-5.85V5.85C45.28,2.63,47.92,0,51.14,0L51.14,0z"/>
                             </svg>`
     gridButton.addEventListener('click', () => {
-      this.#notesContainer.classList.remove('notesList');
-      this.#notesContainer.classList.add('notesGrid');
+      NotesView.notesContainer.classList.remove('notesList');
+      NotesView.notesContainer.classList.add('notesGrid');
       this.#isGrid = true;
     })
 
@@ -132,8 +132,8 @@ class NotesView {
                                 <path d="M135,120H15c-8.284,0-15,6.716-15,15s6.716,15,15,15h120c8.284,0,15-6.716,15-15S143.284,120,135,120z"/>
                             </svg>`;
     listButton.addEventListener('click', () => {
-      this.#notesContainer.classList.remove('notesGrid');
-      this.#notesContainer.classList.add('notesList');
+      NotesView.notesContainer.classList.remove('notesGrid');
+      NotesView.notesContainer.classList.add('notesList');
       this.#isGrid = false;
     })
 
@@ -163,7 +163,7 @@ class NotesView {
    */
   filterAndHide(searchText, startDate, endDate) {
     searchText = searchText.toLowerCase().trim();
-    const domObjectsOfNotes = this.#allNotesObjects.map(noteObject => noteObject.domElement);
+    const domObjectsOfNotes = NotesView.allNotesObjects.map(noteObject => noteObject.domElement);
     const valuesOfTitles = domObjectsOfNotes.map(domObject => domObject.querySelector(':scope .noteTitle').innerText.toLowerCase().trim());
     const valuesOfTexts = domObjectsOfNotes.map(domObject => domObject.querySelector(':scope .noteText').innerText.toLowerCase().trim());
 
@@ -258,7 +258,7 @@ class NotesView {
       openNoteContainer.appendChild(editAndSubmitButton);
     }
 
-    this.#openNoteContainer = openNoteContainer;
+    NotesView.openNoteContainer = openNoteContainer;
     return openNoteContainer;
   }
 
@@ -266,7 +266,7 @@ class NotesView {
    * @private #closeNoteModalContainer -> closes #openNoteContainer
    */
   #closeNoteModalContainer() {
-    this.#openNoteContainer.classList.remove('open');
+    NotesView.openNoteContainer.classList.remove('open');
     this.#changeButtonState('edit');
   }
 
@@ -323,7 +323,7 @@ class NotesView {
   }
 
   /**
-   * @private #createNotesContainer -> creates #notesContainer and returns it as dom-element.
+   * @private #createNotesContainer -> creates notesContainer and returns it as dom-element.
    *
    * @returns {HTMLDivElement}
    */
@@ -332,23 +332,25 @@ class NotesView {
     notesContainer.classList.add('notesContainer');
     notesContainer.classList.add(this.#isGrid ? 'notesGrid' : 'notesList');
 
-    this.#notesContainer = notesContainer;
+    NotesView.notesContainer = notesContainer;
     return notesContainer;
   }
 
   /**
-   * @param id
-   * @param title
-   * @param description
-   * @param selectedDate
+   * @param noteId
+   * @param noteTitle
+   * @param noteText
+   * @param noteForDate
    *
    * @public addNewNote -> calls "Note" class, passes all parameters and adds to dom hierarchy.
    */
-  addNewNote(id, title, description, selectedDate) {
-    const newNote = new Note(title, description, selectedDate, this.#openNoteContainer);
+  static addNewNote({noteId, noteTitle, noteText, noteForDate}) {
+    debugger;
 
-    this.#notesContainer.insertBefore(newNote.domElement, this.#notesContainer.firstChild);
-    this.#allNotesObjects.push(newNote);
+    const newNote = new Note(noteId, noteTitle, noteText, noteForDate, NotesView.openNoteContainer);
+
+    NotesView.notesContainer.insertBefore(newNote.domElement, NotesView.notesContainer.firstChild);
+    NotesView.allNotesObjects.push(newNote);
   }
 }
 

@@ -23,12 +23,13 @@ const ajaxSender = new AjaxSender();
          window.localStorage.getItem('userId')
      )
      allNotes.forEach(noteObject => {
-          notesContainer.addNewNote(
-              noteObject['userId'],
-              noteObject['noteTitle'],
-              noteObject['noteText'],
-              (noteObject['noteForDate'] ? new Date(noteObject['noteForDate']) : null)
-          );
+          NotesView.addNewNote({
+              noteId: noteObject['noteId'],
+              noteTitle: noteObject['noteTitle'],
+              noteText: noteObject['noteText'],
+              noteForDate: (noteObject['noteForDate'] ? new Date(noteObject['noteForDate']) : null),
+              userId: noteObject['userId'],
+          } );
      });
 })();
 
@@ -44,4 +45,6 @@ new WindowAlerter(document.querySelector('#rightSideBar'));
 
 const newNoteModalController = new ModalController();
 const addNewNoteButton = document.querySelector('button.addNewNote');
+
+newNoteModalController.dynamicAddingMethod = NotesView.addNewNote;
 addNewNoteButton.addEventListener('click', () => newNoteModalController.openModal() );

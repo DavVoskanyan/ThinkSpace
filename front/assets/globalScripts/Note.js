@@ -8,10 +8,11 @@ class Note {
   creationDate;
   selectedDate;
 
-  constructor(title, description, selectedDate, openModalElement) {
+  constructor(id, title, description, selectedDate, openModalElement) {
+    this.id = id;
     this.title = title;
     this.description = description;
-    this.selectedDate = selectedDate;
+    this.selectedDate = selectedDate ? new Date(selectedDate) : null;
     this.openModalElement = openModalElement.querySelector(':scope .noteInfoContainer');
     this.openEditModalElement = openModalElement.querySelector(':scope .noteEditionContainer');
 
@@ -33,19 +34,20 @@ class Note {
 
     let month, date;
     if(this.selectedDate) {
-      month = selectedDate.getMonth() + 1 > 9
-          ? selectedDate.getMonth() + 1
-          : `0${selectedDate.getMonth() + 1}`;
-      date = selectedDate.getDate() > 9
-          ? selectedDate.getDate()
-          : `0${selectedDate.getDate()}`;
+      month = this.selectedDate.getMonth() + 1 > 9
+          ? this.selectedDate.getMonth() + 1
+          : `0${this.selectedDate.getMonth() + 1}`;
+      date = this.selectedDate.getDate() > 9
+          ? this.selectedDate.getDate()
+          : `0${this.selectedDate.getDate()}`;
 
-      domDate.innerText = `${selectedDate.getFullYear()}.${month}.${date}`;
+      domDate.innerText = `${this.selectedDate.getFullYear()}.${month}.${date}`;
     }
 
 
     this.domElement.append(domTitle, domText, domDate);
     this.domElement.addEventListener('click', () => this.addToOpenElement(title, description, selectedDate));
+    debugger;
   }
 
 

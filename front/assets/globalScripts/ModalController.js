@@ -98,26 +98,37 @@ export default class ModalController {
     return datePickerContainer;
   }
 
-  async #submitFunction() {
+   #submitFunction() {
     const check = (this.#titleInput.value || this.#textarea.value )
         && window.localStorage.getItem('userId');
     if(check) {
-      const reservedDate = this.datePickerInstance.selectedDate;
-      const reservedDateString = reservedDate
-          ? `${reservedDate.getFullYear()}-${reservedDate.getMonth() + 1}-${reservedDate.getDate()}`
+      const noteForDate = this.datePickerInstance.selectedDate;
+      const noteForDateString = noteForDate
+          ? `${noteForDate.getFullYear()}-${noteForDate.getMonth() + 1}-${noteForDate.getDate()}`
           : null;
 
       const newNoteObject= {};
       newNoteObject.noteTitle = this.#titleInput.value;
       newNoteObject.noteText = this.#textarea.value;
-      newNoteObject.reservedDate = reservedDateString;
+      newNoteObject.noteForDate = noteForDateString;
       newNoteObject.userId = window.localStorage.getItem('userId');
 
-      newNoteObject.noteId = await this.#ajaxSenderInstance.addNewNote(newNoteObject).newRowId;;
-      this.dynamicAddingMethod(newNoteObject);
+      (async () => {
+        let response = await this.#ajaxSenderInstance.addNewNote(newNoteObject);
+
+        this.dynamicAddingMethod({
+          noteId: response.newRowId,
+          noteTitle: this.#titleInput.value,
+          noteText: this.#textarea.value,
+          noteForDate: noteForDateString,
+          userId: window.localStorage.getItem('userId')
+        });
+      })()
     }
     else if(!window.localStorage.getItem('userId')) { location.href = '/index.html'; }
     else { this.#windowAlerterInstance.alertDivConstructor('error', 'No text information provided'); }
+
+    this.closeModal();
   }
 
 

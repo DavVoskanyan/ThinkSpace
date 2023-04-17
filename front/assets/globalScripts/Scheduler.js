@@ -1,6 +1,7 @@
 import '/front/assets/globalStyles/schedulerStyles.css';
 
 import AjaxSender from "/front/assets/globalScripts/AjaxSender.js";
+import ModalController from "/front/assets/globalScripts/ModalController.js";
 
 class Scheduler {
     static ALL_NOTES_ARRAY = [];
@@ -19,7 +20,7 @@ class Scheduler {
     #nextMonth;
 
      static onDayNotesContainer;
-    #notesListElementInContainer;
+    static notesListElementInContainer;
      static singleNoteContainer;
 
     #addNoteModalContainer;
@@ -249,13 +250,13 @@ class Scheduler {
         closeButton.addEventListener('click',
             () => {
                 Scheduler.onDayNotesContainer.classList.remove('isOpen');
-                this.#notesListElementInContainer.innerHTML = '';
+                Scheduler.notesListElementInContainer.innerHTML = '';
             }
         );
 
         const notesList = document.createElement('div');
         notesList.classList.add('notesList');
-        this.#notesListElementInContainer = notesList;
+        Scheduler.notesListElementInContainer = notesList;
 
         const singleNoteContainer = document.createElement('div');
         singleNoteContainer.classList.add('singleNoteContainer');
@@ -271,7 +272,6 @@ class Scheduler {
 
         const selectedDateNotes =  Scheduler.ALL_NOTES_ARRAY.filter(note => {
             const currentDate = new Date(note['noteForDate']);
-
             return currentDate.getFullYear() === dateObject.getFullYear()
                 && currentDate.getMonth() === dateObject.getMonth()
                 && currentDate.getDate() === dateObject.getDate()
@@ -286,7 +286,7 @@ class Scheduler {
             })
             noteDomObject.innerHTML = ` <h2 class="noteTitle">${note['noteTitle']}</h2>
                                     <p class="noteText">${note['noteText']}</p>`;
-            this.#notesListElementInContainer.appendChild(noteDomObject);
+            Scheduler.notesListElementInContainer.appendChild(noteDomObject);
         })
         Scheduler.onDayNotesContainer.classList.add('isOpen');
     }
@@ -294,7 +294,7 @@ class Scheduler {
     addNoteDynamically(noteObject) {
          Scheduler.ALL_NOTES_ARRAY.push(noteObject);
 
-        const inNoteDate = new Date(noteObject['reservedDate']);
+        const inNoteDate = new Date(noteObject['noteForDate']);
         const check = inNoteDate.getFullYear() === Scheduler.currentShowingDate.getFullYear()
             && inNoteDate.getMonth() === Scheduler.currentShowingDate.getMonth();
 
@@ -302,7 +302,7 @@ class Scheduler {
             const dayElement = document.querySelectorAll('.currentShowingMonth .currentShownMonthDay')[inNoteDate.getDate() -1]
             const inDayButton = dayElement.querySelector(':scope .inDayButton');
 
-            if(inDayButton) {inDayButton.innerText = parseInt(inDayButton.innerText + 1)}
+            if(inDayButton) {inDayButton.innerText = parseInt(parseInt(inDayButton.innerText) + 1)}
             else {
                 const newInDayButton = document.createElement('button');
                 newInDayButton.classList.add('inDayButton');

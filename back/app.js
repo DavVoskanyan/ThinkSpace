@@ -26,7 +26,7 @@ app.post('/setNewNote', (req, res) => {
                      ('${req.body['noteTitle']}',
                       '${req.body['noteText']}',
                       '${currentDateString}',
-                      ${`'${req.body['reservedDate']}'` ?? 'NULL'},
+                      ${`'${req.body['noteForDate']}'` ?? 'NULL'},
                       ${req.body['userId']});`,
         (err, rows) => {
             res.json({status: !err, newRowId: rows.insertId});

@@ -49,6 +49,7 @@
   position: static;
   transform: translate(0, 0);
   background: var(--themeBackground);
+  z-index: 2;
 }
 
 

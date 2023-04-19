@@ -37,4 +37,17 @@ export default class AjaxSender {
             });
         return result;
     }
+    async updateNote(noteObject) {
+        let returnResponse = null;
+        await fetch(`${this.#BACK_SERVER_URL}/updateNote/${noteObject['noteId']}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(noteObject)
+        })
+            .then(response => response.json())
+            .then(response => returnResponse = response);
+        return returnResponse;
+    }
 }

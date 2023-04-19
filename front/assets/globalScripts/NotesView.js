@@ -2,6 +2,7 @@ import '/front/assets/globalStyles/notesContainer.css';
 
 import Note from "/front/assets/globalScripts/Note.js";
 import DatePicker from "/front/assets/globalScripts/DatePicker.js";
+import AjaxSender from "/front/assets/globalScripts/AjaxSender.js";
 
 /**
  * @class "NotesView" creates list of notes and all functionality for them.
@@ -42,6 +43,8 @@ class NotesView {
   #isEditable;
   #isDeletable;
 
+  #ajaxSenderInstance;
+
   #openNoteContainer;
   #noteInfoContainer;
   #noteEditingContainer;
@@ -72,6 +75,9 @@ class NotesView {
     this.#isFilterable = isFilterable ?? true;
     this.#isDeletable = isDeletable ?? true;
     this.#buttonStatus = 'edit';
+
+    this.#ajaxSenderInstance = new AjaxSender();
+
     NotesView.allNotesObjects = [];
 
     const elementContainer = document.createElement("div");
@@ -248,7 +254,7 @@ class NotesView {
     const editAndSubmitButton = document.createElement('button');
     this.#editAndSubmitButton = editAndSubmitButton;
     editAndSubmitButton.classList.add("editAndSubmitButton", 'editState');
-    editAndSubmitButton.addEventListener('click', () => {this.#inNoteContainerEditOnClick(); console.log(this.#buttonStatus)});
+    editAndSubmitButton.addEventListener('click', () => this.#inNoteContainerEditOnClick());
     editAndSubmitButton.innerText = 'Edit';
 
     openNoteContainer.appendChild(closeButton);
@@ -278,6 +284,35 @@ class NotesView {
       this.#changeButtonState('edit');
 
       this.#changeContainerState('submit');
+      const newNoteTitle = document.querySelector(':scope .editNoteTitleInput').value;
+      const newNoteText = document.querySelector(':scope .editNoteTextInput').value;
+      const newNoteDate = document.querySelector('.openNoteContainer').dataset['date']
+          ? new Date(document.querySelector('.openNoteContainer').dataset['date'])
+          : null
+
+      this.#ajaxSenderInstance.updateNote({
+        noteId: parseInt(document.querySelector('.openNoteContainer').dataset['note']),
+        noteTitle: newNoteTitle,
+        noteText: newNoteText,
+        noteForDate: newNoteDate,
+      })
+
+      const currentNote = NotesView.allNotesObjects.filter(noteObject => {
+        return parseInt(noteObject.id) === parseInt(document.querySelector('.openNoteContainer').dataset['note']);
+      })[0];
+
+      currentNote.title = newNoteTitle;
+      currentNote.description = newNoteText;
+      currentNote.selectedDate = newNoteDate;
+
+      this.#noteInfoContainer.querySelector(':scope .openElementTitle').innerText = newNoteTitle;
+      this.#noteInfoContainer.querySelector(':scope .openElementDescription').innerText = newNoteText;
+
+      currentNote.domElement.querySelector(':scope .noteTitle').innerText = newNoteTitle;
+      currentNote.domElement.querySelector(':scope .noteText').innerText = newNoteText;
+      currentNote.domElement.querySelector(':scope .noteDate').innerText = newNoteDate;
+
+      this.#closeNoteModalContainer();
     }
     else {
       this.#changeButtonState('submit');
@@ -345,7 +380,6 @@ class NotesView {
    * @public addNewNote -> calls "Note" class, passes all parameters and adds to dom hierarchy.
    */
   static addNewNote({noteId, noteTitle, noteText, noteForDate}) {
-    debugger;
 
     const newNote = new Note(noteId, noteTitle, noteText, noteForDate, NotesView.openNoteContainer);
 

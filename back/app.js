@@ -34,10 +34,24 @@ app.post('/setNewNote', (req, res) => {
                       ${reservationDate},
                       ${req.body['userId']});`,
         (err, rows) => {
-        console.log(err);
+            console.log(err);
             res.json({status: !err, newRowId: rows.insertId});
         }
     );
+});
+app.put('/updateNote/:noteId', (req, res) => {
+    const reservationDate = req.body['noteForDate']
+        ? `'${req.body['noteForDate']}'`
+        : 'NULL' ;
+
+    pool.query(`UPDATE notesTable 
+                    SET noteTitle='${req.body['noteTitle']}', noteText='${req.body['noteText']}', noteForDate=${reservationDate}
+                    WHERE noteId=${req.params['noteId']}`,
+        (err, rows) => {
+            res.json({status: !err, updatedNoteId: req.params['noteId']})
+        }
+    )
+
 })
 
 

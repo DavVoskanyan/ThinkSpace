@@ -1,6 +1,7 @@
 class Note {
   id;
   domElement;
+  openedNoteContainer;
   openModalElement;
   openEditModalElement;
   title;
@@ -13,8 +14,10 @@ class Note {
     this.title = title;
     this.description = description;
     this.selectedDate = selectedDate ? new Date(selectedDate) : null;
+    this.openedNoteContainer = openModalElement;
     this.openModalElement = openModalElement.querySelector(':scope .noteInfoContainer');
     this.openEditModalElement = openModalElement.querySelector(':scope .noteEditionContainer');
+    console.log(this.openModalElement);
 
 
     this.domElement = document.createElement('div');
@@ -46,12 +49,16 @@ class Note {
 
 
     this.domElement.append(domTitle, domText, domDate);
-    this.domElement.addEventListener('click', () => this.addToOpenElement(title, description, selectedDate));
-    debugger;
+    this.domElement.addEventListener('click', () => this.addToOpenElement(this.id, this.title, this.description, this.selectedDate));
   }
 
 
-  addToOpenElement(title, description, date) {
+  addToOpenElement(id, title, description, date) {
+    this.openedNoteContainer.dataset['note'] = id;
+    this.openedNoteContainer.dataset['date'] = date
+        ? `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+        : '';
+
     this.openModalElement.innerHTML = '';
     this.openEditModalElement.innerHTML = '';
     this.openModalElement.classList.remove('open');

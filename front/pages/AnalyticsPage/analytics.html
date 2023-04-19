@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analytics</title>
+
+    <!--  icon  -->
+    <link rel="icon" href="/front/assets/forTabIcon.png">
+
+    <!--  fonts  -->
+
+    <!--  styles  -->
+    <link rel="stylesheet" href="/front/assets/globalStyles/globalCssProperties.css">
+    <link rel="stylesheet" href="/front/assets/globalStyles/templateStyles.css">
+
+    <!--  scripts  -->
+    <script type="module" defer src="/dist/analyticsPage.bundle.js"></script>
+</head>
+<body>
+<div id="header">
+    <img src="/front/assets/LogoDarkTheme.svg" alt="" class="appLogo">
+    <button class="addNewNote">
+        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="plusIcon">
+            <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/>
+        </svg>
+        add new note
+    </button>
+    <div class="rightSidebarTop"></div>
+</div>
+<div id="leftSideBar"></div>
+<div class="hiddenSmoothly" id="mainContent">
+    <div id="upperNumbersContainer">
+        <div id="allNotesNumberContainer" class="numberContainer">
+            <span class="forNumberText">All Notes Ever:</span>
+            <span class="number">0</span>
+        </div>
+        <div id="actualNotesNumberContainer" class="numberContainer">
+            <span class="forNumberText">Actual Notes:</span>
+            <span class="number">0</span>
+        </div>
+        <div id="expiredNotesNumberContainer" class="numberContainer">
+            <span class="forNumberText">Expired Notes:</span>
+            <span class="number">0</span>
+        </div>
+        <div id="undatedNotesNumberContainer" class="numberContainer">
+            <span class="forNumberText">Undated Notes:</span>
+            <span class="number">0</span>
+        </div>
+    </div>
+    <div id="canvasContainer">
+    </div>
+</div>
+<div id="rightSideBar">
+    <div class="nameAndAvatar">
+        <div class="welcome">
+            <span>Hello,</span>
+            <span class="userName">Sicmundus</span>
+        </div>
+        <img class="userAvatar" src="/front/assets/avatars/avatar_2.jpg" alt="">
+    </div>
+    <hr>
+</div>
+
+
+<div id="addNoteModal" class="modal">
+    <div class="modalWindow">
+        <div class="modalHeader">Add New Note</div>
+        <div class="modalContent">
+            <form>
+                <label>
+                    <input type="text" class="title" placeholder="Title...">
+                </label>
+                <label>
+                    <textarea class='description' cols="30" rows="10" placeholder="Text..."></textarea>
+                </label>
+                <button class="addNewNote"> Add </button>
+            </form>
+            <div class="datePickerContainer">
+            </div>
+        </div>
+        <div class="modalFooter"></div>
+    </div>
+</div>
+</body>
+</html>

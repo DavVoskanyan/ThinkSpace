@@ -195,7 +195,7 @@
   overflow: hidden;
   transition-duration: 200ms;
 }
-.forModuleContainer .daysTable { height: 30vh; }
+.forModuleContainer .daysTable { height: 26vh; }
 
 .dropValueButton {
   width: 30px;

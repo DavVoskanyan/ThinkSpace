@@ -29,7 +29,7 @@ new SideBarCreator(
 const ajaxSenderInstance = new AjaxSender();
 
 //   I N I T I A L I Z I N G   W I N D O W   A L E R T E R
-const windowAlerter = new WindowAlerter(document.querySelector('#rightSideBar'));
+new WindowAlerter(document.querySelector('#rightSideBar'));
 
 
 
@@ -38,13 +38,26 @@ const windowAlerter = new WindowAlerter(document.querySelector('#rightSideBar'))
 const newNoteModalController = new ModalController();
 const addNewNoteButton = document.querySelector('button.addNewNote');
 
-newNoteModalController.dynamicAddingMethod = NotesView.addNewNote;
+newNoteModalController.dynamicAddingMethod = noteObject => {
+    const noteObjectDate = noteObject['noteForDate']
+        ? new Date(noteObject['noteForDate'])
+        : null;
+
+    const allNotesContainer = document.querySelector('#allNotesNumberContainer .number');
+    const actualNotesContainer = document.querySelector('#actualNotesNumberContainer .number');
+    const expiredNotesContainer = document.querySelector('#expiredNotesNumberContainer .number');
+    const undatedNotesContainer = document.querySelector('#undatedNotesNumberContainer .number');
+
+
+    allNotesContainer.innerText = parseInt(allNotesContainer.innerText) + 1;
+    if(!noteObjectDate) {undatedNotesContainer.innerText = parseInt(undatedNotesContainer.innerText) + 1}
+    else if(noteObjectDate.getTime() < currentDate.getTime()) {expiredNotesContainer.innerText = parseInt(expiredNotesContainer.innerText) + 1}
+    else {actualNotesContainer.innerText = parseInt(actualNotesContainer.innerText) + 1}
+};
+
 addNewNoteButton.addEventListener('click', () => newNoteModalController.openModal() );
 
 //   I N I T I A L I Z I N G   N U M B E R S - A N I M A T O R
-
-let expiredNotesQuantity = 0;
-let actualNotesQuantity = 0;
 
 (new Promise(async resolve => {
     allNotes = await ajaxSenderInstance.getAllNotesById(userId);

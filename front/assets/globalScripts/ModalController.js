@@ -135,6 +135,8 @@ export default class ModalController {
   closeModal() {
     this.#modalContainer.classList.remove('opened');
     this.datePickerInstance.dropSelectedDate();
+    this.#titleInput.value = '';
+    this.#textarea.value = '';
   }
 
   openModal() {

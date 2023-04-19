@@ -288,7 +288,18 @@ class NotesView {
       const newNoteText = document.querySelector(':scope .editNoteTextInput').value;
       const newNoteDate = document.querySelector('.openNoteContainer').dataset['date']
           ? new Date(document.querySelector('.openNoteContainer').dataset['date'])
-          : null
+          : null;
+
+      let newNoteDateString = '';
+      if(newNoteDate) {
+        const newNoteDateYear = newNoteDate.getFullYear();
+        const newNoteDateMonth = newNoteDate.getMonth() + 1 < 10
+            ? `0${newNoteDate.getMonth() + 1}`
+            : newNoteDate.getMonth() + 1;
+        const newNOteDateDay = newNoteDate.getDate();
+        newNoteDateString = `${newNoteDateYear}.${newNoteDateMonth}.${newNOteDateDay}`;
+      }
+
 
       this.#ajaxSenderInstance.updateNote({
         noteId: parseInt(document.querySelector('.openNoteContainer').dataset['note']),
@@ -301,6 +312,8 @@ class NotesView {
         return parseInt(noteObject.id) === parseInt(document.querySelector('.openNoteContainer').dataset['note']);
       })[0];
 
+
+
       currentNote.title = newNoteTitle;
       currentNote.description = newNoteText;
       currentNote.selectedDate = newNoteDate;
@@ -310,7 +323,7 @@ class NotesView {
 
       currentNote.domElement.querySelector(':scope .noteTitle').innerText = newNoteTitle;
       currentNote.domElement.querySelector(':scope .noteText').innerText = newNoteText;
-      currentNote.domElement.querySelector(':scope .noteDate').innerText = newNoteDate;
+      currentNote.domElement.querySelector(':scope .noteDate').innerText = newNoteDateString;
 
       this.#closeNoteModalContainer();
     }

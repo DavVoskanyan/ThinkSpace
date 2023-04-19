@@ -4,7 +4,6 @@ import SideBarCreator from "/front/assets/globalScripts/SideBarCreator.js";
 import ModalController from "/front/assets/globalScripts/ModalController.js";
 import WindowAlerter from "/front/assets/globalScripts/WindowAlerter.js";
 import NotesView from "/front/assets/globalScripts/NotesView.js";
-import DatePicker from "/front/assets/globalScripts/DatePicker.js";
 import AjaxSender from "/front/assets/globalScripts/AjaxSender.js";
 
 
@@ -16,20 +15,25 @@ const sidebar = new SideBarCreator(
 
 
 //////////////////////////   A D D   N O T E S   F R O M   I N D E X E D - D B   /////////////////////////////
-const notesContainer = new NotesView(document.querySelector("#mainContent"), true, true, true);
+new NotesView(document.querySelector("#mainContent"), true, true, true);
 const ajaxSender = new AjaxSender();
 (async() => {
      const allNotes = await ajaxSender.getAllNotesById(
          window.localStorage.getItem('userId')
      )
      allNotes.forEach(noteObject => {
-          NotesView.addNewNote({
-              noteId: noteObject['noteId'],
-              noteTitle: noteObject['noteTitle'],
-              noteText: noteObject['noteText'],
-              noteForDate: (noteObject['noteForDate'] ? new Date(noteObject['noteForDate']) : null),
-              userId: noteObject['userId'],
-          } );
+         const dateInfo = noteObject['noteForDate'] ? new Date(noteObject['noteForDate']) : null;
+         const currentDate = new Date();
+
+         if(!dateInfo || dateInfo.getTime() >= currentDate.getTime()) {
+             NotesView.addNewNote({
+                 noteId: noteObject['noteId'],
+                 noteTitle: noteObject['noteTitle'],
+                 noteText: noteObject['noteText'],
+                 noteForDate: (noteObject['noteForDate'] ? new Date(noteObject['noteForDate']) : null),
+                 userId: noteObject['userId'],
+             } );
+         }
      });
 })();
 

@@ -7,7 +7,8 @@ module.exports = {
         schedulePage: '/front/pages/SchedulePage/scripts/schedule.js',
         allNotesPage: '/front/pages/AllNotes/scripts/allNotes.js',
         analyticsPage: '/front/pages/AnalyticsPage/scripts/analytics.js',
-        historyPage: '/front/pages/HistoryPage/scripts/history.js'
+        historyPage: '/front/pages/HistoryPage/scripts/history.js',
+        settingsPage: '/front/pages/SettingsPage/scripts/settings.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

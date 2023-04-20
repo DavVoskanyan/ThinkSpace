@@ -2,7 +2,7 @@ import '/front/assets/globalStyles/graphCreatorStyles.css';
 
 class GraphCreator {
 
-    values = [20, 5, 10, 20, 5, 10, 20, 0, 10, 20, 5, 10];
+    values = [];
 
     #CURRENT_MONTH;
     #MONTHS_SHORT_NAMES = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -14,7 +14,8 @@ class GraphCreator {
     #canvasWidth;
     #canvasHeight;
 
-    constructor(parentElement) {
+    constructor(parentElement, valuesArray) {
+        this.values = valuesArray ? valuesArray : [];
         this.#CURRENT_MONTH = new Date();
 
         this.#parentElement = parentElement;

@@ -8,7 +8,7 @@ import AjaxSender from "/front/assets/globalScripts/AjaxSender.js";
 
 
 /////////////////////////   I N I T I A L I Z I N G   S I D E B A R   //////////////////////////////
-const sidebar = new SideBarCreator(
+new SideBarCreator(
     document.querySelector('#leftSideBar'),
     document.querySelector('#mainContent'),
     'all notes');

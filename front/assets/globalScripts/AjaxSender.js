@@ -7,7 +7,15 @@ export default class AjaxSender {
     constructor() {
         this.#windowAlerterInstance = new WindowAlerter(document.querySelector('#rightSideBar'));
     }
-
+    async getUserAccount(userId) {
+        let userInfo = {};
+        await fetch(`${this.#BACK_SERVER_URL}/getUserAccount/${userId}`, {
+            method: 'GET',
+        })
+            .then(response => response.json())
+            .then(response => userInfo = response);
+        return userInfo;
+    }
     async getAllNotesById(userId) {
         let notes = [];
         await fetch(`${this.#BACK_SERVER_URL}/getAllNotes/${userId}`, {
@@ -37,6 +45,21 @@ export default class AjaxSender {
             });
         return result;
     }
+    async updateUserAccount(userObject) {
+        let status;
+
+        await fetch(`${this.#BACK_SERVER_URL}/updateUser`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userObject),
+        })
+            .then(response => response.json())
+            .then(response => status = response.status);
+
+        return status;
+    }
     async updateNote(noteObject) {
         let returnResponse = null;
         await fetch(`${this.#BACK_SERVER_URL}/updateNote/${noteObject['noteId']}`, {
@@ -50,4 +73,6 @@ export default class AjaxSender {
             .then(response => returnResponse = response);
         return returnResponse;
     }
+
+    async
 }

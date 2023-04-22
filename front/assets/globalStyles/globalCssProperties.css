@@ -16,9 +16,11 @@
   /* dark theme */
   --themeBackground: #2e2e2e;
   --themeMainContentBackground: #3e3e3e;
+  --contrastColor: #3aafae;
+  --contrastColorHover: #2b8080;
 
   --textColor: #ffffff;
-  --nonStandardTextColor: #454545;
+  --nonStandardTextColor: #808080;
 
   --elementsDividerColor: #3e3e3e;
 
@@ -35,4 +37,12 @@
   --cancelButtonBackgroundColor: #f12929;
   --editButtonBackgroundColor: #ffb100;
   --submitButtonBackgroundColor: #40b040;
+}
+
+
+
+
+@keyframes pulseAnimation {
+  0%, 100% { width: calc(100% - 10px); }
+  80% { width: 100%; }
 }

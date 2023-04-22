@@ -4,7 +4,12 @@ import SideBarCreator from "/front/assets/globalScripts/SideBarCreator.js";
 import ModalController from "/front/assets/globalScripts/ModalController.js";
 import Scheduler from "/front/assets/globalScripts/Scheduler.js";
 import WindowAlerter from "/front/assets/globalScripts/WindowAlerter.js";
+import UserInfo from "/front/assets/globalScripts/UserInfo.js";
 
+
+
+////////////////   I N I T I A L I Z I N G   U S E R - I N F O   S I D E B A R   /////////////////////
+new UserInfo(document.querySelector('#rightSideBar'));
 
 /////////////////////////   I N I T I A L I Z I N G   S I D E B A R   //////////////////////////////
 new SideBarCreator(

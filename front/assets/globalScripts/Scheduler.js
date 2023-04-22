@@ -292,6 +292,7 @@ class Scheduler {
     }
 
     addNoteDynamically(noteObject) {
+        debugger;
          Scheduler.ALL_NOTES_ARRAY.push(noteObject);
 
         const inNoteDate = new Date(noteObject['noteForDate']);

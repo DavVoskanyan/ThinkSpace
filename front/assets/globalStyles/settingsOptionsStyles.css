@@ -1,0 +1,112 @@
+#imagesMainContainer {
+    width: 100%;
+    padding: 50px 20px 20px 20px;
+    background: var(--noteBackground);
+    border-radius: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+#imagesMainContainer::before {
+    content: 'select your image';
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    text-transform: capitalize;
+    font-size: 15px;
+    color: var(--nonStandardTextColor);
+    letter-spacing: 2px;
+}
+.imageSelector {
+    width: 100%;
+    aspect-ratio: 1;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    transition-duration: 120ms;
+    cursor: pointer;
+}
+.imageSelector.selected {
+    border-color: var(--contrastColor);
+}
+.imageSelector.selected .inSelectorImage { animation: pulseAnimation 350ms ease-in-out; }
+.imageSelector:not(.selected):hover {
+    scale: 0.9 0.9;
+}
+.inSelectorImage {
+    width: calc(100% - 10px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+}
+
+#inputsContainer {
+    width: 100%;
+    margin-top: 20px;
+    padding: 50px 20px 20px 20px;
+    background: var(--noteBackground);
+    border-radius: 10px;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+#inputsContainer::before {
+    content: 'change your info';
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    text-transform: capitalize;
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: var(--nonStandardTextColor);
+}
+.settingsInput {
+    width: 100%;
+    padding: 8px;
+    border: 5px solid var(--noteBackground);
+    outline: 3px solid transparent;
+    border-radius: 10px;
+    background: var(--themeMainContentBackground);
+    font-size: 15px;
+    color: var(--textColor);
+    letter-spacing: 1px;
+    transition-duration: 120ms;
+}
+.settingsInput:focus { outline-color: var(--contrastColor); }
+#passwordInput.settingsInput { letter-spacing: 5px; }
+#passwordInput.settingsInput::placeholder { letter-spacing: 1px; }
+
+#themeChanger {
+    width: 100%;
+    height: 35vh;
+    margin-top: 20px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    background: var(--noteBackground);
+}
+#submitChanges {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    background: var(--contrastColor);
+    color: var(--themeBackground);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    transition-duration: 120ms;
+    cursor: pointer;
+}
+#submitChanges:hover {
+    scale: 1.1 1.1;
+    background: var(--contrastColorHover);
+}

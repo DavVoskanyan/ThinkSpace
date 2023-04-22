@@ -13,7 +13,7 @@ export default class ModalController {
   #titleInput;
   #textarea;
 
-  dynamicAddingMethod;
+  dynamicAddingMethod = () => {};
 
   constructor() {
     this.#ajaxSenderInstance = new AjaxSender();
@@ -115,15 +115,25 @@ export default class ModalController {
 
       (async () => {
         let response = await this.#ajaxSenderInstance.addNewNote(newNoteObject);
+        newNoteObject.noteId = response.newRowId
 
-        this.dynamicAddingMethod({
-          noteId: response.newRowId,
-          noteTitle: this.#titleInput.value,
-          noteText: this.#textarea.value,
-          noteForDate: noteForDateString,
-          userId: window.localStorage.getItem('userId')
-        });
-      })()
+        this.dynamicAddingMethod(newNoteObject);
+        if(!noteForDateString) {
+          document.querySelector('#undatedQuantity').innerText =
+              parseInt(document.querySelector('#undatedQuantity').innerText) + 1;
+        }
+        else if(new Date(noteForDateString).getTime() > new Date().getTime()) {
+          document.querySelector('#actualQuantity').innerText =
+              parseInt(document.querySelector('#actualQuantity').innerText) + 1;
+        }
+        else {
+          document.querySelector('#expiredQuantity').innerText =
+              parseInt(document.querySelector('#expiredQuantity').innerText) + 1;
+        }
+        document.querySelector('#allQuantity').innerText =
+            parseInt(document.querySelector('#allQuantity').innerText) + 1;
+
+      })();
     }
     else if(!window.localStorage.getItem('userId')) { location.href = '/index.html'; }
     else { this.#windowAlerterInstance.alertDivConstructor('error', 'No text information provided'); }

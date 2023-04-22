@@ -148,6 +148,9 @@ export default class SettingsOptions {
 
                 if(updateStatus) {
                     this.#windowAlerterInstance.alertDivConstructor('success', 'Updated Successfully');
+                    document.querySelector('#rightSideBar .userName').innerText = userObject.userName;
+                    document.querySelector('#rightSideBar .userAvatar').src = `/front/assets/avatars/${userObject.imageName}`;
+
                 }
                 else {
                     this.#windowAlerterInstance.alertDivConstructor('error', 'Something Has Gone Wrong');

@@ -13,7 +13,7 @@ export default class ModalController {
   #titleInput;
   #textarea;
 
-  dynamicAddingMethod;
+  dynamicAddingMethod = () => {};
 
   constructor() {
     this.#ajaxSenderInstance = new AjaxSender();
@@ -118,6 +118,21 @@ export default class ModalController {
         newNoteObject.noteId = response.newRowId
 
         this.dynamicAddingMethod(newNoteObject);
+        if(!noteForDateString) {
+          document.querySelector('#undatedQuantity').innerText =
+              parseInt(document.querySelector('#undatedQuantity').innerText) + 1;
+        }
+        else if(new Date(noteForDateString).getTime() > new Date().getTime()) {
+          document.querySelector('#actualQuantity').innerText =
+              parseInt(document.querySelector('#actualQuantity').innerText) + 1;
+        }
+        else {
+          document.querySelector('#expiredQuantity').innerText =
+              parseInt(document.querySelector('#expiredQuantity').innerText) + 1;
+        }
+        document.querySelector('#allQuantity').innerText =
+            parseInt(document.querySelector('#allQuantity').innerText) + 1;
+
       })();
     }
     else if(!window.localStorage.getItem('userId')) { location.href = '/index.html'; }

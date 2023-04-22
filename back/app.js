@@ -16,7 +16,6 @@ app.use(corsParser());
 
 app.get('/getUserAccount/:userId', (req, res) => {
     pool.query(`SELECT * FROM usersTable WHERE userId=${req.params['userId']}`, (err, rows) => {
-        console.error(err);
         res.json(rows);
     })
 })

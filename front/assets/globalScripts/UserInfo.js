@@ -68,7 +68,9 @@ export default class UserInfo {
                                               <div class="blockTitle">${blockTitlesArray[i]}</div>
                                               <div class="blockInfoContainer">
                                                   <div class="coloredBorder"></div>
-                                                  <span class="numericInfo">${numbersArray[i]}</span>
+                                                  <span id="${blockTitlesArray[i]}Quantity" class="numericInfo">
+                                                      ${numbersArray[i]}
+                                                  </span>
                                               </div>
                                           </div>`;
         }

@@ -1,3 +1,9 @@
+if(!window.localStorage.getItem('userId')) {
+    window.location.href = '/index.html';
+}
+
+
+
 import '../styles/allNotes.css';
 
 import SideBarCreator from "/front/assets/globalScripts/SideBarCreator.js";

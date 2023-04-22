@@ -1,3 +1,9 @@
+if(!window.localStorage.getItem('userId')) {
+    window.location.href = '/index.html';
+}
+
+
+
 import "../styles/analytics.css";
 
 

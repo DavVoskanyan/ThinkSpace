@@ -1,15 +1,17 @@
 import WindowAlerter from '/front/assets/globalScripts/WindowAlerter.js';
 
 export default class AjaxSender {
-    #BACK_SERVER_URL = 'http://localhost:3000';
+    static BACK_SERVER_URL = 'http://localhost:3000';
     #windowAlerterInstance;
 
-    constructor() {
-        this.#windowAlerterInstance = new WindowAlerter(document.querySelector('#rightSideBar'));
+    constructor(alerterOff) {
+        if(alerterOff) {
+            this.#windowAlerterInstance = new WindowAlerter(document.querySelector('#rightSideBar'));
+        }
     }
     async getUserAccount(userId) {
         let userInfo = {};
-        await fetch(`${this.#BACK_SERVER_URL}/getUserAccount/${userId}`, {
+        await fetch(`${AjaxSender.BACK_SERVER_URL}/getUserAccount/${userId}`, {
             method: 'GET',
         })
             .then(response => response.json())
@@ -18,7 +20,7 @@ export default class AjaxSender {
     }
     async getAllNotesById(userId) {
         let notes = [];
-        await fetch(`${this.#BACK_SERVER_URL}/getAllNotes/${userId}`, {
+        await fetch(`${AjaxSender.BACK_SERVER_URL}/getAllNotes/${userId}`, {
             method: 'GET',
         })
             .then(response => response.json())
@@ -27,7 +29,7 @@ export default class AjaxSender {
     }
     async addNewNote(noteObject) {
         let result;
-        await fetch(`${this.#BACK_SERVER_URL}/setNewNote`, {
+        await fetch(`${AjaxSender.BACK_SERVER_URL}/setNewNote`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -48,7 +50,7 @@ export default class AjaxSender {
     async updateUserAccount(userObject) {
         let status;
 
-        await fetch(`${this.#BACK_SERVER_URL}/updateUser`, {
+        await fetch(`${AjaxSender.BACK_SERVER_URL}/updateUser`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -62,7 +64,7 @@ export default class AjaxSender {
     }
     async updateNote(noteObject) {
         let returnResponse = null;
-        await fetch(`${this.#BACK_SERVER_URL}/updateNote/${noteObject['noteId']}`, {
+        await fetch(`${AjaxSender.BACK_SERVER_URL}/updateNote/${noteObject['noteId']}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

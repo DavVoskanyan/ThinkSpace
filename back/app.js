@@ -43,6 +43,35 @@ app.post('/setNewNote', (req, res) => {
         }
     );
 });
+app.post('/loginUser', (req, res) => {
+    pool.query(`SELECT userId FROM usersTable 
+                    WHERE userEmail='${req.body['email']}' AND userPassword='${req.body['password']}';`,
+        (err, rows) => {
+            res.json(rows ? rows : {});
+        })
+})
+app.post('/signupUser', (req, res) => {
+    pool.query(`SELECT * FROM usersTable WHERE userEmail='${req.body['email']}';`, (err, rows) => {
+        if(!err && !rows[0]) {
+            const currentDate = new Date();
+            const currentDateString = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
+
+            const imageName = `avatar_${Math.round(Math.random() * 6) + 1}.jpg`;
+
+            pool.query(`INSERT INTO usersTable (userName, userEmail, userPassword, userCreationDate, imageName) VALUES
+                            ('${req.body['name']}',
+                             '${req.body['email']}',
+                             '${req.body['password']}',
+                             '${currentDateString}',
+                             '${imageName}'); `,
+                (err, rows) => {
+                    res.json({userId: rows.insertId, isMailUsed: false});
+                }
+            )
+        }
+        else { res.json({userId: null, isMailUsed: true}); }
+    })
+})
 app.put('/updateUser', (req, res) => {
     pool.query(`UPDATE usersTable
                     SET userName='${req.body['userName']}', userEmail='${req.body['userEmail']}', 
@@ -52,7 +81,7 @@ app.put('/updateUser', (req, res) => {
             res.json({status: !err})
         }
     )
-})
+});
 app.put('/updateNote/:noteId', (req, res) => {
     const reservationDate = req.body['noteForDate']
         ? `'${req.body['noteForDate']}'`
@@ -66,7 +95,7 @@ app.put('/updateNote/:noteId', (req, res) => {
         }
     )
 
-})
+});
 
 
 const port = 3000;

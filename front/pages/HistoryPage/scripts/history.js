@@ -1,3 +1,9 @@
+if(!window.localStorage.getItem('userId')) {
+    window.location.href = '/index.html';
+}
+
+
+
 import '../styles/history.css';
 
 import SideBarCreator from "/front/assets/globalScripts/SideBarCreator.js";
@@ -13,7 +19,7 @@ import UserInfo from "/front/assets/globalScripts/UserInfo.js";
 new UserInfo(document.querySelector('#rightSideBar'));
 
 /////////////////////////   I N I T I A L I Z I N G   S I D E B A R   //////////////////////////////
-const sidebar = new SideBarCreator(
+new SideBarCreator(
     document.querySelector('#leftSideBar'),
     document.querySelector('#mainContent'),
     'history');

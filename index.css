@@ -1,0 +1,129 @@
+* {
+    box-sizing: border-box;
+    transition-duration: 120ms;
+}
+button { cursor: pointer; }
+
+body { background: #2e2e2e; }
+body.registration { background: #ffffff; }
+
+.page {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    transition-duration: 1000ms;
+}
+#loginPage {
+    width: 100vw;
+    background: #2e2e2e;
+}
+#signupPage {
+    width: 0;
+    background: #ffffff;
+}
+
+.registration #signupPage {
+    background: #ffffff;
+    width: 100vw;
+}
+
+.pageSwitcher {
+    width: 15vw;
+    padding: 10px 0;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    position: absolute;
+    top: 10vh;
+    left: 42.5vw;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+#signupPage .pageSwitcher {
+    background: #2e2e2e;
+    color: #ffffff;
+}
+#signupPage .pageSwitcher:hover { background: #404040; }
+#loginPage .pageSwitcher {
+    background: #ffffff;
+    color: #2e2e2e;
+}
+#loginPage .pageSwitcher:hover { background: #e3e3e3; }
+
+.inPageContainer {
+    width: 30vw;
+    height: 50vh;
+    margin: 25vh 35vw;
+    padding: 50px 10px 10px 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+#loginPage .inPageContainer { background: #3e3e3e; }
+#signupPage .inPageContainer { background: #eeeeee; }
+
+.inPageContainer label {
+    width: 100%;
+    height: 20px;
+}
+
+
+
+.inPageContainer input {
+    width: 100%;
+    height: 45px;
+    padding-left: 10px;
+    outline: 3px solid transparent;
+    border: 3px solid transparent;
+    border-radius: 10px;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+.inPageContainer input[type="password"] {
+    letter-spacing: 5px;
+}
+.inPageContainer input::placeholder {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.inPageContainer input:focus {
+    outline-color: #3aafae;
+}
+.inPageContainer input.wrong,
+.inPageContainer input.wrong:focus {
+    outline-color: #f12929;
+}
+#signupPage input {
+    background: #ffffff;
+    color: #2e2e2e;
+}
+#loginPage input {
+    background: #2e2e2e;
+    color: #ffffff;
+}
+
+
+.inContainerButton {
+    width: 50%;
+    padding: 10px 0;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background: #3aafae;
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: capitalize;
+}
+.inContainerButton:hover {
+    background: #2b8080;
+}
+#signupPage .inContainerButton { margin-top: 5vh; }
+#loginPage .inContainerButton { margin-top: 15vh; }

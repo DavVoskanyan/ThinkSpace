@@ -2,10 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Loading...</title>
+    <title>Login / Signup</title>
     <link rel="icon" href="/front/assets/forTabIcon.png">
+
+    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/front/assets/globalStyles/globalCssProperties.css">
+
+    <script type="module" defer src="/index.js"></script>
 </head>
 <body>
-<script> location.href = '/front/pages/SchedulePage/schedule.html'; </script>
+    <div class="page" id="loginPage">
+        <button class="pageSwitcher" id="loginSwitcher">Signup</button>
+        <div class="inPageContainer">
+            <label for="loginEmailInput">
+                <input type="text" id="loginEmailInput" placeholder="Email">
+            </label>
+            <label for="loginPasswordInput">
+                <input type="password" id="loginPasswordInput" placeholder="Password">
+            </label>
+            <button class="inContainerButton">log in</button>
+        </div>
+    </div>
+    <div class="page" id="signupPage">
+        <button class="pageSwitcher" id="signUpSwitcher">Login</button>
+        <div class="inPageContainer">
+            <label for="signupNameInput">
+                <input type="text" id="signupNameInput" placeholder="Name">
+            </label>
+            <label for="signupEmailInput">
+                <input type="text" id="signupEmailInput" placeholder="Email">
+            </label>
+            <label for="signupPasswordInput">
+                <input type="password" id="signupPasswordInput" placeholder="Password">
+            </label>
+            <button class="inContainerButton">sign up</button>
+        </div>
+    </div>
 </body>
 </html>

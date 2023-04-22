@@ -61,7 +61,7 @@ app.put('/updateNote/:noteId', (req, res) => {
     pool.query(`UPDATE notesTable 
                     SET noteTitle='${req.body['noteTitle']}', noteText='${req.body['noteText']}', noteForDate=${reservationDate}
                     WHERE noteId=${req.params['noteId']};`,
-        (err, rows) => {
+        err => {
             res.json({status: !err, updatedNoteId: req.params['noteId']})
         }
     )

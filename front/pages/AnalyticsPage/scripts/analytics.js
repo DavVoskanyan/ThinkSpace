@@ -34,7 +34,7 @@ new SideBarCreator(
     'analytics');
 
 //   I N I T I A L I Z I N G   A J A X - S E N D E R
-const ajaxSenderInstance = new AjaxSender();
+const ajaxSenderInstance = new AjaxSender( true );
 
 //   I N I T I A L I Z I N G   W I N D O W   A L E R T E R
 new WindowAlerter(document.querySelector('#rightSideBar'));

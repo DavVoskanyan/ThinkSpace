@@ -18,6 +18,8 @@
   --themeMainContentBackground: #3e3e3e;
   --contrastColor: #3aafae;
   --contrastColorHover: #2b8080;
+  --negativeContrastColor: #ad0c0c;
+  --negativeContrastColorHover: #8d0b0b;
 
   --textColor: #ffffff;
   --nonStandardTextColor: #808080;

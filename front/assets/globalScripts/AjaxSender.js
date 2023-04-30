@@ -76,5 +76,13 @@ export default class AjaxSender {
         return returnResponse;
     }
 
-    async
+    async deleteNote(noteObject) {
+        let returnResponse;
+        await fetch(`${AjaxSender.BACK_SERVER_URL}/deleteNote/${noteObject['noteId']}`, {
+            method: 'DELETE'
+        })
+            .then(response => response.json())
+            .then(response => returnResponse = response['deletedNoteId'])
+        return returnResponse;
+    }
 }

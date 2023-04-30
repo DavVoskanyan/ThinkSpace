@@ -15,12 +15,12 @@ app.use(bodyParser.json());
 app.use(corsParser());
 
 app.get('/getUserAccount/:userId', (req, res) => {
-    pool.query(`SELECT * FROM usersTable WHERE userId=${req.params['userId']}`, (err, rows) => {
+    pool.query(`SELECT * FROM usersTable WHERE userId=${req.params['userId']};`, (err, rows) => {
         res.json(rows);
     })
 })
 app.get('/getAllNotes/:userId', (req, res) => {
-    pool.query(`SELECT * FROM notesTable WHERE userId=${req.params['userId']}`, (err, rows) => {
+    pool.query(`SELECT * FROM notesTable WHERE userId=${req.params['userId']} AND deleted=0;`, (err, rows) => {
         res.json(rows);
     });
 });
@@ -32,12 +32,13 @@ app.post('/setNewNote', (req, res) => {
         ? `'${req.body['noteForDate']}'`
         : 'NULL' ;
 
-    pool.query(`INSERT INTO notesTable (noteTitle, noteText, noteCreationDate, noteForDate, userId) VALUES
+    pool.query(`INSERT INTO notesTable (noteTitle, noteText, noteCreationDate, noteForDate, userId, deleted) VALUES
                      ('${req.body['noteTitle']}',
                       '${req.body['noteText']}',
                       '${currentDateString}',
                       ${reservationDate},
-                      ${req.body['userId']});`,
+                      ${req.body['userId']},
+                      0);`,
         (err, rows) => {
             res.json({status: !err, newRowId: rows.insertId});
         }
@@ -74,8 +75,8 @@ app.post('/signupUser', (req, res) => {
 })
 app.put('/updateUser', (req, res) => {
     pool.query(`UPDATE usersTable
-                    SET userName='${req.body['userName']}', userEmail='${req.body['userEmail']}', 
-                        userPassword='${req.body['userPassword']}', imageName='${req.body['imageName']}'
+                    SET userName='${req.body['userName']}', userPassword='${req.body['userPassword']}', 
+                    imageName='${req.body['imageName']}'
                     WHERE userId=${req.body['userId']};`,
         err => {
             res.json({status: !err})
@@ -94,7 +95,15 @@ app.put('/updateNote/:noteId', (req, res) => {
             res.json({status: !err, updatedNoteId: req.params['noteId']})
         }
     )
-
+});
+app.delete('/deleteNote/:noteId', (req, res) => {
+    pool.query(`UPDATE notesTable
+                    SET deleted=1
+                    WHERE noteId=${req.params['noteId']};`,
+        err => {
+            res.json({status: !err, deletedNoteId: req.params['noteId']});
+        }
+    )
 });
 
 

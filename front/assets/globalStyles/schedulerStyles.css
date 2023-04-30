@@ -175,14 +175,28 @@
     color: var(--menuIconColorHover);
     opacity: 1;
 }
+.notesList {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+}
 .notesList .noteObjectInList {
     width: 100%;
-    margin: 10px auto;
-    padding: 5px 10px;
-    border-radius: 8px;
+    aspect-ratio: 1;
+    padding: 10px;
+    border-radius: 10px;
     background: var(--themeMainContentBackground);
+    overflow: hidden;
 }
 .notesList .noteObjectInList .noteTitle {
+    color: var(--textColor);
+    font-size: 30px;
+    font-style: italic;
+}
+.notesList .noteObjectInList .noteText {
+    margin-top: 10px;
     color: var(--textColor);
 }
 .closeButton {
@@ -203,4 +217,26 @@
 .closeButton:hover {
     font-style: italic;
     background: var(--cancelButtonBackgroundColor);
+}
+
+.singleNoteContainer {
+    height: 0;
+    padding: 10px;
+    border-radius: 10px;
+    color: #ffffff;
+    transition-duration: 250ms;
+}
+.singleNoteContainer.noteIsSelected {
+    height: 50%;
+    margin-bottom: 10px;
+    background: var(--themeMainContentBackground);
+    overflow: auto;
+}
+
+.singleNoteContainer .noteTitle {
+    margin-bottom: 10px;
+    font-size: 30px;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 1px;
 }

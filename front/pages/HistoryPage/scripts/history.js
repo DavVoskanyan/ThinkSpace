@@ -26,8 +26,8 @@ new SideBarCreator(
 
 
 //////////////////////////   A D D   N O T E S   F R O M   I N D E X E D - D B   /////////////////////////////
-new NotesView(document.querySelector("#mainContent"), true, true, true);
-const ajaxSender = new AjaxSender();
+new NotesView(document.querySelector("#mainContent"), true, false, true);
+const ajaxSender = new AjaxSender( true );
 (async() => {
     const allNotes = await ajaxSender.getAllNotesById(
         window.localStorage.getItem('userId')

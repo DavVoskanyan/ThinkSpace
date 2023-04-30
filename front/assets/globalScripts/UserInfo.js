@@ -9,7 +9,7 @@ export default class UserInfo {
     #notes;
     constructor(parentElement) {
         this.#parentElement = parentElement;
-        this.#ajaxSenderInstance = new AjaxSender();
+        this.#ajaxSenderInstance = new AjaxSender( false );
 
         (async () => {
             this.#userInfo = await this.#ajaxSenderInstance.getUserAccount(

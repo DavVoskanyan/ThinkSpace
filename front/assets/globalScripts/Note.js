@@ -17,7 +17,6 @@ class Note {
     this.openedNoteContainer = openModalElement;
     this.openModalElement = openModalElement.querySelector(':scope .noteInfoContainer');
     this.openEditModalElement = openModalElement.querySelector(':scope .noteEditionContainer');
-    console.log(this.openModalElement);
 
 
     this.domElement = document.createElement('div');

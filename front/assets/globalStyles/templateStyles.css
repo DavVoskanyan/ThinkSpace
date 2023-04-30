@@ -30,6 +30,10 @@ body {
     left: 0;
     background: var(--themeBackground);
 }
+#header > #logo {
+    color: var(--textColor);
+    translate: -60px;
+}
 #leftSideBar {
     width: 120px;
     height: calc(100vh - 65px);

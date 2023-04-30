@@ -16,7 +16,7 @@ export default class ModalController {
   dynamicAddingMethod = () => {};
 
   constructor() {
-    this.#ajaxSenderInstance = new AjaxSender();
+    this.#ajaxSenderInstance = new AjaxSender( true );
     this.#windowAlerterInstance = new WindowAlerter(document.querySelector('#rightSideBar'));
     this.#createModal();
 

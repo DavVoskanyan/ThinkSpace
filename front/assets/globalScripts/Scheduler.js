@@ -27,7 +27,7 @@ class Scheduler {
     #datePickerController;
 
     constructor(parentNode, modalController) {
-        this.#ajaxSenderInstance = new AjaxSender();
+        this.#ajaxSenderInstance = new AjaxSender( true );
         (async () => {
             Scheduler.ALL_NOTES_ARRAY = await this.#ajaxSenderInstance.getAllNotesById(
                 window.localStorage.getItem('userId')
@@ -292,7 +292,6 @@ class Scheduler {
     }
 
     addNoteDynamically(noteObject) {
-        debugger;
          Scheduler.ALL_NOTES_ARRAY.push(noteObject);
 
         const inNoteDate = new Date(noteObject['noteForDate']);

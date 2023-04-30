@@ -89,6 +89,24 @@
     border-radius: 10px;
     background: var(--noteBackground);
 }
+
+#logoutButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    background: var(--themeBackground);
+    color: var(--textColor);
+    font-size: 15px;
+    font-weight: 100;
+    letter-spacing: 1px;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    transition-duration: 120ms;
+    cursor: pointer;
+}
 #submitChanges {
     margin-top: 20px;
     padding: 10px 20px;

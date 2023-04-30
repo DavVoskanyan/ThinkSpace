@@ -14,7 +14,6 @@ class NotesView {
    * @private #isGrid {boolean} -> default type of list ("grid" or "list").
    * @private #isFilterable {boolean} -> if "filter line" should be.
    * @private #isEditable {boolean} -> default are notes editable or not.
-   * @private #isDeletable {boolean} -> if user will have opportunity to delete not.
    *
    *
    *          properties that are connected with opened note
@@ -41,7 +40,6 @@ class NotesView {
   #isGrid;
   #isFilterable;
   #isEditable;
-  #isDeletable;
 
   #ajaxSenderInstance;
 
@@ -64,19 +62,16 @@ class NotesView {
    * @param isGrid -> {boolean} if default notesContainer should be as grid.
    * @param isEditable -> {boolean} if notes in list should be editable.
    * @param isFilterable -> {boolean} if there should be filter line.
-   * @param isDeletable -> {boolean} if notes from list can be deleted.
    *
    * @constructor -> sets all "config-values", creates dom-elements with their hierarchy and adds to DOM.
    */
-  constructor(parentElement, isGrid, isEditable, isFilterable, isDeletable) {
-
-    this.#isGrid = isGrid ?? true;
-    this.#isEditable = isEditable ?? true;
-    this.#isFilterable = isFilterable ?? true;
-    this.#isDeletable = isDeletable ?? true;
+  constructor(parentElement, isGrid, isEditable, isFilterable) {
+    this.#isGrid = isGrid === undefined ? true : isGrid;
+    this.#isEditable = isEditable === undefined ? true : isEditable;
+    this.#isFilterable = isFilterable === undefined ? true : isFilterable;
     this.#buttonStatus = 'edit';
 
-    this.#ajaxSenderInstance = new AjaxSender();
+    this.#ajaxSenderInstance = new AjaxSender( true );
 
     NotesView.allNotesObjects = [];
 
@@ -300,13 +295,26 @@ class NotesView {
         newNoteDateString = `${newNoteDateYear}.${newNoteDateMonth}.${newNOteDateDay}`;
       }
 
+      if(!newNoteTitle && !newNoteText) {
+        this.#ajaxSenderInstance.deleteNote(
+            { noteId: parseInt(document.querySelector('.openNoteContainer').dataset['note']) }
+        )
+        NotesView.allNotesObjects = NotesView.allNotesObjects.filter(noteObject => {
+          if(parseInt(noteObject.id) === parseInt(document.querySelector('.openNoteContainer').dataset['note'])){
+            noteObject.domElement.remove();
+            return false;
+          }
+          return true;
+        })
+      }
+      else {
+        this.#ajaxSenderInstance.updateNote({
+          noteId: parseInt(document.querySelector('.openNoteContainer').dataset['note']),
+          noteTitle: newNoteTitle,
+          noteText: newNoteText,
+          noteForDate: newNoteDate,
+        });
 
-      this.#ajaxSenderInstance.updateNote({
-        noteId: parseInt(document.querySelector('.openNoteContainer').dataset['note']),
-        noteTitle: newNoteTitle,
-        noteText: newNoteText,
-        noteForDate: newNoteDate,
-      })
 
       const currentNote = NotesView.allNotesObjects.filter(noteObject => {
         return parseInt(noteObject.id) === parseInt(document.querySelector('.openNoteContainer').dataset['note']);
@@ -324,6 +332,7 @@ class NotesView {
       currentNote.domElement.querySelector(':scope .noteTitle').innerText = newNoteTitle;
       currentNote.domElement.querySelector(':scope .noteText').innerText = newNoteText;
       currentNote.domElement.querySelector(':scope .noteDate').innerText = newNoteDateString;
+      }
 
       this.#closeNoteModalContainer();
     }

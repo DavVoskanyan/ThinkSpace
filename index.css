@@ -59,7 +59,7 @@ body.registration { background: #ffffff; }
     width: 30vw;
     height: 50vh;
     margin: 25vh 35vw;
-    padding: 50px 10px 10px 10px;
+    padding: 50px 20px 20px 20px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -125,5 +125,11 @@ body.registration { background: #ffffff; }
 .inContainerButton:hover {
     background: #2b8080;
 }
-#signupPage .inContainerButton { margin-top: 5vh; }
-#loginPage .inContainerButton { margin-top: 15vh; }
+#signupPage .inContainerButton {
+    margin-top: 5vh;
+    color: #ffffff;
+}
+#loginPage .inContainerButton {
+    margin-top: 15vh;
+    color: #2e2e2e;
+}

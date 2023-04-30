@@ -14,11 +14,10 @@ export default class SettingsOptions {
 
     #selectedImageName;
     #newName;
-    #newEmail;
     #newPassword;
     constructor(parentElement) {
         this.#parentElement = parentElement;
-        this.#ajaxSenderInstance = new AjaxSender();
+        this.#ajaxSenderInstance = new AjaxSender( true );
         this.#windowAlerterInstance = new WindowAlerter(document.querySelector('#rightSideBar'));
 
         (async () => {
@@ -31,7 +30,7 @@ export default class SettingsOptions {
                 this.#currentUserAccount[0]['userPassword']
             );
             this.#createThemeChanger();
-            this.#createSubmitButton();
+            this.#createActionButtons();
         })();
     }
 
@@ -80,20 +79,6 @@ export default class SettingsOptions {
             this.#newName = nameInput.value;
         })
 
-        const emailInput = document.createElement('input');
-        emailInput.type = 'email';
-        emailInput.id = 'emailInput';
-        emailInput.classList.add('settingsInput');
-        emailInput.value = userEmail;
-        this.#newEmail = userEmail;
-        emailInput.placeholder = 'Email';
-        emailInput.addEventListener("input", () => {
-            emailInput.value = emailInput.value.trim();
-            if(emailInput.value.length > 30) {
-                emailInput.value = emailInput.value.substring(0, emailInput.value.length - 1);
-            }
-            this.#newEmail = emailInput.value;
-        })
 
         const passwordInput = document.createElement('input');
         passwordInput.type = 'password';
@@ -109,7 +94,7 @@ export default class SettingsOptions {
             }
             this.#newPassword = passwordInput.value;
         })
-        inputsContainer.append(nameInput, emailInput, passwordInput);
+        inputsContainer.append(nameInput, passwordInput);
         this.#parentElement.appendChild(inputsContainer);
     }
 
@@ -120,7 +105,17 @@ export default class SettingsOptions {
         this.#parentElement.appendChild(themeChanger);
     }
 
-    #createSubmitButton() {
+    #createActionButtons() {
+        const logoutButton = document.createElement('button');
+        logoutButton.id = 'logoutButton';
+        logoutButton.innerText = 'log out';
+
+        logoutButton.addEventListener('click', () => {
+            window.localStorage.removeItem('userId');
+            window.location.href = '/index.html';
+        })
+
+
         const submitButton = document.createElement('button');
         submitButton.id = 'submitChanges';
         submitButton.innerText = 'submit';
@@ -129,18 +124,14 @@ export default class SettingsOptions {
             if(!this.#newName.trim()) {
                 this.#windowAlerterInstance.alertDivConstructor('error', 'Name cannot be empty');
             }
-            if(!this.#newEmail.trim()) {
-                this.#windowAlerterInstance.alertDivConstructor('error', 'Email cannot be empty');
-            }
             if(!this.#newPassword.trim()) {
                 this.#windowAlerterInstance.alertDivConstructor('error', 'Password cannot be empty');
             }
-            if(this.#newName.trim() && this.#newEmail.trim() && this.#newPassword.trim()) {
+            if(this.#newName.trim() && this.#newPassword.trim()) {
                 const userObject = {};
 
                 userObject.userId = window.localStorage.getItem('userId');
                 userObject.userName = this.#newName.trim();
-                userObject.userEmail = this.#newEmail.trim();
                 userObject.userPassword = this.#newPassword.trim();
                 userObject.imageName = this.#selectedImageName.trim();
 
@@ -158,6 +149,7 @@ export default class SettingsOptions {
             }
         })
 
-        this.#parentElement.appendChild(submitButton);
+
+        this.#parentElement.append(logoutButton, submitButton);
     }
 }

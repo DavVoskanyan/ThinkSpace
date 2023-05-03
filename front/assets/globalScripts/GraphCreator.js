@@ -1,6 +1,6 @@
 import '/front/assets/globalStyles/graphCreatorStyles.css';
 
-class GraphCreator {
+export default class GraphCreator {
 
     values = [];
 
@@ -91,5 +91,3 @@ class GraphCreator {
         this.#canvasContext.stroke();
     }
 }
-
-export default GraphCreator;

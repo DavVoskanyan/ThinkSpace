@@ -1,6 +1,6 @@
 import '/front/assets/globalStyles/datePickerStyles.css';
 
-class DatePicker {
+export default class DatePicker {
 
   static #MONTH_NAMES = ["January","February","March","April","May","June","July",
     "August","September","October","November","December"];
@@ -177,5 +177,3 @@ class DatePicker {
     if(this.#DATE_ELEMENT) { this.#DATE_ELEMENT.innerText = this.#DEFAULT_TEXT_FOR_ELEMENT }
   }
 }
-
-export default DatePicker;

@@ -4,39 +4,8 @@ import Note from "/front/assets/globalScripts/Note.js";
 import DatePicker from "/front/assets/globalScripts/DatePicker.js";
 import AjaxSender from "/front/assets/globalScripts/AjaxSender.js";
 
-/**
- * @class "NotesView" creates list of notes and all functionality for them.
- */
-class NotesView {
-  /**
-   *          configuration properties of class
-   *
-   * @private #isGrid {boolean} -> default type of list ("grid" or "list").
-   * @private #isFilterable {boolean} -> if "filter line" should be.
-   * @private #isEditable {boolean} -> default are notes editable or not.
-   *
-   *
-   *          properties that are connected with opened note
-   *
-   * @private #openNoteContainer {HTMLDivElement} -> DOM-element which you see after clicking on note.
-   * @private #noteInfoContainer {HTMLDivElement} -> DOM-element (child of #openNoteContainer) in which you see note
-   *                                                 info.
-   * @private #noteEditingContainer {HTMLDivElement} -> DOM-element (child of #openNoteContainer) in which you can
-   *                                                    change information about note (title, text).
-   * @private #editAndSubmitButton {HTMLButtonElement} -> DOM-element which has 2 states: "edit" and "submit".
-   *                                                      "edit" -> if you click on it, it will open #noteEditingContainer,
-   *                                                                close #noteInfoContiner and changes status,
-   *                                                      "submit" -> if you click on it, it will open #noteInfoContiner,
-   *                                                                close #noteEditingContainer and change status.
-   * @private #buttonStatus {String} -> it holds status of button as string ("edit"/"submit").
-   *
-   *
-   *          properties that are connected with notes list
-   *
-   * @private notesContainer {HTMLDivElement} -> DOM-element which is parent element of notes. Can have 2 states:
-   *                                              grid (with "notesGrid" class) and list (with "notesList" class).
-   * @private allNotesObjects [{Note},...] -> Array which saves all created objects of notes.
-   */
+export default class NotesView {
+
   #isGrid;
   #isFilterable;
   #isEditable;
@@ -57,14 +26,6 @@ class NotesView {
   filterStartDate;
   filterEndDate;
 
-  /**
-   * @param parentElement -> {HTMLDivElement} in which notes list will be.
-   * @param isGrid -> {boolean} if default notesContainer should be as grid.
-   * @param isEditable -> {boolean} if notes in list should be editable.
-   * @param isFilterable -> {boolean} if there should be filter line.
-   *
-   * @constructor -> sets all "config-values", creates dom-elements with their hierarchy and adds to DOM.
-   */
   constructor(parentElement, isGrid, isEditable, isFilterable) {
     this.#isGrid = isGrid === undefined ? true : isGrid;
     this.#isEditable = isEditable === undefined ? true : isEditable;
@@ -87,11 +48,6 @@ class NotesView {
     parentElement.appendChild(elementContainer);
   }
 
-  /**
-   * @private #createFilteringField -> creates "grid" and "list" buttons and filter inputs.
-   *
-   * @returns {HTMLDivElement} -> "filter-line" as DOM-element.
-   */
   #createFilteringField() {
     const filterLine = document.createElement("div");
     filterLine.classList.add('filterLine');
@@ -155,13 +111,6 @@ class NotesView {
     return filterLine;
   }
 
-  /**
-   * @param searchText -> String, which will be the search text.
-   * @param startDate -> start date {Date} for filtering.
-   * @param endDate -> finish date {Date} for filtering.
-   *
-   * @public filterAndHide -> takes string, searches notes hides all other notes.
-   */
   filterAndHide(searchText, startDate, endDate) {
     searchText = searchText.toLowerCase().trim();
     const domObjectsOfNotes = NotesView.allNotesObjects.map(noteObject => noteObject.domElement);
@@ -185,15 +134,7 @@ class NotesView {
     })
   }
 
-  /**
-   * @param id -> String, which will be given to element's "id" attribute as value.
-   * @param propertyName -> {String} to which parameter the DatePicker object will be given.
-   * @param searchInput -> {Input} Dom-element of search input.
-   *
-   * @private createDatePickerForFiltering -> creates datepicker for filter-line and returns it.
-   *
-   * @returns {HTMLDivElement} -> "DatePicker"-s object.
-   */
+
   #createDatePickerForFiltering(id, propertyName, searchInput) {
     const datePickerContainer = document.createElement('div');
     datePickerContainer.id = id;
@@ -224,11 +165,7 @@ class NotesView {
     return datePickerContainer;
   }
 
-  /**
-   * @private #createOpenNoteContainer -> creates #openNoteContainer and returns dom-element.
-   *
-   * @returns {HTMLDivElement} -> Element, in which you see your clicked note, as DOM-element.
-   */
+
   #createOpenNoteContainer() {
     const openNoteContainer = document.createElement('div');
     openNoteContainer.classList.add('openNoteContainer');
@@ -263,17 +200,13 @@ class NotesView {
     return openNoteContainer;
   }
 
-  /**
-   * @private #closeNoteModalContainer -> closes #openNoteContainer
-   */
+
   #closeNoteModalContainer() {
     NotesView.openNoteContainer.classList.remove('open');
     this.#changeButtonState('edit');
   }
 
-  /**
-   * @private #inNoteContainerEditOnClick -> changes button and #noteInfoContainer container's status to opposite one ("edit" <--> "submit")
-   */
+
   #inNoteContainerEditOnClick() {
     if(this.#buttonStatus === 'submit') {
       this.#changeButtonState('edit');
@@ -343,11 +276,7 @@ class NotesView {
     }
   }
 
-  /**
-   * @private #changeButtonState -> changes button status to opposite one.
-   *
-   * @param status
-   */
+
   #changeButtonState(status) {
     if(status.trim().toLowerCase() === 'edit') {
       this.#editAndSubmitButton.classList.remove('submitState');
@@ -363,11 +292,7 @@ class NotesView {
     }
   }
 
-  /**
-   * @private #changeContainerState -> changes #noteInfoContainer's and #noteEditingContainer's statuses
-   *
-   * @param status
-   */
+
   #changeContainerState(status) {
     if(status.trim().toLowerCase() === 'edit') {
       this.#noteInfoContainer.classList.add('hidden');
@@ -379,11 +304,7 @@ class NotesView {
     }
   }
 
-  /**
-   * @private #createNotesContainer -> creates notesContainer and returns it as dom-element.
-   *
-   * @returns {HTMLDivElement}
-   */
+
   #createNotesContainer() {
     const notesContainer = document.createElement('div');
     notesContainer.classList.add('notesContainer');
@@ -393,14 +314,7 @@ class NotesView {
     return notesContainer;
   }
 
-  /**
-   * @param noteId
-   * @param noteTitle
-   * @param noteText
-   * @param noteForDate
-   *
-   * @public addNewNote -> calls "Note" class, passes all parameters and adds to dom hierarchy.
-   */
+
   static addNewNote({noteId, noteTitle, noteText, noteForDate}) {
 
     const newNote = new Note(noteId, noteTitle, noteText, noteForDate, NotesView.openNoteContainer);
@@ -409,8 +323,3 @@ class NotesView {
     NotesView.allNotesObjects.push(newNote);
   }
 }
-
-/**
- * @export -> class is exported for further usage.
- */
-export default NotesView;

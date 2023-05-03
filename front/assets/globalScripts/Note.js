@@ -1,4 +1,4 @@
-class Note {
+export default class Note {
   id;
   domElement;
   openedNoteContainer;
@@ -91,5 +91,3 @@ class Note {
   }
 
 }
-
-export default Note;

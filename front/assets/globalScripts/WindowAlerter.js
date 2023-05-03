@@ -1,6 +1,6 @@
 import '/front/assets/globalStyles/alertWindowStyles.css';
 
-class WindowAlerter {
+export default class WindowAlerter {
   static NOTIFICATIONS_CONTAINER;
   #ERROR_SVG_FILE_NAME = 'xMark';
   #SUCCESS_SVG_FLE_NAME = 'checkMark';
@@ -64,6 +64,3 @@ class WindowAlerter {
     }, 150)
   }
 }
-
-
-export default WindowAlerter;

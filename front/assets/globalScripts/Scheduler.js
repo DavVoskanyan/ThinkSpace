@@ -3,7 +3,7 @@ import '/front/assets/globalStyles/schedulerStyles.css';
 import AjaxSender from "/front/assets/globalScripts/AjaxSender.js";
 import ModalController from "/front/assets/globalScripts/ModalController.js";
 
-class Scheduler {
+export default class Scheduler {
     static ALL_NOTES_ARRAY = [];
 
     #PARENT_NODE;
@@ -316,5 +316,3 @@ class Scheduler {
         }
     }
 }
-
-export default Scheduler;

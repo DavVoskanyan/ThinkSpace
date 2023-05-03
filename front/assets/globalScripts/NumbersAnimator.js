@@ -1,4 +1,4 @@
-class NumbersAnimator {
+export default class NumbersAnimator {
     constructor() {
     }
     static increaseAnimate(startValue, finalValue, DomElement) {
@@ -10,5 +10,3 @@ class NumbersAnimator {
     }
 
 }
-
-export default NumbersAnimator;

@@ -1,4 +1,4 @@
-class SideBarCreator {
+export default class SideBarCreator {
     #SIDEBAR_SECTION_TITLES = ['scheduler', 'all notes', 'analytics', 'history', 'settings'];
 
     #SIDEBAR_SECTION_LINKS = {
@@ -96,6 +96,3 @@ class SideBarCreator {
         }
     }
 }
-
-
-export default SideBarCreator;
